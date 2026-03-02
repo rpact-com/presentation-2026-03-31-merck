@@ -1,12 +1,10 @@
 ---
-title: 'Title' # TODO: Update website title
-description: 'purpose, company, etc' # TODO: Update website description
-author: # TODO: Update authors
-  - "{{< var author-wassmer >}}"
-  - "{{< var author-pahlke >}}"
-  - "{{< var author-sabanes >}}"
+title: 'crmPack Training for Merck'
+description: 'Basic and advanced training for crmPack users at Merck'
+author:
+  - "{{< var author-sabanes >}}"  
 affiliation: "RPACT"
-date: yyyy-mm-dd # TODO: Update date
+date: 2026-03-31
 date-format: long
 institute: "[RPACT](https://www.rpact.com)"
 image: figures/logos/logo_full.png
@@ -16,28 +14,22 @@ editor:
     wrap: 120
 ---
 
-<!-- TODO: Update welcome message here. -->
-**Welcome to ...** 
+**Welcome to the crmPack Training for Merck!** 
 
-<!-- TODO: Update URL -->
 This website is accessible at
-[presentation.company.year.rpact.com](https://presentation.company.year.rpact.com).
+[crmPack Training for Merck](https://crmpack-training.merck.2026.rpact.com).
 
 **Details**
 
-<!-- TODO: Update date, presenter, time, location and agenda. -->
-- 🗓 Date: yyyy-mm-dd 
-- 🧑‍💻 Presenter: First Last 
+- 🧑‍💻 Presenter: Daniel Sabanés Bové
   ([RPACT GmbH](https://www.rpact.com))
-- 🕒 Time: 2:00 PM –  5:30 PM CET (Germany)
-- 📍 Location: 
-
+- 📍 Location: Online 
 
 ## [{{< fa calendar-check >}}]{.yellow} Agenda
-
-|               |                                                                             |
-|---------------|-----------------------------------------------------------------------------| 
-| 14:00 - 14:30 | [Title 1](/parts/01_title1.qmd)                 | 
-| 14:30 - 15:00 | [Title 2](/parts/02_title2.qmd)                 | 
-
-
+ 
+- [Basic Training](/parts/01_basic.qmd)
+  - 🗓 Date: 2026-03-31
+  - 🕒 Time: 2:00 PM –  3:00 PM CEST (Germany)
+- [Advanced Training](/parts/02_advanced.qmd)
+  - 🗓 Date: 2026-04-21
+  - 🕒 Time: 10:30 AM – 11:30 AM CEST (Germany)
