@@ -13,7 +13,7 @@ execute:
 #| echo: false
 #| cache: false
 library(emoji)
-library(rpact)
+library(crmPack)
 ```
 
 ## Advanced Training Outline `r emoji("package")`
@@ -69,6 +69,7 @@ min_result <- MinimalInformative(
 ## Comparing the prior result with the target quantiles
 
 ```{r}
+#| output-location: slide
 matplot(
     x = coarseGrid,
     y = min_result$required,
@@ -161,8 +162,8 @@ normal_mix_fix_weights_prior
 We can easily see the difference in the JAGS code:
 
 ```{r}
-normal_mix_prior@priormodel
-normal_mix_fix_weights_prior@priormodel
+body(normal_mix_prior@priormodel)
+body(normal_mix_fix_weights_prior@priormodel)
 ```
 
 ## Yet another but different mixture prior
@@ -204,8 +205,8 @@ data_share <- DataMixture(
 Let's look at the model definition:
 
 ```{r}
-online_mix_prior@priormodel
-online_mix_prior@datamodel
+body(online_mix_prior@priormodel)
+body(online_mix_prior@datamodel)
 ```
 
 We see that `comp == 2` means that the current and external data are from the same distribution, while `comp == 1` means they are from different distributions.
