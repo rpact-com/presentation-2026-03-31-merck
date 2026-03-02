@@ -43,9 +43,9 @@ Part of this training material is based on the `crmPack` training materials deve
 
 ## Overview of dose escalation designs
 
-- Rule-based designs: 3+3, accelerated titration, rolling 6, etc.
-- Model-based designs: Continual Reassessment Method (CRM), Escalation with Overdose Control (EWOC), etc.
-- Model-assisted designs: mTPI, Keyboard, Bayesian Optimal Interval (BOIN), etc.
+- Rule-based designs: 3+3 [@LIN2001], accelerated titration, rolling 6 [@SKOLNIK2008], etc.
+- Model-based designs: Continual Reassessment Method (CRM) [@OQUIGLEY1990], Escalation with Overdose Control (EWOC) [@NEUENSCHWANDER2008], etc.
+- Model-assisted designs: mTPI [@JI2010], Keyboard, Bayesian Optimal Interval (BOIN) [@LIU2015], etc.
 
 ## 3+3 design
 
@@ -53,14 +53,29 @@ Part of this training material is based on the `crmPack` training materials deve
 
 ## 3+3 vs. model-based designs
 
+
+|                           | 3+3                    | CRM            |
+|---------------------------|------------------------|----------------|
+| Definition of a DLT       | Study specific         | Study specific |
+| The target toxicity rate  | 0.33                   | Any            |
+| The dose grid             | Study specific         | Study specific |
+| The cohort size           | 3                      | Any            |
+| The stopping rule(s)      | 2 DLTs at same dose    | Any            |
+| The eligibility rule      | One dose up            | Any            |
+| The escalation rule       | +1 if 0/3 or 1/6       | Any            |
+| The definition of the MTD | Max dose with \<2 DLTs | Any            |
+| The dose-toxicity model   | None                   | Any            |
+
+## Higher-level overview
+
 ![Table taken from ["Moving Beyond 3+3: The Future of Clinical Trial Design"](https://ascopubs.org/doi/10.1200/EDBK_319783)](/figures/comparison-table.jpg)
 
 ## Usage of model-based designs
 
--   [@ROGATKO2007] reported that 98.4% of phase I cancer trials use a 3+3 design or a variant, but that only 35% of participants is such trials were treated at "optimal" doses, compared to 55% in model-based trials
--   [@LETOURNAU2009] reported 3.3% (6 of 181) of trials used CRM during 2007--2008
--   [@VANBRUMMELEN2016] reported that only 6.4% (11 of 172 oncology Phase I trials) used model-based approaches from 2012 to 2014
--   [@NONAMI2025] reported that from 394 clinical trials submitted to PMDA between 2013 and 2022, 195 (49.5%) used rule-based designs, 114 (28.9%) used model-based designs and 85 (21.6%) used model-assisted designs.
+-   @ROGATKO2007 reported that 98.4% of phase I cancer trials use a 3+3 design or a variant, but that only 35% of participants is such trials were treated at "optimal" doses, compared to 55% in model-based trials
+-   @LETOURNAU2009 reported 3.3% (6 of 181) of trials used CRM during 2007--2008
+-   @VANBRUMMELEN2016 reported that only 6.4% (11 of 172 oncology Phase I trials) used model-based approaches from 2012 to 2014
+-   @NONAMI2025 reported that from 394 clinical trials submitted to PMDA between 2013 and 2022, 195 (49.5%) used rule-based designs, 114 (28.9%) used model-based designs and 85 (21.6%) used model-assisted designs.
 
 ## crmPack to the rescue!
 
@@ -86,6 +101,247 @@ With `crmPack` we aim to make it easy for everyone to use model-based designs in
 
 ![`crmPack` package framework](/figures/screenshots/framework.png)
 
-# 
+# Example study design
+
+## Data object
+
+We first need to decide what the possible doses could be, i.e. the so-called dose grid:
+
+```{r}
+#| message: false
+library(crmPack)
+
+dose_grid <- c(1, 5, 10, seq(from = 20, to = 200, by = 10))
+```
+
+This we use to initialize our (still empty, i.e. without patients) `Data` object, which will be used to store the data of our trial as it progresses:
+
+```{r}
+empty_data <- Data(doseGrid = dose_grid)
+```
+
+## Adding a patient
+
+We can "update" the `Data` object with the information of a patient treated at dose 10, who did not experience a DLT, and a patient at dose 20 with a DLT:
+
+```{r}
+data <- empty_data |> 
+    update(x = 10, y = 0) |> 
+    update(x = 20, y = 1)
+```
+
+And plot it:
+
+```{r}
+plot(data)
+```
+
+## Model object
+
+Next we need to specify the dose-toxicity model we want to use. 
+
+Often used is this logistic model with reference dose $d_{ref}$, which assigns the following probability of DLT to a dose $x$:
+
+$$
+\mathbb{P}(Y = 1 | x) = \frac{e^{\alpha + \beta \cdot log(x / d_{ref})}}{1 + e^{\alpha + \beta \cdot log(x / d_{ref})}} 
+$$
+
+Then we also use a prior distribution for the parameters $\alpha$ and $\beta$. Typically, we want $\beta$ to be positive, so we can assign a bivariate normal distribution to $(\alpha, \log(\beta))$.
+
+## Model object (cont'd)
+
+For example, let's use the following model:
+
+```{r}
+get_model <- function(sigma0, sigma1, rho) {
+  cov <- matrix(c(sigma0^2, rho * sigma0 * sigma1, rho * sigma0 * sigma1, sigma1^2), nrow = 2)
+  LogisticLogNormal(
+    mean = c(-3, 0.5),
+    cov = cov,
+    ref_dose = 20
+  )
+}
+model <- get_model(sigma0 = 1, sigma1 = 2, rho = 0.5)
+```
+
+## Model object (cont'd)
+
+In Quarto/Rmarkdown, we will get the nice textual description of the model by just printing it:
+
+```{r}
+model
+```
+
+## Generating prior and posterior samples
+
+We use MCMC, in particular Gibbs sampling implemented in JAGS, to generate (approximate) samples from the posterior distribution of the model parameters. The settings are controlled by the `McmcOptions` object. Note that in order to get reproducible results, we also need to set the random seed:
+
+```{r}
+mcmc_options <- McmcOptions(
+  burnin = 1000,
+  step = 10,
+  samples = 1000,
+  rng_kind = "Mersenne-Twister",
+  rng_seed = 12345
+)
+```
+
+Now we can generate the prior and posterior samples with the `mcmc` method:
+
+```{r}
+prior_samples <- mcmc(model, data = empty_data, options = mcmc_options)
+posterior_samples <- mcmc(model, data = data, options = mcmc_options)
+```
+
+## Plotting dose-toxicity curves: Prior
+
+```{r}
+plot(prior_samples, model, empty_data)
+```
+
+## Plotting dose-toxicity curves: Posterior
+
+```{r}
+plot(posterior_samples, model, data)
+```
+
+## Increments object
+
+We usually need additional safety rules for our model-based dose escalation design. For example, we might restrict the maximum allowed dose increment to 100% (i.e. doubling the dose) if no DLTs have been observed, and to 50% if one DLT has been observed. This can be implemented with an `Increments` object:
+
+```{r}
+increments <- IncrementsRelativeDLT(
+    intervals = c(0, 1),
+    increments = c(1, 0.5)
+)
+increments
+```
+
+## NextBest object
+
+Together with the regression model, the definition of how to obtain the recommendation for the dose of the next cohort, are the key components of the model-based dose escalation design. 
+
+For example, we can maximize the posterior probability of being in the target toxicity interval (e.g. 20--30% DLTs) while restricting the maximum overdosing (e.g. 40-100% DLTs) probability to less than 25%:
+
+```{r}
+next_best <- NextBestNCRM(
+    target = c(0.2, 0.3),
+    overdose = c(0.4, 1),
+    max_overdose_prob = 0.25
+)
+next_best
+```
+
+## CohortSize object
+
+In the simplest case, we just always have the same constant number of patients in each cohort, e.g. 3 patients per cohort:
+
+```{r}
+cohort_size <- CohortSizeConst(3)
+```
+
+As with all components, other options are available, see `?CohortSize` for details.
+
+## Stopping object
+
+Typically there are stopping rules for a dose escalation study. In the simplest case, this is just the number of patients treated, e.g. 30 patients:
+
+```{r}
+stop1 <- StoppingMinPatients(nPatients = 30)
+```
+
+But we can also combine this with logical `&` and `|` operators with other stopping rules, e.g. to also stop if the target probability is high, or if the model would not recommend any dose at all because of safety concerns:
+
+```{r}
+stop2 <- StoppingTargetProb(target = c(0.2, 0.3), prob = 0.7)
+stop3 <- StoppingMissingDose()
+stopping <- stop1 | stop2 | stop3
+stopping
+```
+
+## Resulting recommendation example
+
+So in our data example from above, what would be the recommended dose for the next cohort?
+
+First, the maximum increment is calculated using the `maxDose` method:
+
+```{r}
+max_dose <- maxDose(increments, data)
+max_dose
+```
+
+Here it is only 30, because we observed one DLT at dose 20, so the maximum allowed increment is 50%.
+
+Then the next best dose is calculated with the `nextBest` method:
+
+```{r}
+next_best_dose <- nextBest(next_best, doselimit = max_dose, samples = posterior_samples, model = model, data = data)
+```
+
+## Resulting recommendation example (cont'd)
+
+The plot is in the `$plot` element of the result:
+
+```{r}
+print(next_best_dose$plot)
+```
+
+And the value is in the `$value` element:
+
+```{r}
+next_best_dose$value
+```
+
+So due to the high probability of overdosing at dose 30, the recommended dose for the next cohort is dose 20, which is the same as the previous cohort. 
+
+# Operating characteristics
+
+## Design object
+
+First we need to put all the components of our model-based dose escalation design together in a `Design` object - here we also need to define a starting dose:
+
+```{r}
+design <- Design(
+    data = empty_data,
+    model = model,
+    nextBest = next_best,
+    increments = increments,
+    cohort_size = cohort_size,
+    stopping = stopping,
+    startingDose = 5
+)
+design
+```
+
+## Examine method
+
+The first "quick check" we should run on our design is how it behaves if we don't see any DLTs at all - can we even reach the higher doses? This can be done with the `examine` method:
+
+```{r}
+examine(design)
+```
+
+Here it could be also concerning that if we observe 3 DLTs at the starting dose of 5, we still continue with the same dose 5 for the next cohort. The reason here is that the prior is "too confident" that at low doses we have a low DLT probability. 
+
+## Adjusted performance
+
+So we need to adjust the prior to be less confident, e.g. by increasing the standard deviations of the parameters:
+
+```{r}
+model_adjusted <- get_model(sigma0 = 2, sigma1 = 4, rho = 0.5)
+design_adjusted <- design
+design_adjusted@model <- model_adjusted
+examine(design_adjusted)
+```
+
+## Backfilling cohorts
+
+
+
+## Toxicity scenarios
+
+## Running simulations
+
+## Summarizing results
 
 ## References {.scrollable}
