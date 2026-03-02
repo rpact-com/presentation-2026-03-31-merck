@@ -1,1 +1,1 @@
-Sitemap: https://crmpack-training-basic.merck.2026.rpact.com/sitemap.xml
+Sitemap: https://crmpack-training.merck.2026.rpact.com/sitemap.xml

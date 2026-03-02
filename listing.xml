@@ -5,9 +5,9 @@
       xmlns:dc="http://purl.org/dc/elements/1.1/" 
       version="2.0">
 <channel>
-<title>Presentation title</title>
-<link>https://crmpack-training-basic.merck.2026.rpact.com/listing.html</link>
-<atom:link href="https://crmpack-training-basic.merck.2026.rpact.com/listing.xml" rel="self" type="application/rss+xml"/>
+<title>crmPack Training for Merck</title>
+<link>https://crmpack-training.merck.2026.rpact.com/listing.html</link>
+<atom:link href="https://crmpack-training.merck.2026.rpact.com/listing.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <language>en</language>
 <generator>quarto-1.8.27</generator>
@@ -15,20 +15,20 @@
 <item>
   <title></title>
   <dc:creator>First Last</dc:creator>
-  <link>https://crmpack-training-basic.merck.2026.rpact.com/parts/01_title1.html</link>
+  <link>https://crmpack-training.merck.2026.rpact.com/parts/01_title1.html</link>
   <description><![CDATA[ undefined ]]></description>
-  <guid>https://crmpack-training-basic.merck.2026.rpact.com/parts/01_title1.html</guid>
+  <guid>https://crmpack-training.merck.2026.rpact.com/parts/01_title1.html</guid>
   <pubDate>Tue, 31 Mar 2026 00:00:00 GMT</pubDate>
-  <media:content url="https://crmpack-training-basic.merck.2026.rpact.com/figures/illustration/packages.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://crmpack-training.merck.2026.rpact.com/figures/illustration/packages.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title></title>
   <dc:creator>First Last</dc:creator>
-  <link>https://crmpack-training-basic.merck.2026.rpact.com/parts/02_title2.html</link>
+  <link>https://crmpack-training.merck.2026.rpact.com/parts/02_title2.html</link>
   <description><![CDATA[ undefined ]]></description>
-  <guid>https://crmpack-training-basic.merck.2026.rpact.com/parts/02_title2.html</guid>
+  <guid>https://crmpack-training.merck.2026.rpact.com/parts/02_title2.html</guid>
   <pubDate>Tue, 31 Mar 2026 00:00:00 GMT</pubDate>
-  <media:content url="https://crmpack-training-basic.merck.2026.rpact.com/figures/illustration/packages.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://crmpack-training.merck.2026.rpact.com/figures/illustration/packages.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>
