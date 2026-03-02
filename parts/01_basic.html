@@ -133,6 +133,7 @@
     }
     .reveal .slide:not(.center) {
       height: 100%;
+      overflow-y: auto;
     }
     .reveal .slide.scrollable {
       overflow-y: auto;
@@ -619,20 +620,20 @@ No DLTs
 <span id="cb22-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">startingDose =</span> <span class="dv">5</span></span>
 <span id="cb22-9"><a aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb22-10"><a aria-hidden="true" tabindex="-1"></a>design</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<section id="design-1" class="slide level2 cell-output-display">
-<h2>Design</h2>
-<h3 id="dose-toxicity-model">Dose toxicity model</h3>
+</div>
+<h4 id="design-1">Design</h4>
+<h4 id="dose-toxicity-model">Dose toxicity model</h4>
 <p>A logistic log normal model will describe the relationship between dose and toxicity: <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>T</mi><mi>o</mi><mi>x</mi><mo stretchy="false" form="prefix">|</mo><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mo>=</mo><mn>1</mn><mo stretchy="false" form="prefix">|</mo><mi>θ</mi><mo>,</mo><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><msup><mi>e</mi><mrow><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>d</mi><mi>/</mi><msub><mi>d</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>d</mi><mi>/</mi><msub><mi>d</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex"> p(Tox | d) = f(X = 1 | \theta, d) = \frac{e^{\alpha + \beta \cdot log(d/d_{ref})}}{1 + e^{\alpha + \beta \cdot log(d/d_{ref})}} </annotation></semantics></math>where d<sub>ref</sub> denotes a reference dose.</p>
 <p>The prior for θ is given by<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝛉</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>α</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>β</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>−</mi><mn>3.00</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.50</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1.00</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1.00</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1.00</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4.00</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex"> \boldsymbol\theta = \begin{bmatrix}\alpha \\ log(\beta)\end{bmatrix}\sim N \left(\begin{bmatrix}-3.00 \\  0.50\end{bmatrix} , \begin{bmatrix} 1.00 &amp;  1.00 \\ 1.00 &amp;  4.00\end{bmatrix} \right) </annotation></semantics></math></p>
 <p>The reference dose will be 20.00.</p>
-<h3 id="stopping-rule">Stopping rule</h3>
+<h4 id="stopping-rule">Stopping rule</h4>
 <p>If any of the following rules are <code>TRUE</code>:</p>
 <ul>
 <li><p>≥ 30 patients dosed: If 30 or more participants have been treated.</p></li>
 <li><p>P(0.2 ≤ prob(DLE | NBD) ≤ 0.3) ≥ 0.7: If the probability of toxicity at the next best dose is in the range [0.20, 0.30] is at least 0.70.</p></li>
 <li><p>Stopped because of missing dose: If the dose returned by <code>nextBest()</code> is <code>NA</code>, or if the trial includes a placebo dose, the placebo dose.</p></li>
 </ul>
-<h3 id="escalation-rule">Escalation rule</h3>
+<h4 id="escalation-rule">Escalation rule</h4>
 <table>
 <caption>
 Defined by number of DLTs reported so far
@@ -684,21 +685,19 @@ Inf
 </tr>
 </tbody>
 </table>
-<h3 id="use-of-placebo">Use of placebo</h3>
+<h4 id="use-of-placebo">Use of placebo</h4>
 <p>Placebo will not be administered in the trial.</p>
-<h3 id="backfill-cohorts">Backfill cohorts</h3>
+<h4 id="backfill-cohorts">Backfill cohorts</h4>
 <p>No backfill cohorts at all will be opened.</p>
-<h3 id="dose-recommendation">Dose recommendation</h3>
+<h4 id="dose-recommendation">Dose recommendation</h4>
 <p>The dose recommended for the next cohort will be chosen in the following way. First, doses that are ineligible according to the increments rule will be discarded. Next, any dose for which the mean posterior probability of toxicity being in the overdose range - (0.4, 1] - is 0.25 or more will also be discarded. Finally, the dose amongst those remaining which has the highest chance that the mean posterior probability of toxicity is in the target toxicity range of 0.2 to 0.3 (inclusive) will be selected.</p>
-<h3 id="cohort-size">Cohort size</h3>
+<h4 id="cohort-size">Cohort size</h4>
 <p>A constant size of 3 participants.</p>
-<h3 id="observed-data">Observed data</h3>
+<h4 id="observed-data">Observed data</h4>
 <p>No participants are yet evaluable.</p>
 <p>The dose grid is 1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190 and 200.</p>
-<h3 id="starting-dose">Starting dose</h3>
+<h4 id="starting-dose">Starting dose</h4>
 <p>The starting dose is 5.</p>
-</section>
-</div>
 </section>
 <section id="examine-method" class="slide level2">
 <h2>Examine method</h2>
@@ -719,18 +718,22 @@ Inf
 10   20    1       20 FALSE         0
 11   20    2       20 FALSE         0
 12   20    3       10 FALSE       -50
-13   30    0       60 FALSE       100
+13   30    0       50 FALSE        67
 14   30    1       30 FALSE         0
 15   30    2       20 FALSE       -33
 16   30    3       20 FALSE       -33
-17   60    0      110 FALSE        83
-18   60    1       50 FALSE       -17
-19   60    2       40 FALSE       -33
-20   60    3       30 FALSE       -50
-21  110    0      200 FALSE        82
-22  110    1      100 FALSE        -9
-23  110    2       60 FALSE       -45
-24  110    3       50 FALSE       -55</code></pre>
+17   50    0       90 FALSE        80
+18   50    1       50 FALSE         0
+19   50    2       30 FALSE       -40
+20   50    3       30 FALSE       -40
+21   90    0      180 FALSE       100
+22   90    1      110 FALSE        22
+23   90    2       60 FALSE       -33
+24   90    3       40 FALSE       -56
+25  180    0      200 FALSE        11
+26  180    1      150 FALSE       -17
+27  180    2       90 FALSE       -50
+28  180    3       70 FALSE       -61</code></pre>
 </div>
 </div>
 <p>Here it could be also concerning that if we observe 3 DLTs at the starting dose of 5, we still continue with the same dose 5 for the next cohort. The reason here is that the prior is “too confident” that at low doses we have a low DLT probability.</p>
@@ -761,42 +764,158 @@ Inf
 14   20    1       20 FALSE         0
 15   20    2       20 FALSE         0
 16   20    3       10 FALSE       -50
-17   20    0       20 FALSE         0
+17   20    0       30 FALSE        50
 18   20    1       20 FALSE         0
 19   20    2       20 FALSE         0
 20   20    3       20 FALSE         0
-21   20    0       30 FALSE        50
-22   20    1       20 FALSE         0
-23   20    2       20 FALSE         0
-24   20    3       20 FALSE         0
-25   30    0       60 FALSE       100
-26   30    1       30 FALSE         0
-27   30    2       20 FALSE       -33
-28   30    3       20 FALSE       -33
-29   60    0      120 FALSE       100
-30   60    1       60 FALSE         0
-31   60    2       40 FALSE       -33
-32   60    3       30 FALSE       -50
-33  120    0      200 FALSE        67
-34  120    1      110 FALSE        -8
-35  120    2       80 FALSE       -33
-36  120    3       50 FALSE       -58</code></pre>
+21   30    0       60 FALSE       100
+22   30    1       30 FALSE         0
+23   30    2       20 FALSE       -33
+24   30    3       20 FALSE       -33
+25   60    0      120 FALSE       100
+26   60    1       60 FALSE         0
+27   60    2       40 FALSE       -33
+28   60    3       30 FALSE       -50
+29  120    0      200 FALSE        67
+30  120    1      110 FALSE        -8
+31  120    2       80 FALSE       -33
+32  120    3       50 FALSE       -58</code></pre>
 </div>
+</div>
+</section>
+<section id="toxicity-scenarios" class="slide level2">
+<h2>Toxicity scenarios</h2>
+<p>In order to evaluate the operating characteristics of our design, we need to define some toxicity scenarios, i.e.&nbsp;the true dose-toxicity relationship in the population. This needs to be a function mapping a dose vector to a vector of DLT probabilities. This could be:</p>
+<ul>
+<li>Logistic curve</li>
+<li>Probit curve</li>
+<li>Power curve</li>
+<li>Manual specification of DLT probabilities at each dose level</li>
+</ul>
+<p>For example:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a>scenario1 <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb27-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">plogis</span>(<span class="sc">-</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fl">0.8</span> <span class="sc">*</span> <span class="fu">log</span>(x <span class="sc">/</span> <span class="dv">20</span>))</span>
+<span id="cb27-3"><a aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="toxicity-scenarios-contd" class="slide level2">
+<h2>Toxicity scenarios (cont’d)</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(scenario1, <span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">200</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="01_basic_files/figure-revealjs/unnamed-chunk-26-1.png" width="960" class="r-stretch"></section>
+<section id="running-simulations" class="slide level2">
+<h2>Running simulations</h2>
+<p>Now given the design and the toxicity scenario, we can run simulations with the <code>simulate</code> method:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> <span class="fu">simulate</span>(</span>
+<span id="cb29-2"><a aria-hidden="true" tabindex="-1"></a>    design_adjusted,</span>
+<span id="cb29-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">nsim =</span> <span class="dv">100</span>,</span>
+<span id="cb29-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">truth =</span> scenario1,</span>
+<span id="cb29-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mcmcOptions =</span> mcmc_options,</span>
+<span id="cb29-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> <span class="dv">123</span>,</span>
+<span id="cb29-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">parallel =</span> <span class="cn">TRUE</span></span>
+<span id="cb29-8"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="backfilling-cohorts" class="slide level2">
 <h2>Backfilling cohorts</h2>
+<p>Especially in oncology trials, it is meanwhile common to open backfill cohorts at lower dose levels while the escalation cohorts are still ongoing at higher dose levels. Recently this was implemented in <code>crmPack</code> with the <code>Backfill</code> objects.</p>
+<p>For example:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-hidden="true" tabindex="-1"></a>backfill_simple <span class="ot">&lt;-</span> <span class="fu">Backfill</span>(</span>
+<span id="cb30-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">cohort_size =</span> <span class="fu">CohortSizeConst</span>(<span class="dv">3</span>),</span>
+<span id="cb30-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">max_size =</span> <span class="dv">12</span>,</span>
+<span id="cb30-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">opening =</span> <span class="fu">OpeningMinCohorts</span>(<span class="at">min_cohorts =</span> <span class="dv">1</span>),</span>
+<span id="cb30-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">recruitment =</span> <span class="fu">RecruitmentUnlimited</span>(),</span>
+<span id="cb30-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">priority =</span> <span class="st">"lowest"</span></span>
+<span id="cb30-7"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb30-8"><a aria-hidden="true" tabindex="-1"></a>backfill_simple</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<p><strong>Cohort size</strong>: A constant size of 3 participants.</p>
+<p><strong>Opening rule</strong>: If 1 or more cohorts have been treated in total.</p>
+<p><strong>Recruitment</strong>: Unlimited recruitment of backfill patients is allowed.</p>
+<p><strong>Total number of backfill patients</strong>: 12 backfill patients.</p>
+<p><strong>Priority of higher vs.&nbsp;lower dose backfill cohorts</strong>: lowest dose.</p>
+</div>
+</div>
 </section>
-<section id="toxicity-scenarios" class="slide level2">
-<h2>Toxicity scenarios</h2>
-</section>
-<section id="running-simulations" class="slide level2">
-<h2>Running simulations</h2>
+<section id="backfilling-cohorts-contd" class="slide level2">
+<h2>Backfilling cohorts (cont’d)</h2>
+<p>This can then be added in the corresponding <code>backfill</code> slot of the <code>Design</code> object:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-hidden="true" tabindex="-1"></a>design_backfill <span class="ot">&lt;-</span> design_adjusted</span>
+<span id="cb31-2"><a aria-hidden="true" tabindex="-1"></a>design_backfill<span class="sc">@</span>backfill <span class="ot">&lt;-</span> backfill_simple</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Please note that the <code>examine</code> method does not yet take the backfilling into account, so it will still show the same results as before. To see the effect of the backfilling, we need to run simulations.</p>
 </section>
 <section id="summarizing-results" class="slide level2">
 <h2>Summarizing results</h2>
+<p>We can get basic summaries of the simulation results with the <code>summary</code> method:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" tabindex="-1"></a>sims_summary <span class="ot">&lt;-</span> <span class="fu">summary</span>(sims, <span class="at">truth =</span> scenario1)</span>
+<span id="cb32-2"><a aria-hidden="true" tabindex="-1"></a>sims_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Summary of 100 simulations
+
+Target toxicity interval was 20, 35 %
+Target dose interval corresponding to this was 43.1, 112.4 
+Intervals are corresponding to 10 and 90 % quantiles
+
+Number of patients overall : mean 30 (30, 30) 
+Number of patients treated above target tox interval : mean 0 (0, 0) 
+Proportions of DLTs in the trials : mean 10 % (3 %, 17 %) 
+Mean toxicity risks for the patients on active : mean 10 % (4 %, 14 %) 
+Doses selected as MTD : mean 25.8 (5, 41) 
+True toxicity at doses selected : mean 12 % (4 %, 19 %) 
+Proportion of trials selecting target MTD: 6 %
+Dose most often selected as MTD: 20 
+Observed toxicity rate at dose most often selected: 12 %
+Fitted toxicity rate at dose most often selected : mean 12 % (3 %, 23 %) 
+Stop reason triggered:
+ ≥ 30 patients dosed :  100 %
+ P(0.2 ≤ prob(DLE | NBD) ≤ 0.3) ≥ 0.7 :  0 %
+ Stopped because of missing dose :  0 %</code></pre>
+</div>
+</div>
 </section>
-<section id="references" class="slide level2 scrollable smaller">
+<section id="plotting-results" class="slide level2">
+<h2>Plotting results</h2>
+<p>And we can also get more detailed plots of the simulation results with the <code>plot</code> method:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sims)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="01_basic_files/figure-revealjs/unnamed-chunk-31-1.png" width="960" class="r-stretch"></section>
+<section id="plotting-results-contd" class="slide level2">
+<h2>Plotting results (cont’d)</h2>
+<p>The <code>summary</code> result can also be plotted:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(sims_summary)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="01_basic_files/figure-revealjs/unnamed-chunk-32-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="learning-more" class="title-slide slide level1 center">
+<h1>Learning more</h1>
+
+</section>
+<section id="learning-more-1" class="slide level2">
+<h2>Learning more</h2>
+<p>Lots of documentation is available on the <code>crmPack</code> website: <a href="https://crmPack.org/">crmPack.org</a> It includes:</p>
+<ul>
+<li>13 vignettes with detailed examples of how to use the package
+<ul>
+<li>In particular, the <a href="https://www.crmpack.org/vignettes/getting-started/crmPack_paper/">paper</a> vignette is a great starting point</li>
+<li>Also backfilling cohorts are explained in a dedicated <a href="https://www.crmpack.org/vignettes/getting-started/crmPack_backfill/">backfilling</a> vignette e.g.</li>
+</ul></li>
+<li>Link to the online reference explaining all the functions and classes in the package</li>
+<li>Contact information for questions and suggestions, as well as a link to the GitHub repository for bug reports and feature requests</li>
+</ul>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 
 

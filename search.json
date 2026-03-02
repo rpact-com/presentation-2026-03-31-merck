@@ -189,53 +189,81 @@
     "text": "Design object\nFirst we need to put all the components of our model-based dose escalation design together in a Design object - here we also need to define a starting dose:\n\ndesign &lt;- Design(\n    data = empty_data,\n    model = model,\n    nextBest = next_best,\n    increments = increments,\n    cohort_size = cohort_size,\n    stopping = stopping,\n    startingDose = 5\n)\ndesign\n\nDesign\nDose toxicity model\nA logistic log normal model will describe the relationship between dose and toxicity: p(Tox|d)=f(X=1|θ,d)=eα+β⋅log(d/dref)1+eα+β⋅log(d/dref) p(Tox | d) = f(X = 1 | \\theta, d) = \\frac{e^{\\alpha + \\beta \\cdot log(d/d_{ref})}}{1 + e^{\\alpha + \\beta \\cdot log(d/d_{ref})}} where dref denotes a reference dose.\nThe prior for θ is given by𝛉=[αlog(β)]∼N([−3.000.50],[1.001.001.004.00]) \\boldsymbol\\theta = \\begin{bmatrix}\\alpha \\\\ log(\\beta)\\end{bmatrix}\\sim N \\left(\\begin{bmatrix}-3.00 \\\\  0.50\\end{bmatrix} , \\begin{bmatrix} 1.00 &  1.00 \\\\ 1.00 &  4.00\\end{bmatrix} \\right) \nThe reference dose will be 20.00.\nStopping rule\nIf any of the following rules are TRUE:\n\n≥ 30 patients dosed: If 30 or more participants have been treated.\nP(0.2 ≤ prob(DLE | NBD) ≤ 0.3) ≥ 0.7: If the probability of toxicity at the next best dose is in the range [0.20, 0.30] is at least 0.70.\nStopped because of missing dose: If the dose returned by nextBest() is NA, or if the trial includes a placebo dose, the placebo dose.\n\nEscalation rule\n\n\nDefined by number of DLTs reported so far\n\n\n\n\n\nNo DLTs\n\n\n\n\n\n\n\nMin\n\n\nMax\n\n\nIncrement\n\n\n\n\n\n\n0\n\n\n1\n\n\n1.0\n\n\n\n\n1\n\n\nInf\n\n\n0.5\n\n\n\n\nUse of placebo\nPlacebo will not be administered in the trial.\nBackfill cohorts\nNo backfill cohorts at all will be opened.\nDose recommendation\nThe dose recommended for the next cohort will be chosen in the following way. First, doses that are ineligible according to the increments rule will be discarded. Next, any dose for which the mean posterior probability of toxicity being in the overdose range - (0.4, 1] - is 0.25 or more will also be discarded. Finally, the dose amongst those remaining which has the highest chance that the mean posterior probability of toxicity is in the target toxicity range of 0.2 to 0.3 (inclusive) will be selected.\nCohort size\nA constant size of 3 participants.\nObserved data\nNo participants are yet evaluable.\nThe dose grid is 1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190 and 200.\nStarting dose\nThe starting dose is 5."
   },
   {
-    "objectID": "parts/01_basic.html#design-1",
-    "href": "parts/01_basic.html#design-1",
-    "title": "crmPack Training for Merck",
-    "section": "Design",
-    "text": "Design\nDose toxicity model\nA logistic log normal model will describe the relationship between dose and toxicity: p(Tox|d)=f(X=1|θ,d)=eα+β⋅log(d/dref)1+eα+β⋅log(d/dref) p(Tox | d) = f(X = 1 | \\theta, d) = \\frac{e^{\\alpha + \\beta \\cdot log(d/d_{ref})}}{1 + e^{\\alpha + \\beta \\cdot log(d/d_{ref})}} where dref denotes a reference dose.\nThe prior for θ is given by𝛉=[αlog(β)]∼N([−3.000.50],[1.001.001.004.00]) \\boldsymbol\\theta = \\begin{bmatrix}\\alpha \\\\ log(\\beta)\\end{bmatrix}\\sim N \\left(\\begin{bmatrix}-3.00 \\\\  0.50\\end{bmatrix} , \\begin{bmatrix} 1.00 &  1.00 \\\\ 1.00 &  4.00\\end{bmatrix} \\right) \nThe reference dose will be 20.00.\nStopping rule\nIf any of the following rules are TRUE:\n\n≥ 30 patients dosed: If 30 or more participants have been treated.\nP(0.2 ≤ prob(DLE | NBD) ≤ 0.3) ≥ 0.7: If the probability of toxicity at the next best dose is in the range [0.20, 0.30] is at least 0.70.\nStopped because of missing dose: If the dose returned by nextBest() is NA, or if the trial includes a placebo dose, the placebo dose.\n\nEscalation rule\n\n\nDefined by number of DLTs reported so far\n\n\n\n\n\nNo DLTs\n\n\n\n\n\n\n\nMin\n\n\nMax\n\n\nIncrement\n\n\n\n\n\n\n0\n\n\n1\n\n\n1.0\n\n\n\n\n1\n\n\nInf\n\n\n0.5\n\n\n\n\nUse of placebo\nPlacebo will not be administered in the trial.\nBackfill cohorts\nNo backfill cohorts at all will be opened.\nDose recommendation\nThe dose recommended for the next cohort will be chosen in the following way. First, doses that are ineligible according to the increments rule will be discarded. Next, any dose for which the mean posterior probability of toxicity being in the overdose range - (0.4, 1] - is 0.25 or more will also be discarded. Finally, the dose amongst those remaining which has the highest chance that the mean posterior probability of toxicity is in the target toxicity range of 0.2 to 0.3 (inclusive) will be selected.\nCohort size\nA constant size of 3 participants.\nObserved data\nNo participants are yet evaluable.\nThe dose grid is 1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190 and 200.\nStarting dose\nThe starting dose is 5."
-  },
-  {
     "objectID": "parts/01_basic.html#examine-method",
     "href": "parts/01_basic.html#examine-method",
     "title": "crmPack Training for Merck",
     "section": "Examine method",
-    "text": "Examine method\nThe first “quick check” we should run on our design is how it behaves if we don’t see any DLTs at all - can we even reach the higher doses? This can be done with the examine method:\n\nexamine(design)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        5 FALSE         0\n4     5    3        5 FALSE         0\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3       10 FALSE         0\n9    20    0       30 FALSE        50\n10   20    1       20 FALSE         0\n11   20    2       20 FALSE         0\n12   20    3       10 FALSE       -50\n13   30    0       60 FALSE       100\n14   30    1       30 FALSE         0\n15   30    2       20 FALSE       -33\n16   30    3       20 FALSE       -33\n17   60    0      110 FALSE        83\n18   60    1       50 FALSE       -17\n19   60    2       40 FALSE       -33\n20   60    3       30 FALSE       -50\n21  110    0      200 FALSE        82\n22  110    1      100 FALSE        -9\n23  110    2       60 FALSE       -45\n24  110    3       50 FALSE       -55\n\n\nHere it could be also concerning that if we observe 3 DLTs at the starting dose of 5, we still continue with the same dose 5 for the next cohort. The reason here is that the prior is “too confident” that at low doses we have a low DLT probability."
+    "text": "Examine method\nThe first “quick check” we should run on our design is how it behaves if we don’t see any DLTs at all - can we even reach the higher doses? This can be done with the examine method:\n\nexamine(design)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        5 FALSE         0\n4     5    3        5 FALSE         0\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3       10 FALSE         0\n9    20    0       30 FALSE        50\n10   20    1       20 FALSE         0\n11   20    2       20 FALSE         0\n12   20    3       10 FALSE       -50\n13   30    0       50 FALSE        67\n14   30    1       30 FALSE         0\n15   30    2       20 FALSE       -33\n16   30    3       20 FALSE       -33\n17   50    0       90 FALSE        80\n18   50    1       50 FALSE         0\n19   50    2       30 FALSE       -40\n20   50    3       30 FALSE       -40\n21   90    0      180 FALSE       100\n22   90    1      110 FALSE        22\n23   90    2       60 FALSE       -33\n24   90    3       40 FALSE       -56\n25  180    0      200 FALSE        11\n26  180    1      150 FALSE       -17\n27  180    2       90 FALSE       -50\n28  180    3       70 FALSE       -61\n\n\nHere it could be also concerning that if we observe 3 DLTs at the starting dose of 5, we still continue with the same dose 5 for the next cohort. The reason here is that the prior is “too confident” that at low doses we have a low DLT probability."
   },
   {
     "objectID": "parts/01_basic.html#adjusted-performance",
     "href": "parts/01_basic.html#adjusted-performance",
     "title": "crmPack Training for Merck",
     "section": "Adjusted performance",
-    "text": "Adjusted performance\nSo we need to adjust the prior to be less confident, e.g. by increasing the standard deviations of the parameters:\n\nmodel_adjusted &lt;- get_model(sigma0 = 2, sigma1 = 4, rho = 0.5)\ndesign_adjusted &lt;- design\ndesign_adjusted@model &lt;- model_adjusted\nexamine(design_adjusted)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        1 FALSE       -80\n4     5    3       NA  TRUE        NA\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3        5 FALSE       -50\n9    20    0       20 FALSE         0\n10   20    1       20 FALSE         0\n11   20    2       10 FALSE       -50\n12   20    3       10 FALSE       -50\n13   20    0       20 FALSE         0\n14   20    1       20 FALSE         0\n15   20    2       20 FALSE         0\n16   20    3       10 FALSE       -50\n17   20    0       20 FALSE         0\n18   20    1       20 FALSE         0\n19   20    2       20 FALSE         0\n20   20    3       20 FALSE         0\n21   20    0       30 FALSE        50\n22   20    1       20 FALSE         0\n23   20    2       20 FALSE         0\n24   20    3       20 FALSE         0\n25   30    0       60 FALSE       100\n26   30    1       30 FALSE         0\n27   30    2       20 FALSE       -33\n28   30    3       20 FALSE       -33\n29   60    0      120 FALSE       100\n30   60    1       60 FALSE         0\n31   60    2       40 FALSE       -33\n32   60    3       30 FALSE       -50\n33  120    0      200 FALSE        67\n34  120    1      110 FALSE        -8\n35  120    2       80 FALSE       -33\n36  120    3       50 FALSE       -58"
-  },
-  {
-    "objectID": "parts/01_basic.html#backfilling-cohorts",
-    "href": "parts/01_basic.html#backfilling-cohorts",
-    "title": "crmPack Training for Merck",
-    "section": "Backfilling cohorts",
-    "text": "Backfilling cohorts"
+    "text": "Adjusted performance\nSo we need to adjust the prior to be less confident, e.g. by increasing the standard deviations of the parameters:\n\nmodel_adjusted &lt;- get_model(sigma0 = 2, sigma1 = 4, rho = 0.5)\ndesign_adjusted &lt;- design\ndesign_adjusted@model &lt;- model_adjusted\nexamine(design_adjusted)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        1 FALSE       -80\n4     5    3       NA  TRUE        NA\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3        5 FALSE       -50\n9    20    0       20 FALSE         0\n10   20    1       20 FALSE         0\n11   20    2       10 FALSE       -50\n12   20    3       10 FALSE       -50\n13   20    0       20 FALSE         0\n14   20    1       20 FALSE         0\n15   20    2       20 FALSE         0\n16   20    3       10 FALSE       -50\n17   20    0       30 FALSE        50\n18   20    1       20 FALSE         0\n19   20    2       20 FALSE         0\n20   20    3       20 FALSE         0\n21   30    0       60 FALSE       100\n22   30    1       30 FALSE         0\n23   30    2       20 FALSE       -33\n24   30    3       20 FALSE       -33\n25   60    0      120 FALSE       100\n26   60    1       60 FALSE         0\n27   60    2       40 FALSE       -33\n28   60    3       30 FALSE       -50\n29  120    0      200 FALSE        67\n30  120    1      110 FALSE        -8\n31  120    2       80 FALSE       -33\n32  120    3       50 FALSE       -58"
   },
   {
     "objectID": "parts/01_basic.html#toxicity-scenarios",
     "href": "parts/01_basic.html#toxicity-scenarios",
     "title": "crmPack Training for Merck",
     "section": "Toxicity scenarios",
-    "text": "Toxicity scenarios"
+    "text": "Toxicity scenarios\nIn order to evaluate the operating characteristics of our design, we need to define some toxicity scenarios, i.e. the true dose-toxicity relationship in the population. This needs to be a function mapping a dose vector to a vector of DLT probabilities. This could be:\n\nLogistic curve\nProbit curve\nPower curve\nManual specification of DLT probabilities at each dose level\n\nFor example:\n\nscenario1 &lt;- function(x) {\n    plogis(- 2 + 0.8 * log(x / 20))\n}"
+  },
+  {
+    "objectID": "parts/01_basic.html#toxicity-scenarios-contd",
+    "href": "parts/01_basic.html#toxicity-scenarios-contd",
+    "title": "crmPack Training for Merck",
+    "section": "Toxicity scenarios (cont’d)",
+    "text": "Toxicity scenarios (cont’d)\n\ncurve(scenario1, from = 1, to = 200, ylim = c(0, 1))"
   },
   {
     "objectID": "parts/01_basic.html#running-simulations",
     "href": "parts/01_basic.html#running-simulations",
     "title": "crmPack Training for Merck",
     "section": "Running simulations",
-    "text": "Running simulations"
+    "text": "Running simulations\nNow given the design and the toxicity scenario, we can run simulations with the simulate method:\n\nsims &lt;- simulate(\n    design_adjusted,\n    nsim = 100,\n    truth = scenario1,\n    mcmcOptions = mcmc_options,\n    seed = 123,\n    parallel = TRUE\n)"
+  },
+  {
+    "objectID": "parts/01_basic.html#backfilling-cohorts",
+    "href": "parts/01_basic.html#backfilling-cohorts",
+    "title": "crmPack Training for Merck",
+    "section": "Backfilling cohorts",
+    "text": "Backfilling cohorts\nEspecially in oncology trials, it is meanwhile common to open backfill cohorts at lower dose levels while the escalation cohorts are still ongoing at higher dose levels. Recently this was implemented in crmPack with the Backfill objects.\nFor example:\n\nbackfill_simple &lt;- Backfill(\n  cohort_size = CohortSizeConst(3),\n  max_size = 12,\n  opening = OpeningMinCohorts(min_cohorts = 1),\n  recruitment = RecruitmentUnlimited(),\n  priority = \"lowest\"\n)\nbackfill_simple\n\nCohort size: A constant size of 3 participants.\nOpening rule: If 1 or more cohorts have been treated in total.\nRecruitment: Unlimited recruitment of backfill patients is allowed.\nTotal number of backfill patients: 12 backfill patients.\nPriority of higher vs. lower dose backfill cohorts: lowest dose."
+  },
+  {
+    "objectID": "parts/01_basic.html#backfilling-cohorts-contd",
+    "href": "parts/01_basic.html#backfilling-cohorts-contd",
+    "title": "crmPack Training for Merck",
+    "section": "Backfilling cohorts (cont’d)",
+    "text": "Backfilling cohorts (cont’d)\nThis can then be added in the corresponding backfill slot of the Design object:\n\ndesign_backfill &lt;- design_adjusted\ndesign_backfill@backfill &lt;- backfill_simple\n\nPlease note that the examine method does not yet take the backfilling into account, so it will still show the same results as before. To see the effect of the backfilling, we need to run simulations."
   },
   {
     "objectID": "parts/01_basic.html#summarizing-results",
     "href": "parts/01_basic.html#summarizing-results",
     "title": "crmPack Training for Merck",
     "section": "Summarizing results",
-    "text": "Summarizing results"
+    "text": "Summarizing results\nWe can get basic summaries of the simulation results with the summary method:\n\nsims_summary &lt;- summary(sims, truth = scenario1)\nsims_summary\n\nSummary of 100 simulations\n\nTarget toxicity interval was 20, 35 %\nTarget dose interval corresponding to this was 43.1, 112.4 \nIntervals are corresponding to 10 and 90 % quantiles\n\nNumber of patients overall : mean 30 (30, 30) \nNumber of patients treated above target tox interval : mean 0 (0, 0) \nProportions of DLTs in the trials : mean 10 % (3 %, 17 %) \nMean toxicity risks for the patients on active : mean 10 % (4 %, 14 %) \nDoses selected as MTD : mean 25.8 (5, 41) \nTrue toxicity at doses selected : mean 12 % (4 %, 19 %) \nProportion of trials selecting target MTD: 6 %\nDose most often selected as MTD: 20 \nObserved toxicity rate at dose most often selected: 12 %\nFitted toxicity rate at dose most often selected : mean 12 % (3 %, 23 %) \nStop reason triggered:\n ≥ 30 patients dosed :  100 %\n P(0.2 ≤ prob(DLE | NBD) ≤ 0.3) ≥ 0.7 :  0 %\n Stopped because of missing dose :  0 %"
+  },
+  {
+    "objectID": "parts/01_basic.html#plotting-results",
+    "href": "parts/01_basic.html#plotting-results",
+    "title": "crmPack Training for Merck",
+    "section": "Plotting results",
+    "text": "Plotting results\nAnd we can also get more detailed plots of the simulation results with the plot method:\n\nplot(sims)"
+  },
+  {
+    "objectID": "parts/01_basic.html#plotting-results-contd",
+    "href": "parts/01_basic.html#plotting-results-contd",
+    "title": "crmPack Training for Merck",
+    "section": "Plotting results (cont’d)",
+    "text": "Plotting results (cont’d)\nThe summary result can also be plotted:\n\nplot(sims_summary)"
+  },
+  {
+    "objectID": "parts/01_basic.html#learning-more-1",
+    "href": "parts/01_basic.html#learning-more-1",
+    "title": "crmPack Training for Merck",
+    "section": "Learning more",
+    "text": "Learning more\nLots of documentation is available on the crmPack website: crmPack.org It includes:\n\n13 vignettes with detailed examples of how to use the package\n\nIn particular, the paper vignette is a great starting point\nAlso backfilling cohorts are explained in a dedicated backfilling vignette e.g.\n\nLink to the online reference explaining all the functions and classes in the package\nContact information for questions and suggestions, as well as a link to the GitHub repository for bug reports and feature requests"
   },
   {
     "objectID": "parts/01_basic.html#references",
