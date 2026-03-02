@@ -2,8 +2,8 @@
   {
     "listing": "/listing.html",
     "items": [
-      "/parts/01_title1.html",
-      "/parts/02_title2.html"
+      "/parts/01_basic.html",
+      "/parts/02_advanced.html"
     ]
   }
 ]

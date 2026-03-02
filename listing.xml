@@ -14,21 +14,21 @@
 <lastBuildDate>Tue, 31 Mar 2026 00:00:00 GMT</lastBuildDate>
 <item>
   <title></title>
-  <dc:creator>First Last</dc:creator>
-  <link>https://crmpack-training.merck.2026.rpact.com/parts/01_title1.html</link>
+  <dc:creator>Daniel Sabanés Bové</dc:creator>
+  <link>https://crmpack-training.merck.2026.rpact.com/parts/01_basic.html</link>
   <description><![CDATA[ undefined ]]></description>
-  <guid>https://crmpack-training.merck.2026.rpact.com/parts/01_title1.html</guid>
+  <guid>https://crmpack-training.merck.2026.rpact.com/parts/01_basic.html</guid>
   <pubDate>Tue, 31 Mar 2026 00:00:00 GMT</pubDate>
-  <media:content url="https://crmpack-training.merck.2026.rpact.com/figures/illustration/packages.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://crmpack-training.merck.2026.rpact.com/figures/illustration/exercise.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title></title>
-  <dc:creator>First Last</dc:creator>
-  <link>https://crmpack-training.merck.2026.rpact.com/parts/02_title2.html</link>
+  <dc:creator>Daniel Sabanés Bové</dc:creator>
+  <link>https://crmpack-training.merck.2026.rpact.com/parts/02_advanced.html</link>
   <description><![CDATA[ undefined ]]></description>
-  <guid>https://crmpack-training.merck.2026.rpact.com/parts/02_title2.html</guid>
+  <guid>https://crmpack-training.merck.2026.rpact.com/parts/02_advanced.html</guid>
   <pubDate>Tue, 31 Mar 2026 00:00:00 GMT</pubDate>
-  <media:content url="https://crmpack-training.merck.2026.rpact.com/figures/illustration/packages.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://crmpack-training.merck.2026.rpact.com/figures/illustration/refatoring_Antoni-Shkraba.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>

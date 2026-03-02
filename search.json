@@ -1,15 +1,15 @@
 [
   {
-    "objectID": "parts/01_title1.html#title",
-    "href": "parts/01_title1.html#title",
-    "title": "Title of this Part",
+    "objectID": "parts/01_basic.html#title",
+    "href": "parts/01_basic.html#title",
+    "title": "crmPack Training for Merck",
     "section": "Title 📦",
     "text": "Title 📦\n\n\n\nText\nText"
   },
   {
-    "objectID": "parts/01_title1.html#references",
-    "href": "parts/01_title1.html#references",
-    "title": "Title of this Part",
+    "objectID": "parts/01_basic.html#references",
+    "href": "parts/01_basic.html#references",
+    "title": "crmPack Training for Merck",
     "section": "References",
     "text": "References"
   },
@@ -18,7 +18,7 @@
     "href": "listing.html",
     "title": "Slides",
     "section": "",
-    "text": "Title of this Part\n\n\nDescription of this part.\n\n\n\n\n\nMar 31, 2026\n\n\nFirst Last\n\n\n\n\n\n\n\n\n\n\n\n\nTitle of this Part\n\n\nDescription of this part.\n\n\n\n\n\nMar 31, 2026\n\n\nFirst Last\n\n\n\n\n\nNo matching items"
+    "text": "crmPack Training for Merck\n\n\nBasic Training\n\n\nBasic training for crmPack users at Merck.\n\n\n\n\n\nMar 31, 2026\n\n\nDaniel Sabanés Bové\n\n\n\n\n\n\n\n\n\n\n\n\ncrmPack Training for Merck\n\n\nAdvanced Training\n\n\nAdvanced training for crmPack users at Merck.\n\n\n\n\n\nMar 31, 2026\n\n\nDaniel Sabanés Bové\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "index.html",
@@ -35,16 +35,16 @@
     "text": "Agenda\n\nBasic Training\n\n🗓 Date: 2026-03-31\n🕒 Time: 2:00 PM – 3:00 PM CEST (Germany)\n\nAdvanced Training\n\n🗓 Date: 2026-04-21\n🕒 Time: 10:30 AM – 11:30 AM CEST (Germany)"
   },
   {
-    "objectID": "parts/02_title2.html#title",
-    "href": "parts/02_title2.html#title",
-    "title": "Title of this Part",
+    "objectID": "parts/02_advanced.html#title",
+    "href": "parts/02_advanced.html#title",
+    "title": "crmPack Training for Merck",
     "section": "Title 📦",
     "text": "Title 📦\n\n\n\nText\nText"
   },
   {
-    "objectID": "parts/02_title2.html#references",
-    "href": "parts/02_title2.html#references",
-    "title": "Title of this Part",
+    "objectID": "parts/02_advanced.html#references",
+    "href": "parts/02_advanced.html#references",
+    "title": "crmPack Training for Merck",
     "section": "References",
     "text": "References"
   }
