@@ -12,6 +12,6 @@ listing:
   categories: false
   feed: 
     items: 3
-    title: Presentation title # TODO: Update the presentation title.
+    title: "crmPack Training for Merck"
     language: en
 ---

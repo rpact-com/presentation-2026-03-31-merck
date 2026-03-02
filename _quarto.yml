@@ -4,7 +4,7 @@ project:
 
 website:
   title: "crmPack Training for Merck"
-  site-url: https://crmpack-training-basic.merck.2026.rpact.com
+  site-url: https://crmpack-training.merck.2026.rpact.com
   favicon: favicon.ico
   search: true
   navbar:
