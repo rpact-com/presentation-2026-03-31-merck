@@ -3,8 +3,8 @@ project:
   output-dir: www
 
 website:
-  title: "Title of the Presentation Website" # TODO: provide the website title.
-  site-url: https://presentation.company.year.rpact.com # TODO: provide the website URL.
+  title: "crmPack Training for Merck"
+  site-url: https://crmpack-training-basic.merck.2026.rpact.com
   favicon: favicon.ico
   search: true
   navbar:
@@ -27,7 +27,7 @@ website:
         href: https://www.rpact.com/contact/
         aria-label: Contact
   page-footer:
-    left: | # TODO: update the copyright year as needed.
+    left: |
       Copyright &copy; 2026 RPACT. All rights reserved.
     center:
       - icon: house
