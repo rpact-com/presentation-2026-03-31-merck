@@ -193,14 +193,14 @@
     "href": "parts/01_basic.html#examine-method",
     "title": "crmPack Training for Merck",
     "section": "Examine method",
-    "text": "Examine method\nThe first “quick check” we should run on our design is how it behaves if we don’t see any DLTs at all - can we even reach the higher doses? This can be done with the examine method:\n\nexamine(design)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        5 FALSE         0\n4     5    3        5 FALSE         0\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3       10 FALSE         0\n9    20    0       30 FALSE        50\n10   20    1       20 FALSE         0\n11   20    2       20 FALSE         0\n12   20    3       10 FALSE       -50\n13   30    0       50 FALSE        67\n14   30    1       30 FALSE         0\n15   30    2       20 FALSE       -33\n16   30    3       20 FALSE       -33\n17   50    0       90 FALSE        80\n18   50    1       50 FALSE         0\n19   50    2       30 FALSE       -40\n20   50    3       30 FALSE       -40\n21   90    0      180 FALSE       100\n22   90    1      110 FALSE        22\n23   90    2       60 FALSE       -33\n24   90    3       40 FALSE       -56\n25  180    0      200 FALSE        11\n26  180    1      150 FALSE       -17\n27  180    2       90 FALSE       -50\n28  180    3       70 FALSE       -61\n\n\nHere it could be also concerning that if we observe 3 DLTs at the starting dose of 5, we still continue with the same dose 5 for the next cohort. The reason here is that the prior is “too confident” that at low doses we have a low DLT probability."
+    "text": "Examine method\nThe first “quick check” we should run on our design is how it behaves if we don’t see any DLTs at all - can we even reach the higher doses? This can be done with the examine method:\n\nexamine(design)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        5 FALSE         0\n4     5    3        5 FALSE         0\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3       10 FALSE         0\n9    20    0       30 FALSE        50\n10   20    1       20 FALSE         0\n11   20    2       20 FALSE         0\n12   20    3       10 FALSE       -50\n13   30    0       60 FALSE       100\n14   30    1       30 FALSE         0\n15   30    2       20 FALSE       -33\n16   30    3       20 FALSE       -33\n17   60    0      120 FALSE       100\n18   60    1       50 FALSE       -17\n19   60    2       40 FALSE       -33\n20   60    3       30 FALSE       -50\n21  120    0      200 FALSE        67\n22  120    1      140 FALSE        17\n23  120    2       70 FALSE       -42\n24  120    3       50 FALSE       -58\n\n\nHere it could be also concerning that if we observe 3 DLTs at the starting dose of 5, we still continue with the same dose 5 for the next cohort. The reason here is that the prior is “too confident” that at low doses we have a low DLT probability."
   },
   {
     "objectID": "parts/01_basic.html#adjusted-performance",
     "href": "parts/01_basic.html#adjusted-performance",
     "title": "crmPack Training for Merck",
     "section": "Adjusted performance",
-    "text": "Adjusted performance\nSo we need to adjust the prior to be less confident, e.g. by increasing the standard deviations of the parameters:\n\nmodel_adjusted &lt;- get_model(sigma0 = 2, sigma1 = 4, rho = 0.5)\ndesign_adjusted &lt;- design\ndesign_adjusted@model &lt;- model_adjusted\nexamine(design_adjusted)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        1 FALSE       -80\n4     5    3       NA  TRUE        NA\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3        5 FALSE       -50\n9    20    0       20 FALSE         0\n10   20    1       20 FALSE         0\n11   20    2       10 FALSE       -50\n12   20    3       10 FALSE       -50\n13   20    0       20 FALSE         0\n14   20    1       20 FALSE         0\n15   20    2       20 FALSE         0\n16   20    3       10 FALSE       -50\n17   20    0       30 FALSE        50\n18   20    1       20 FALSE         0\n19   20    2       20 FALSE         0\n20   20    3       20 FALSE         0\n21   30    0       60 FALSE       100\n22   30    1       30 FALSE         0\n23   30    2       20 FALSE       -33\n24   30    3       20 FALSE       -33\n25   60    0      120 FALSE       100\n26   60    1       60 FALSE         0\n27   60    2       40 FALSE       -33\n28   60    3       30 FALSE       -50\n29  120    0      200 FALSE        67\n30  120    1      110 FALSE        -8\n31  120    2       80 FALSE       -33\n32  120    3       50 FALSE       -58"
+    "text": "Adjusted performance\nSo we need to adjust the prior to be less confident, e.g. by increasing the standard deviations of the parameters:\n\nmodel_adjusted &lt;- get_model(sigma0 = 2, sigma1 = 4, rho = 0.5)\ndesign_adjusted &lt;- design\ndesign_adjusted@model &lt;- model_adjusted\nexamine(design_adjusted)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        1 FALSE       -80\n4     5    3       NA  TRUE        NA\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3        5 FALSE       -50\n9    20    0       20 FALSE         0\n10   20    1       20 FALSE         0\n11   20    2       10 FALSE       -50\n12   20    3       10 FALSE       -50\n13   20    0       20 FALSE         0\n14   20    1       20 FALSE         0\n15   20    2       20 FALSE         0\n16   20    3       10 FALSE       -50\n17   20    0       20 FALSE         0\n18   20    1       20 FALSE         0\n19   20    2       20 FALSE         0\n20   20    3       20 FALSE         0\n21   20    0       30 FALSE        50\n22   20    1       20 FALSE         0\n23   20    2       20 FALSE         0\n24   20    3       20 FALSE         0\n25   30    0       60 FALSE       100\n26   30    1       30 FALSE         0\n27   30    2       20 FALSE       -33\n28   30    3       20 FALSE       -33\n29   60    0      120 FALSE       100\n30   60    1       70 FALSE        17\n31   60    2       40 FALSE       -33\n32   60    3       30 FALSE       -50\n33  120    0      200 FALSE        67\n34  120    1      120 FALSE         0\n35  120    2       80 FALSE       -33\n36  120    3       60 FALSE       -50"
   },
   {
     "objectID": "parts/01_basic.html#toxicity-scenarios",
@@ -333,13 +333,118 @@
     "href": "parts/02_advanced.html#advanced-training-outline",
     "title": "crmPack Training for Merck",
     "section": "Advanced Training Outline 📦",
-    "text": "Advanced Training Outline 📦\n\n\n\nMixture priors\nTime-to-event (TITE) designs"
+    "text": "Advanced Training Outline 📦\n\n\n\nPrior construction:\n\nMinimally informative prior\nMixture priors\n\nTime-to-event (TITE) designs"
+  },
+  {
+    "objectID": "parts/02_advanced.html#minimally-informative-prior",
+    "href": "parts/02_advanced.html#minimally-informative-prior",
+    "title": "crmPack Training for Merck",
+    "section": "Minimally informative prior",
+    "text": "Minimally informative prior\n\nAs we have seen in the basic training, it is not trivial to construct a reasonable prior for the CRM model parameters.\nIt gets easier when we don’t directly specify priors for the model parameters, but instead specify a prior for the toxicity probabilities at the doses of interest.\nFor logistic (log-)normal models, the crmPack function Quantiles2LogisticNormal can be used to compute the model parameters that correspond to a given set of quantiles for the toxicity probabilities at the doses of interest."
+  },
+  {
+    "objectID": "parts/02_advanced.html#minimally-informative-prior-contd",
+    "href": "parts/02_advanced.html#minimally-informative-prior-contd",
+    "title": "crmPack Training for Merck",
+    "section": "Minimally informative prior (cont’d)",
+    "text": "Minimally informative prior (cont’d)\n\nSpecifically, Neuenschwander, Branson, and Gsponer (2008) introduced the concept of a “minimally informative prior” for the CRM, which is a prior for the logistic (log-) normal model that is as vague as possible while still being consistent with the prior information we have about the toxicity probabilities at the doses of interest\nThe algorithm can be summarized as follows:\n\nFor a high dose, have a small chance (say 5%) of being below a low toxicity probability (say 20%)\nFor a low dose have a small chance (say 5%) of being above a low toxicity probability (say 10%)\nFor intermediate doses, assume prior medians are linear in log-dose on the logit scale\nThen iteratively compute the model prior parameters that come closest to satisfying these constraints"
+  },
+  {
+    "objectID": "parts/02_advanced.html#example-of-a-minimally-informative-prior",
+    "href": "parts/02_advanced.html#example-of-a-minimally-informative-prior",
+    "title": "crmPack Training for Merck",
+    "section": "Example of a minimally informative prior",
+    "text": "Example of a minimally informative prior\nNote that we only use a coarse grid here to simplify the optimization problem a bit.\n\ncoarseGrid &lt;- c(25, 100, 300)\nmin_result &lt;- MinimalInformative(\n  dosegrid = coarseGrid, \n  refDose = 100,\n  logNormal = TRUE, # use a log-normal distribution for the slope parameter\n  threshmin = 0.1, # the quantile for the low dose\n  threshmax = 0.2, # the quantile for the high dose\n  seed = 432, # for reproducibility\n  control = list(max.time = 30) # limit the optimization time here\n)\n\nIt: 1, obj value (lsEnd): 0.07142670344 indTrace: 1\nIt: 351, obj value (lsEnd): 0.03540073469 indTrace: 351\nIt: 370, obj value (lsEnd): 0.01526062805 indTrace: 370\nIt: 377, obj value (lsEnd): 0.01507283033 indTrace: 377\nIt: 395, obj value (lsEnd): 0.01445789659 indTrace: 395\nIt: 577, obj value (lsEnd): 0.0127023889 indTrace: 577\ntimeSpan = 32.113298 maxTime = 30\nEmini is: 0.0127023889\nxmini are:\n-1.280320232 0.6589842054 1.264422506 0.08107323782 0.8768339596 \nTotally it used 32.113324 secs\nNo. of function call is: 11250"
+  },
+  {
+    "objectID": "parts/02_advanced.html#comparing-the-prior-result-with-the-target-quantiles",
+    "href": "parts/02_advanced.html#comparing-the-prior-result-with-the-target-quantiles",
+    "title": "crmPack Training for Merck",
+    "section": "Comparing the prior result with the target quantiles",
+    "text": "Comparing the prior result with the target quantiles\n\nmatplot(\n    x = coarseGrid,\n    y = min_result$required,\n    type = \"o\",\n    lty = 1,\n    col = 1\n)\nmatlines(\n    x = coarseGrid,\n    y = min_result$quantiles,\n    type = \"o\",\n    lty = 2,\n    col = 1\n)\nlegend(\"topleft\", legend = c(\"Target quantiles\", \"Obtained quantiles\"), lty = 1:2, col = 1)"
+  },
+  {
+    "objectID": "parts/02_advanced.html#comparing-the-prior-result-with-the-target-quantiles-output",
+    "href": "parts/02_advanced.html#comparing-the-prior-result-with-the-target-quantiles-output",
+    "title": "crmPack Training for Merck",
+    "section": "Comparing the prior result with the target quantiles",
+    "text": "Comparing the prior result with the target quantiles"
+  },
+  {
+    "objectID": "parts/02_advanced.html#resulting-prior-parameters",
+    "href": "parts/02_advanced.html#resulting-prior-parameters",
+    "title": "crmPack Training for Merck",
+    "section": "Resulting prior parameters",
+    "text": "Resulting prior parameters\n\nmin_result$model\n\nA logistic log normal model will describe the relationship between dose and toxicity: p(Tox|d)=f(X=1|θ,d)=eα+β⋅log(d/dref)1+eα+β⋅log(d/dref) p(Tox | d) = f(X = 1 | \\theta, d) = \\frac{e^{\\alpha + \\beta \\cdot log(d/d_{ref})}}{1 + e^{\\alpha + \\beta \\cdot log(d/d_{ref})}} where dref denotes a reference dose.\nThe prior for θ is given by𝛉=[αlog(β)]∼N([−1.280.66],[1.600.090.090.01]) \\boldsymbol\\theta = \\begin{bmatrix}\\alpha \\\\ log(\\beta)\\end{bmatrix}\\sim N \\left(\\begin{bmatrix}-1.28 \\\\  0.66\\end{bmatrix} , \\begin{bmatrix} 1.60 &  0.09 \\\\ 0.09 &  0.01\\end{bmatrix} \\right) \nThe reference dose will be 100.00."
+  },
+  {
+    "objectID": "parts/02_advanced.html#mixture-priors",
+    "href": "parts/02_advanced.html#mixture-priors",
+    "title": "crmPack Training for Merck",
+    "section": "Mixture priors",
+    "text": "Mixture priors\n\nSometimes we have more specific prior information about the toxicity probabilities at the doses of interest, for example from preclinical data or from similar drugs.\nIn such cases, we can use mixture priors to incorporate this information into the CRM model\nFor example, we can use a logistic log-normal model with a mixture of two normal distributions, with the weights of the two components reflecting our uncertainty about which scenario is more likely\nApplications of mixture priors include:\n\nbimodal: e.g. one representing a “low toxicity” scenario and one representing a “high toxicity” scenario\nborrowing from another compound: e.g. one representing the information from a similar drug and one representing a minimally informative prior\nborrowing from another population: e.g. one representing the behavior from a global study population and one minimally informative"
+  },
+  {
+    "objectID": "parts/02_advanced.html#mixture-priors-in-crmpack",
+    "href": "parts/02_advanced.html#mixture-priors-in-crmpack",
+    "title": "crmPack Training for Merck",
+    "section": "Mixture priors in crmPack",
+    "text": "Mixture priors in crmPack\ncrmPack currently includes the following classes for mixture priors:\n\nLogisticNormalMixture:\n\nstandard logistic regression model with a mixture of K=2K=2 bivariate normal priors on the intercept and slope parameters\nthe weight parameter is also estimated from the data and has a Beta hyperprior distribution\n\nLogisticNormalFixedMixture\n\nstandard logistic regression model with fixed mixture of multiple bivariate (log-) normal priors on the intercept and slope parameters\nthe weights are fixed, and K&gt;2K&gt;2 mixture components can be used"
+  },
+  {
+    "objectID": "parts/02_advanced.html#example-of-logisticnormalmixture",
+    "href": "parts/02_advanced.html#example-of-logisticnormalmixture",
+    "title": "crmPack Training for Merck",
+    "section": "Example of LogisticNormalMixture",
+    "text": "Example of LogisticNormalMixture\nLet’s first define two bivariate normal components:\n\ncomp1 &lt;- ModelParamsNormal(\n    mean = c(-0.85, 1),\n    cov = matrix(c(1, -0.5, -0.5, 1), nrow = 2)\n  )\ncomp2 &lt;- ModelParamsNormal(\n    mean = c(1, 1.5),\n    cov = matrix(c(1.2, -0.45, -0.45, 0.6), nrow = 2)\n  )\n\nSay we use a uniform Beta(1,1)\\textrm{Beta}(1,1) hyperprior for the weight parameter, and a reference dose of d*=50d^{*} = 50:\n\nnormal_mix_prior &lt;- LogisticNormalMixture(\n    comp1 = comp1,\n    comp2 = comp2,\n    weightpar = c(a = 1, b = 1),\n    ref_dose = 50\n)\nnormal_mix_prior\n\nA mixture of two logistic log normal models will describe the relationship between dose and toxicity: p(Tox|d)=f(X=1|θ,d)=eα+β⋅log(d/d*)1+eα+β⋅log(d/d*) p(Tox | d) = f(X = 1 | \\theta, d) = \\frac{e^{\\alpha + \\beta \\cdot log(d/d^*)}}{1 + e^{\\alpha + \\beta \\cdot log(d/d^*)}} where d* denotes a reference dose.\nThe prior for θ is given by$$ \\theta = \\begin{bmatrix} \\alpha \\\\ log(\\beta) \\end{bmatrix} \\sim w \\cdot The prior for &theta; is given by\\n$$ =\n[αβ]\\begin{bmatrix}\\alpha \\\\ \\beta\\end{bmatrix}\nN (\n[−0.851.00]\\begin{bmatrix}-0.85 \\\\  1.00\\end{bmatrix}\n,\n[1.00−0.50−0.501.00]\\begin{bmatrix} 1.00 & -0.50 \\\\ -0.50 &  1.00\\end{bmatrix}\n) $$\n\n(1 - w) The prior for θ is given by𝛉=[αβ]∼N([1.001.50],[1.20−0.45−0.450.60]) \\boldsymbol\\theta = \\begin{bmatrix}\\alpha \\\\ \\beta\\end{bmatrix}\\sim N \\left(\\begin{bmatrix} 1.00 \\\\  1.50\\end{bmatrix} , \\begin{bmatrix} 1.20 & -0.45 \\\\ -0.45 &  0.60\\end{bmatrix} \\right) \n\n$$and the prior for w is given by\nw∼Beta(1,1) w \\sim Beta(1, 1) The reference dose will be 50.00."
+  },
+  {
+    "objectID": "parts/02_advanced.html#example-of-logisticnormalfixedmixture",
+    "href": "parts/02_advanced.html#example-of-logisticnormalfixedmixture",
+    "title": "crmPack Training for Merck",
+    "section": "Example of LogisticNormalFixedMixture",
+    "text": "Example of LogisticNormalFixedMixture\nHere we need to fix the weights of the mixture components, for example to 0.5 each:\n\nnormal_mix_fix_weights_prior &lt;- LogisticNormalFixedMixture(\n  components = list(\n    comp1 = comp1,\n    comp2 = comp2\n  ),\n  weights = c(0.5, 0.5),\n    ref_dose = 50\n)\nnormal_mix_fix_weights_prior\n\nA mixture of 2 logistic log normal models with fixed weights will describe the relationship between dose and toxicity: p(Tox|d)=f(X=1|θ,d)=eα+β⋅log(d/d*)1+eα+β⋅log(d/d*) p(Tox | d) = f(X = 1 | \\theta, d) = \\frac{e^{\\alpha + \\beta \\cdot log(d/d^*)}}{1 + e^{\\alpha + \\beta \\cdot log(d/d^*)}} where d* denotes a reference dose.\nThe prior for θ is given byθ=[αβ]∼∑i=12wi⋅N(𝛍i,𝚺i) \\theta = \\begin{bmatrix} \\alpha \\\\ \\beta \\end{bmatrix} \\sim \\sum_{i=1}^{2}w_i \\cdot N \\left( \\mathbf{\\mu}_i ,  \\mathbf{\\Sigma}_i \\right)  with ∑i=12wi=1 \\sum_{i=1}^{2} w_i = 1  The individual components of the mixture are 𝛉1=[αβ]∼N([−0.851.00],[1.00−0.50−0.501.00]) \\boldsymbol\\theta_1 = \\begin{bmatrix}\\alpha \\\\ \\beta\\end{bmatrix}\\sim N \\left(\\begin{bmatrix}-0.85 \\\\  1.00\\end{bmatrix} , \\begin{bmatrix} 1.00 & -0.50 \\\\ -0.50 &  1.00\\end{bmatrix} \\right) \nwith weight 0.5 and 𝛉2=[αβ]∼N([1.001.50],[1.20−0.45−0.450.60]) \\boldsymbol\\theta_2 = \\begin{bmatrix}\\alpha \\\\ \\beta\\end{bmatrix}\\sim N \\left(\\begin{bmatrix} 1.00 \\\\  1.50\\end{bmatrix} , \\begin{bmatrix} 1.20 & -0.45 \\\\ -0.45 &  0.60\\end{bmatrix} \\right) \nwith weight 0.5 The reference dose will be 50.00."
+  },
+  {
+    "objectID": "parts/02_advanced.html#comparison-of-the-two-prior-specifications",
+    "href": "parts/02_advanced.html#comparison-of-the-two-prior-specifications",
+    "title": "crmPack Training for Merck",
+    "section": "Comparison of the two prior specifications",
+    "text": "Comparison of the two prior specifications\nWe can easily see the difference in the JAGS code:\n\nbody(normal_mix_prior@priormodel)\n\n{\n    w ~ dbeta(weightpar[1], weightpar[2])\n    wc &lt;- 1 - w\n    comp0 ~ dbern(wc)\n    comp &lt;- comp0 + 1\n    theta ~ dmnorm(mean[1:2, comp], prec[1:2, 1:2, comp])\n    alpha0 &lt;- theta[1]\n    alpha1 &lt;- theta[2]\n}\n\nbody(normal_mix_fix_weights_prior@priormodel)\n\n{\n    comp ~ dcat(weights)\n    theta ~ dmnorm(mean[1:2, comp], prec[1:2, 1:2, comp])\n    alpha0 &lt;- theta[1]\n    alpha1 &lt;- theta[2]\n}"
+  },
+  {
+    "objectID": "parts/02_advanced.html#yet-another-but-different-mixture-prior",
+    "href": "parts/02_advanced.html#yet-another-but-different-mixture-prior",
+    "title": "crmPack Training for Merck",
+    "section": "Yet another but different mixture prior",
+    "text": "Yet another but different mixture prior\n\nLogisticLogNormalMixture\n\nstandard logistic model with online mixture of K=2K=2 bivariate log normal priors on the intercept and slope parameters\ncan be used when data is arising online from the informative component of the prior, at the same time with the data of the trial of main interest\nassumes the same prior distribution for the informative component and the current trial data (for simplicity), the only question is whether the parameters are identical or not\nneeds to use DataMixture class to specify the data structure for the online data"
+  },
+  {
+    "objectID": "parts/02_advanced.html#example-of-logisticlognormalmixture",
+    "href": "parts/02_advanced.html#example-of-logisticlognormalmixture",
+    "title": "crmPack Training for Merck",
+    "section": "Example of LogisticLogNormalMixture",
+    "text": "Example of LogisticLogNormalMixture\nNote that we just use one component, i.e. one prior here:\n\nonline_mix_prior &lt;- LogisticLogNormalMixture(\n    share_weight = 0.5, # probability that the current and external data are from the same distribution\n    ref_dose = 50,\n    mean = comp1@mean,\n    cov = comp1@cov\n)\n\nNow we define the data, which consists of the current trial data and the external data:\n\ndata_share &lt;- DataMixture(\n    doseGrid = c(25, 50, 100, 200, 300),\n    x = c(25, 25, 50, 50),\n    y = c(0, 1, 0, 1),\n    xshare = c(25, 25, 50, 50, 100, 100, 300, 300),\n    yshare = c(0, 0, 0, 1, 0, 0, 0, 1)\n)"
+  },
+  {
+    "objectID": "parts/02_advanced.html#example-of-logisticlognormalmixture-contd",
+    "href": "parts/02_advanced.html#example-of-logisticlognormalmixture-contd",
+    "title": "crmPack Training for Merck",
+    "section": "Example of LogisticLogNormalMixture (cont’d)",
+    "text": "Example of LogisticLogNormalMixture (cont’d)\nLet’s look at the model definition:\n\nbody(online_mix_prior@priormodel)\n\n{\n    for (k in 1:2) {\n        theta[k, 1:2] ~ dmnorm(mean, prec)\n        alpha0[k] &lt;- theta[k, 1]\n        alpha1[k] &lt;- exp(theta[k, 2])\n    }\n    comp ~ dcat(cat_probs)\n}\n\nbody(online_mix_prior@datamodel)\n\n{\n    for (i in 1:nObs) {\n        stand_log_dose[i] &lt;- log(x[i]/ref_dose)\n        logit(p[i]) &lt;- alpha0[comp] + alpha1[comp] * stand_log_dose[i]\n        y[i] ~ dbern(p[i])\n    }\n    for (j in 1:nObsshare) {\n        stand_log_dose_share[j] &lt;- log(xshare[j]/ref_dose)\n        logit(pshare[j]) &lt;- alpha0[2] + alpha1[2] * stand_log_dose_share[j]\n        yshare[j] ~ dbern(pshare[j])\n    }\n}\n\n\nWe see that comp == 2 means that the current and external data are from the same distribution, while comp == 1 means they are from different distributions."
+  },
+  {
+    "objectID": "parts/02_advanced.html#example-of-logisticlognormalmixture-contd-1",
+    "href": "parts/02_advanced.html#example-of-logisticlognormalmixture-contd-1",
+    "title": "crmPack Training for Merck",
+    "section": "Example of LogisticLogNormalMixture (cont’d)",
+    "text": "Example of LogisticLogNormalMixture (cont’d)\nWe can produce samples then as usually:\n\nsamples_share &lt;- mcmc(data_share, online_mix_prior, McmcOptions())\nplot(samples_share, online_mix_prior, data_share)\n\n\nProbability that the current and external data are from the same distribution:\n\nmean(samples_share@data$comp == 2)\n\n[1] 0.573"
   },
   {
     "objectID": "parts/02_advanced.html#references",
     "href": "parts/02_advanced.html#references",
     "title": "crmPack Training for Merck",
     "section": "References",
-    "text": "References"
+    "text": "References\n\n\n\n\nNeuenschwander, B, M Branson, and T Gsponer. 2008. “Critical Aspects of the Bayesian Approach to Phase i Cancer Trials.” Statistics in Medicine."
   }
 ]
