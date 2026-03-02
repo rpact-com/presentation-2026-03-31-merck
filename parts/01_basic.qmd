@@ -1,0 +1,29 @@
+---
+title: "crmPack Training for Merck"
+subtitle: "Basic Training"
+author: "Daniel Sabanés Bové"
+part: 1
+description: "Basic training for crmPack users at Merck."
+image: /figures/illustration/exercise.jpg
+---
+
+```{r}
+#| echo: false
+library(emoji)
+library(rpact)
+```
+
+## Title `r emoji("package")`
+
+::::: columns
+::: {.column width="70%"}
+- Text
+- Text
+:::
+
+::: {.column width="30%"}
+![](/figures/logos/crmPack_logo.png){height="150px"}
+:::
+:::::
+
+## References {.scrollable}

@@ -1,0 +1,29 @@
+---
+title: "crmPack Training for Merck"
+subtitle: "Advanced Training"
+author: "Daniel Sabanés Bové"
+part: 2
+description: "Advanced training for crmPack users at Merck."
+image: /figures/illustration/refatoring_Antoni-Shkraba.jpg
+---
+
+```{r}
+#| echo: false
+library(emoji)
+library(rpact)
+```
+
+## Title `r emoji("package")`
+
+::::: columns
+::: {.column width="70%"}
+- Text
+- Text
+:::
+
+::: {.column width="30%"}
+![](/figures/logos/crmPack_logo.png){height="150px"}
+:::
+:::::
+
+## References {.scrollable}
