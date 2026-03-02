@@ -1,10 +1,10 @@
 [
   {
-    "objectID": "parts/01_basic.html#title",
-    "href": "parts/01_basic.html#title",
+    "objectID": "parts/01_basic.html#basic-training-outline",
+    "href": "parts/01_basic.html#basic-training-outline",
     "title": "crmPack Training for Merck",
-    "section": "Title 📦",
-    "text": "Title 📦\n\n\n\nText\nText"
+    "section": "Basic Training Outline 📦",
+    "text": "Basic Training Outline 📦\n\n\n\nMotivation\nModel-based dose escalation design\nExample study design\nCalculating operating characteristics\nBackfilling cohorts"
   },
   {
     "objectID": "parts/01_basic.html#references",
@@ -35,11 +35,11 @@
     "text": "Agenda\n\nBasic Training\n\n🗓 Date: 2026-03-31\n🕒 Time: 2:00 PM – 3:00 PM CEST (Germany)\n\nAdvanced Training\n\n🗓 Date: 2026-04-21\n🕒 Time: 10:30 AM – 11:30 AM CEST (Germany)"
   },
   {
-    "objectID": "parts/02_advanced.html#title",
-    "href": "parts/02_advanced.html#title",
+    "objectID": "parts/02_advanced.html#advanced-training-outline",
+    "href": "parts/02_advanced.html#advanced-training-outline",
     "title": "crmPack Training for Merck",
-    "section": "Title 📦",
-    "text": "Title 📦\n\n\n\nText\nText"
+    "section": "Advanced Training Outline 📦",
+    "text": "Advanced Training Outline 📦\n\n\n\nMixture priors\nTime-to-event (TITE) designs"
   },
   {
     "objectID": "parts/02_advanced.html#references",
