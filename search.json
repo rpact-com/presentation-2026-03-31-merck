@@ -35,6 +35,41 @@
     "text": "Agenda\n\nBasic Training\n\n🗓 Date: 2026-03-31\n🕒 Time: 2:00 PM – 3:00 PM CEST (Germany)\n\nAdvanced Training\n\n🗓 Date: 2026-04-21\n🕒 Time: 10:30 AM – 11:30 AM CEST (Germany)"
   },
   {
+    "objectID": "additional/pre_read.html",
+    "href": "additional/pre_read.html",
+    "title": "Pre-read material",
+    "section": "",
+    "text": "Hello, and thank you for your interest in the crmPack training that I will be running on the 31st March and 21st April.\nTo help you get the most from the training, I would like to ask you to do a few things in preparation."
+  },
+  {
+    "objectID": "additional/pre_read.html#pre-requisites",
+    "href": "additional/pre_read.html#pre-requisites",
+    "title": "Pre-read material",
+    "section": "Pre-requisites",
+    "text": "Pre-requisites\nThe course is primarily focused on using crmPack to design, run and report CRM trials. Whilst I will briefly cover CRM theory - and compare CRM trials to 3 + 3 trials, it’s not really about CRM, 3 + 3 or first-in-human trials. If you’d like an introduction or referesher, I recommend:\nGarret-Meyer E (2006) The continual reassessment method: a tutorial. Clin Trials 3: 57 - 71. doi: 10.1191/1740774506cn134oa.\nAs crmPack is an R package, you’ll obviously need access to R and - preferably - RStudio or VScode if you’d like to play around with the package. The platform (your laptop, online, etc.) you use shouldn’t be an issue."
+  },
+  {
+    "objectID": "additional/pre_read.html#software",
+    "href": "additional/pre_read.html#software",
+    "title": "Pre-read material",
+    "section": "Software",
+    "text": "Software\nFirst, and most importantly, make sure you have the necessary software installed on your laptop or whatever platform on which you plan to follow the training.\nCheck that you have the latest release version of crmPack installed. You can do this by running the following code in R:\n\npackageVersion(\"crmPack\")\n\nand you should get 2.1.0 or higher. If you don’t, you can install the latest release version from CRAN with:\n\ninstall.packages(\"crmPack\")\n\nNext, check that JAGS has been installed. The easiest way to do this is to attach the rjags package (which is a dependency of crmPack, so it should have been installed in the previous step):\n\nlibrary(rjags)\n\nLoading required package: coda\n\n\nLinked to JAGS 4.3.2\n\n\nLoaded modules: basemod,bugs\n\n\nIf you see something similar to the above (in particular, the line reading Linked to JAGS 4.3.2), you’re good to go. If not, you’ll need to install JAGS as well.\nGo to https://sourceforge.net/projects/mcmc-jags and click the Download button. [Ignore the ads. Just wait for the download to start - and finish]\n\nGo to your Downloads folder, double click the JAGS-4.*.*.exe file and follow the instructions"
+  },
+  {
+    "objectID": "additional/pre_read.html#course-materials",
+    "href": "additional/pre_read.html#course-materials",
+    "title": "Pre-read material",
+    "section": "Course materials",
+    "text": "Course materials\nThe course materials are available at crmpack-training.merck.2026.rpact.com/. You can also find the materials on GitHub at github.com/rpact-com/presentation-2026-03-31-merck"
+  },
+  {
+    "objectID": "additional/pre_read.html#thank-you-and-see-you-soon",
+    "href": "additional/pre_read.html#thank-you-and-see-you-soon",
+    "title": "Pre-read material",
+    "section": "Thank you and see you soon!",
+    "text": "Thank you and see you soon!\nThank you for your attention. I look forward to seeing you in the training sessions.\nIf anything I’ve written here is unclear, or if you have questions I haven’t answered, please do get in touch."
+  },
+  {
     "objectID": "parts/02_advanced.html#advanced-training-outline",
     "href": "parts/02_advanced.html#advanced-training-outline",
     "title": "crmPack Training for Merck",
