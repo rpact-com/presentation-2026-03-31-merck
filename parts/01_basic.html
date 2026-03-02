@@ -30,7 +30,27 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+      margin-bottom: 0em;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-dc2cc7c4e327c12b05a7a4edecb209e0.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -160,11 +180,74 @@ Daniel Sabanés Bové
 <p><img data-src="../figures/logos/crmPack_logo.png" height="150"></p>
 </div></div>
 </section>
-<section id="references" class="slide level2 scrollable">
+<section id="acknowledgements" class="slide level2">
+<h2>Acknowledgements</h2>
+<p>Part of this training material is based on the <code>crmPack</code> training materials developed by John Kirkpatrick (Roche, now at Astellas). Thanks John for sharing!</p>
+</section>
+<section>
+<section id="motivation" class="title-slide slide level1 center">
+<h1>Motivation</h1>
+
+</section>
+<section id="maximum-tolerated-dose-mtd" class="slide level2">
+<h2>Maximum tolerated dose (MTD)</h2>
+<ul>
+<li>The main purpose of a First-in-Human (FIH) study is usually to define the Maximum Tolerated Dose (MTD) of the IMP</li>
+<li>Usually, the MTD is defined in terms of the highest acceptable incidence of Dose-Limiting Toxicities (DLTs) at a given dose</li>
+<li>The definition of a DLT varies with indication and may vary from the serious (life-threatening SAEs) to the innocuous (mild headache)</li>
+</ul>
+</section>
+<section id="overview-of-dose-escalation-designs" class="slide level2">
+<h2>Overview of dose escalation designs</h2>
+<ul>
+<li>Rule-based designs: 3+3, accelerated titration, rolling 6, etc.</li>
+<li>Model-based designs: Continual Reassessment Method (CRM), Escalation with Overdose Control (EWOC), etc.</li>
+<li>Model-assisted designs: mTPI, Keyboard, Bayesian Optimal Interval (BOIN), etc.</li>
+</ul>
+</section>
+<section id="design" class="slide level2">
+<h2>3+3 design</h2>
+
+<img data-src="../figures/3-3-design.png" class="r-stretch quarto-figure-center"><p class="caption">Figure taken from <a href="https://link.springer.com/article/10.1007/s00280-012-2059-8">“Principles of dose finding studies in cancer: A comparison of trial designs”</a></p></section>
+<section id="vs.-model-based-designs" class="slide level2">
+<h2>3+3 vs.&nbsp;model-based designs</h2>
+
+<img data-src="../figures/comparison-table.jpg" class="r-stretch quarto-figure-center"><p class="caption">Table taken from <a href="https://ascopubs.org/doi/10.1200/EDBK_319783">“Moving Beyond 3+3: The Future of Clinical Trial Design”</a></p></section>
+<section id="usage-of-model-based-designs" class="slide level2">
+<h2>Usage of model-based designs</h2>
+<ul>
+<li><span class="citation" data-cites="ROGATKO2007">(<a href="#/references" role="doc-biblioref" onclick="">Rogatko et al. 2007</a>)</span> reported that 98.4% of phase I cancer trials use a 3+3 design or a variant, but that only 35% of participants is such trials were treated at “optimal” doses, compared to 55% in model-based trials</li>
+<li><span class="citation" data-cites="LETOURNAU2009">(<a href="#/references" role="doc-biblioref" onclick="">Le Tourneau, Lee, and Siu 2009</a>)</span> reported 3.3% (6 of 181) of trials used CRM during 2007–2008</li>
+<li><span class="citation" data-cites="VANBRUMMELEN2016">(<a href="#/references" role="doc-biblioref" onclick="">van Brummelen et al. 2016</a>)</span> reported that only 6.4% (11 of 172 oncology Phase I trials) used model-based approaches from 2012 to 2014</li>
+</ul>
+</section>
+<section id="crmpack-to-the-rescue" class="slide level2">
+<h2>crmPack to the rescue!</h2>
+<p>With <code>crmPack</code> we aim to make it easy for everyone to use model-based designs in their dose escalation studies. The package provides:</p>
+<ul>
+<li>A flexible framework to define dose escalation designs</li>
+<li>Calculation of operating characteristics via simulations</li>
+<li>Visualization and tabulation of results</li>
+<li>A user-friendly interface to backfill cohorts</li>
+<li>A growing collection of advanced design options (e.g.&nbsp;dual endpoint designs, time-to-event designs, etc.)</li>
+</ul>
+</section>
+<section id="references" class="slide level2 scrollable smaller">
 <h2>References</h2>
 
 
-</section>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-LETOURNAU2009" class="csl-entry" role="listitem">
+Le Tourneau, C, JJ Lee, and LL Siu. 2009. <span>“Dose Escalation Methods in Phase i Cancer Clinical Trials.”</span> <em>J Natl Cancer Inst</em>, 708–20.
+</div>
+<div id="ref-ROGATKO2007" class="csl-entry" role="listitem">
+Rogatko, A, D Shoeneck, W Jonas, M Tighiouart, FR Khuri, and A Porter. 2007. <span>“Translation of Innovative Designs into Phase 1 Trials.”</span> <em>J Clin Onc</em> 25 (31): 4982–86.
+</div>
+<div id="ref-VANBRUMMELEN2016" class="csl-entry" role="listitem">
+van Brummelen, EM, AD Huitema, E van Werkhoven, JH Beijnen, and JH Schellens. 2016. <span>“The Performance of Model-Based Versus Rule-Based Phase i Clinical Trials in Oncology: A Quantitative Comparison of the Performance of Model-Based Versus Rule-Based Phase i Trials with Molecularly Targeted Anticancer Drugs over the Last 2 Years.”</span> <em>J Pharmacokinet Pharmacodyn</em> 43 (3): 235–42.
+</div>
+</div>
+</section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="../figures/logos/logo_full.png" class="slide-logo"></p>

@@ -7,11 +7,60 @@
     "text": "Basic Training Outline 📦\n\n\n\nMotivation\nModel-based dose escalation design\nExample study design\nCalculating operating characteristics\nBackfilling cohorts"
   },
   {
+    "objectID": "parts/01_basic.html#acknowledgements",
+    "href": "parts/01_basic.html#acknowledgements",
+    "title": "crmPack Training for Merck",
+    "section": "Acknowledgements",
+    "text": "Acknowledgements\nPart of this training material is based on the crmPack training materials developed by John Kirkpatrick (Roche, now at Astellas). Thanks John for sharing!"
+  },
+  {
+    "objectID": "parts/01_basic.html#maximum-tolerated-dose-mtd",
+    "href": "parts/01_basic.html#maximum-tolerated-dose-mtd",
+    "title": "crmPack Training for Merck",
+    "section": "Maximum tolerated dose (MTD)",
+    "text": "Maximum tolerated dose (MTD)\n\nThe main purpose of a First-in-Human (FIH) study is usually to define the Maximum Tolerated Dose (MTD) of the IMP\nUsually, the MTD is defined in terms of the highest acceptable incidence of Dose-Limiting Toxicities (DLTs) at a given dose\nThe definition of a DLT varies with indication and may vary from the serious (life-threatening SAEs) to the innocuous (mild headache)"
+  },
+  {
+    "objectID": "parts/01_basic.html#overview-of-dose-escalation-designs",
+    "href": "parts/01_basic.html#overview-of-dose-escalation-designs",
+    "title": "crmPack Training for Merck",
+    "section": "Overview of dose escalation designs",
+    "text": "Overview of dose escalation designs\n\nRule-based designs: 3+3, accelerated titration, rolling 6, etc.\nModel-based designs: Continual Reassessment Method (CRM), Escalation with Overdose Control (EWOC), etc.\nModel-assisted designs: mTPI, Keyboard, Bayesian Optimal Interval (BOIN), etc."
+  },
+  {
+    "objectID": "parts/01_basic.html#design",
+    "href": "parts/01_basic.html#design",
+    "title": "crmPack Training for Merck",
+    "section": "3+3 design",
+    "text": "3+3 design\n\nFigure taken from “Principles of dose finding studies in cancer: A comparison of trial designs”"
+  },
+  {
+    "objectID": "parts/01_basic.html#vs.-model-based-designs",
+    "href": "parts/01_basic.html#vs.-model-based-designs",
+    "title": "crmPack Training for Merck",
+    "section": "3+3 vs. model-based designs",
+    "text": "3+3 vs. model-based designs\n\nTable taken from “Moving Beyond 3+3: The Future of Clinical Trial Design”"
+  },
+  {
+    "objectID": "parts/01_basic.html#usage-of-model-based-designs",
+    "href": "parts/01_basic.html#usage-of-model-based-designs",
+    "title": "crmPack Training for Merck",
+    "section": "Usage of model-based designs",
+    "text": "Usage of model-based designs\n\n(Rogatko et al. 2007) reported that 98.4% of phase I cancer trials use a 3+3 design or a variant, but that only 35% of participants is such trials were treated at “optimal” doses, compared to 55% in model-based trials\n(Le Tourneau, Lee, and Siu 2009) reported 3.3% (6 of 181) of trials used CRM during 2007–2008\n(van Brummelen et al. 2016) reported that only 6.4% (11 of 172 oncology Phase I trials) used model-based approaches from 2012 to 2014"
+  },
+  {
+    "objectID": "parts/01_basic.html#crmpack-to-the-rescue",
+    "href": "parts/01_basic.html#crmpack-to-the-rescue",
+    "title": "crmPack Training for Merck",
+    "section": "crmPack to the rescue!",
+    "text": "crmPack to the rescue!\nWith crmPack we aim to make it easy for everyone to use model-based designs in their dose escalation studies. The package provides:\n\nA flexible framework to define dose escalation designs\nCalculation of operating characteristics via simulations\nVisualization and tabulation of results\nA user-friendly interface to backfill cohorts\nA growing collection of advanced design options (e.g. dual endpoint designs, time-to-event designs, etc.)"
+  },
+  {
     "objectID": "parts/01_basic.html#references",
     "href": "parts/01_basic.html#references",
     "title": "crmPack Training for Merck",
     "section": "References",
-    "text": "References"
+    "text": "References\n\n\n\n\nLe Tourneau, C, JJ Lee, and LL Siu. 2009. “Dose Escalation Methods in Phase i Cancer Clinical Trials.” J Natl Cancer Inst, 708–20.\n\n\nRogatko, A, D Shoeneck, W Jonas, M Tighiouart, FR Khuri, and A Porter. 2007. “Translation of Innovative Designs into Phase 1 Trials.” J Clin Onc 25 (31): 4982–86.\n\n\nvan Brummelen, EM, AD Huitema, E van Werkhoven, JH Beijnen, and JH Schellens. 2016. “The Performance of Model-Based Versus Rule-Based Phase i Clinical Trials in Oncology: A Quantitative Comparison of the Performance of Model-Based Versus Rule-Based Phase i Trials with Molecularly Targeted Anticancer Drugs over the Last 2 Years.” J Pharmacokinet Pharmacodyn 43 (3): 235–42."
   },
   {
     "objectID": "listing.html",
