@@ -30,6 +30,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
     /* CSS for citations */
     div.csl-bib-body { }
     div.csl-entry {
@@ -200,9 +266,9 @@ Daniel Sabanés Bové
 <section id="overview-of-dose-escalation-designs" class="slide level2">
 <h2>Overview of dose escalation designs</h2>
 <ul>
-<li>Rule-based designs: 3+3, accelerated titration, rolling 6, etc.</li>
-<li>Model-based designs: Continual Reassessment Method (CRM), Escalation with Overdose Control (EWOC), etc.</li>
-<li>Model-assisted designs: mTPI, Keyboard, Bayesian Optimal Interval (BOIN), etc.</li>
+<li>Rule-based designs: 3+3 <span class="citation" data-cites="LIN2001">(<a href="#/references" role="doc-biblioref" onclick="">Lin and Shih 2015</a>)</span>, accelerated titration, rolling 6 <span class="citation" data-cites="SKOLNIK2008">(<a href="#/references" role="doc-biblioref" onclick="">Skolnik et al. 2008</a>)</span>, etc.</li>
+<li>Model-based designs: Continual Reassessment Method (CRM) <span class="citation" data-cites="OQUIGLEY1990">(<a href="#/references" role="doc-biblioref" onclick="">O’Quigley, Pepe, and Fisher 1990</a>)</span>, Escalation with Overdose Control (EWOC) <span class="citation" data-cites="NEUENSCHWANDER2008">(<a href="#/references" role="doc-biblioref" onclick="">Neuenschwander, Branson, and Gsponer 2008</a>)</span>, etc.</li>
+<li>Model-assisted designs: mTPI <span class="citation" data-cites="JI2010">(<a href="#/references" role="doc-biblioref" onclick="">Ji et al. 2010</a>)</span>, Keyboard, Bayesian Optimal Interval (BOIN) <span class="citation" data-cites="LIU2015">(<a href="#/references" role="doc-biblioref" onclick="">Liu and Yuan 2015</a>)</span>, etc.</li>
 </ul>
 </section>
 <section id="design" class="slide level2">
@@ -211,15 +277,74 @@ Daniel Sabanés Bové
 <img data-src="../figures/3-3-design.png" class="r-stretch quarto-figure-center"><p class="caption">Figure taken from <a href="https://link.springer.com/article/10.1007/s00280-012-2059-8">“Principles of dose finding studies in cancer: A comparison of trial designs”</a></p></section>
 <section id="vs.-model-based-designs" class="slide level2">
 <h2>3+3 vs.&nbsp;model-based designs</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th>3+3</th>
+<th>CRM</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Definition of a DLT</td>
+<td>Study specific</td>
+<td>Study specific</td>
+</tr>
+<tr class="even">
+<td>The target toxicity rate</td>
+<td>0.33</td>
+<td>Any</td>
+</tr>
+<tr class="odd">
+<td>The dose grid</td>
+<td>Study specific</td>
+<td>Study specific</td>
+</tr>
+<tr class="even">
+<td>The cohort size</td>
+<td>3</td>
+<td>Any</td>
+</tr>
+<tr class="odd">
+<td>The stopping rule(s)</td>
+<td>2 DLTs at same dose</td>
+<td>Any</td>
+</tr>
+<tr class="even">
+<td>The eligibility rule</td>
+<td>One dose up</td>
+<td>Any</td>
+</tr>
+<tr class="odd">
+<td>The escalation rule</td>
+<td>+1 if 0/3 or 1/6</td>
+<td>Any</td>
+</tr>
+<tr class="even">
+<td>The definition of the MTD</td>
+<td>Max dose with &lt;2 DLTs</td>
+<td>Any</td>
+</tr>
+<tr class="odd">
+<td>The dose-toxicity model</td>
+<td>None</td>
+<td>Any</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="higher-level-overview" class="slide level2">
+<h2>Higher-level overview</h2>
 
 <img data-src="../figures/comparison-table.jpg" class="r-stretch quarto-figure-center"><p class="caption">Table taken from <a href="https://ascopubs.org/doi/10.1200/EDBK_319783">“Moving Beyond 3+3: The Future of Clinical Trial Design”</a></p></section>
 <section id="usage-of-model-based-designs" class="slide level2">
 <h2>Usage of model-based designs</h2>
 <ul>
-<li><span class="citation" data-cites="ROGATKO2007">(<a href="#/references" role="doc-biblioref" onclick="">Rogatko et al. 2007</a>)</span> reported that 98.4% of phase I cancer trials use a 3+3 design or a variant, but that only 35% of participants is such trials were treated at “optimal” doses, compared to 55% in model-based trials</li>
-<li><span class="citation" data-cites="LETOURNAU2009">(<a href="#/references" role="doc-biblioref" onclick="">Le Tourneau, Lee, and Siu 2009</a>)</span> reported 3.3% (6 of 181) of trials used CRM during 2007–2008</li>
-<li><span class="citation" data-cites="VANBRUMMELEN2016">(<a href="#/references" role="doc-biblioref" onclick="">van Brummelen et al. 2016</a>)</span> reported that only 6.4% (11 of 172 oncology Phase I trials) used model-based approaches from 2012 to 2014</li>
-<li><span class="citation" data-cites="NONAMI2025">(<a href="#/references" role="doc-biblioref" onclick=""><strong>NONAMI2025?</strong></a>)</span> reported that from 394 clinical trials submitted to PMDA between 2013 and 2022, 195 (49.5%) used rule-based designs, 114 (28.9%) used model-based designs and 85 (21.6%) used model-assisted designs.</li>
+<li><span class="citation" data-cites="ROGATKO2007">Rogatko et al. (<a href="#/references" role="doc-biblioref" onclick="">2007</a>)</span> reported that 98.4% of phase I cancer trials use a 3+3 design or a variant, but that only 35% of participants is such trials were treated at “optimal” doses, compared to 55% in model-based trials</li>
+<li><span class="citation" data-cites="LETOURNAU2009">Le Tourneau, Lee, and Siu (<a href="#/references" role="doc-biblioref" onclick="">2009</a>)</span> reported 3.3% (6 of 181) of trials used CRM during 2007–2008</li>
+<li><span class="citation" data-cites="VANBRUMMELEN2016">van Brummelen et al. (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span> reported that only 6.4% (11 of 172 oncology Phase I trials) used model-based approaches from 2012 to 2014</li>
+<li><span class="citation" data-cites="NONAMI2025">Nonami et al. (<a href="#/references" role="doc-biblioref" onclick="">2025</a>)</span> reported that from 394 clinical trials submitted to PMDA between 2013 and 2022, 195 (49.5%) used rule-based designs, 114 (28.9%) used model-based designs and 85 (21.6%) used model-assisted designs.</li>
 </ul>
 </section>
 <section id="crmpack-to-the-rescue" class="slide level2">
@@ -251,20 +376,457 @@ Daniel Sabanés Bové
 
 <img data-src="../figures/screenshots/framework.png" class="r-stretch quarto-figure-center"><p class="caption"><code>crmPack</code> package framework</p></section></section>
 <section>
-<section id="section" class="title-slide slide level1 center">
-<h1></h1>
+<section id="example-study-design" class="title-slide slide level1 center">
+<h1>Example study design</h1>
 
+</section>
+<section id="data-object" class="slide level2">
+<h2>Data object</h2>
+<p>We first need to decide what the possible doses could be, i.e.&nbsp;the so-called dose grid:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(crmPack)</span>
+<span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>dose_grid <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">20</span>, <span class="at">to =</span> <span class="dv">200</span>, <span class="at">by =</span> <span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>This we use to initialize our (still empty, i.e.&nbsp;without patients) <code>Data</code> object, which will be used to store the data of our trial as it progresses:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a>empty_data <span class="ot">&lt;-</span> <span class="fu">Data</span>(<span class="at">doseGrid =</span> dose_grid)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="adding-a-patient" class="slide level2">
+<h2>Adding a patient</h2>
+<p>We can “update” the <code>Data</code> object with the information of a patient treated at dose 10, who did not experience a DLT, and a patient at dose 20 with a DLT:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> empty_data <span class="sc">|&gt;</span> </span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">update</span>(<span class="at">x =</span> <span class="dv">10</span>, <span class="at">y =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">update</span>(<span class="at">x =</span> <span class="dv">20</span>, <span class="at">y =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>And plot it:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="01_basic_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
+<section id="model-object" class="slide level2">
+<h2>Model object</h2>
+<p>Next we need to specify the dose-toxicity model we want to use.</p>
+<p>Often used is this logistic model with reference dose <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>d</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub><annotation encoding="application/x-tex">d_{ref}</annotation></semantics></math>, which assigns the following probability of DLT to a dose <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ℙ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>Y</mi><mo>=</mo><mn>1</mn><mo stretchy="false" form="prefix">|</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><msup><mi>e</mi><mrow><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mi>/</mi><msub><mi>d</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mi>/</mi><msub><mi>d</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+\mathbb{P}(Y = 1 | x) = \frac{e^{\alpha + \beta \cdot log(x / d_{ref})}}{1 + e^{\alpha + \beta \cdot log(x / d_{ref})}} 
+</annotation></semantics></math></p>
+<p>Then we also use a prior distribution for the parameters <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math> and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math>. Typically, we want <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>β</mi><annotation encoding="application/x-tex">\beta</annotation></semantics></math> to be positive, so we can assign a bivariate normal distribution to <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mi>α</mi><mo>,</mo><mo>log</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>β</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(\alpha, \log(\beta))</annotation></semantics></math>.</p>
+</section>
+<section id="model-object-contd" class="slide level2">
+<h2>Model object (cont’d)</h2>
+<p>For example, let’s use the following model:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a>get_model <span class="ot">&lt;-</span> <span class="cf">function</span>(sigma0, sigma1, rho) {</span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>  cov <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(sigma0<span class="sc">^</span><span class="dv">2</span>, rho <span class="sc">*</span> sigma0 <span class="sc">*</span> sigma1, rho <span class="sc">*</span> sigma0 <span class="sc">*</span> sigma1, sigma1<span class="sc">^</span><span class="dv">2</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">LogisticLogNormal</span>(</span>
+<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="fl">0.5</span>),</span>
+<span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cov =</span> cov,</span>
+<span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">ref_dose =</span> <span class="dv">20</span></span>
+<span id="cb5-7"><a aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-8"><a aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-9"><a aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">get_model</span>(<span class="at">sigma0 =</span> <span class="dv">1</span>, <span class="at">sigma1 =</span> <span class="dv">2</span>, <span class="at">rho =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="model-object-contd-1" class="slide level2">
+<h2>Model object (cont’d)</h2>
+<p>In Quarto/Rmarkdown, we will get the nice textual description of the model by just printing it:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a>model</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<p>A logistic log normal model will describe the relationship between dose and toxicity: <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>T</mi><mi>o</mi><mi>x</mi><mo stretchy="false" form="prefix">|</mo><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mo>=</mo><mn>1</mn><mo stretchy="false" form="prefix">|</mo><mi>θ</mi><mo>,</mo><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><msup><mi>e</mi><mrow><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>d</mi><mi>/</mi><msub><mi>d</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>d</mi><mi>/</mi><msub><mi>d</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex"> p(Tox | d) = f(X = 1 | \theta, d) = \frac{e^{\alpha + \beta \cdot log(d/d_{ref})}}{1 + e^{\alpha + \beta \cdot log(d/d_{ref})}} </annotation></semantics></math>where d<sub>ref</sub> denotes a reference dose.</p>
+<p>The prior for θ is given by<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝛉</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>α</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>β</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>−</mi><mn>3.00</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.50</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1.00</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1.00</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1.00</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4.00</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex"> \boldsymbol\theta = \begin{bmatrix}\alpha \\ log(\beta)\end{bmatrix}\sim N \left(\begin{bmatrix}-3.00 \\  0.50\end{bmatrix} , \begin{bmatrix} 1.00 &amp;  1.00 \\ 1.00 &amp;  4.00\end{bmatrix} \right) </annotation></semantics></math></p>
+<p>The reference dose will be 20.00.</p>
+</div>
+</div>
+</section>
+<section id="generating-prior-and-posterior-samples" class="slide level2">
+<h2>Generating prior and posterior samples</h2>
+<p>We use MCMC, in particular Gibbs sampling implemented in JAGS, to generate (approximate) samples from the posterior distribution of the model parameters. The settings are controlled by the <code>McmcOptions</code> object. Note that in order to get reproducible results, we also need to set the random seed:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a>mcmc_options <span class="ot">&lt;-</span> <span class="fu">McmcOptions</span>(</span>
+<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">burnin =</span> <span class="dv">1000</span>,</span>
+<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">step =</span> <span class="dv">10</span>,</span>
+<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">samples =</span> <span class="dv">1000</span>,</span>
+<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">rng_kind =</span> <span class="st">"Mersenne-Twister"</span>,</span>
+<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">rng_seed =</span> <span class="dv">12345</span></span>
+<span id="cb7-7"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Now we can generate the prior and posterior samples with the <code>mcmc</code> method:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>prior_samples <span class="ot">&lt;-</span> <span class="fu">mcmc</span>(model, <span class="at">data =</span> empty_data, <span class="at">options =</span> mcmc_options)</span>
+<span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a>posterior_samples <span class="ot">&lt;-</span> <span class="fu">mcmc</span>(model, <span class="at">data =</span> data, <span class="at">options =</span> mcmc_options)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="plotting-dose-toxicity-curves-prior" class="slide level2">
+<h2>Plotting dose-toxicity curves: Prior</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(prior_samples, model, empty_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="01_basic_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
+<section id="plotting-dose-toxicity-curves-posterior" class="slide level2">
+<h2>Plotting dose-toxicity curves: Posterior</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(posterior_samples, model, data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="01_basic_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section>
+<section id="increments-object" class="slide level2">
+<h2>Increments object</h2>
+<p>We usually need additional safety rules for our model-based dose escalation design. For example, we might restrict the maximum allowed dose increment to 100% (i.e.&nbsp;doubling the dose) if no DLTs have been observed, and to 50% if one DLT has been observed. This can be implemented with an <code>Increments</code> object:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a>increments <span class="ot">&lt;-</span> <span class="fu">IncrementsRelativeDLT</span>(</span>
+<span id="cb11-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">intervals =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb11-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">increments =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb11-4"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-5"><a aria-hidden="true" tabindex="-1"></a>increments</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top">
+<caption>Defined by number of DLTs reported so far</caption>
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th colspan="2" data-quarto-table-cell-role="th" style="text-align: center; border-bottom: hidden; padding-bottom: 0; padding-left: 3px; padding-right: 3px;"><div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+No DLTs
+</div></th>
+<th data-quarto-table-cell-role="th" style="text-align: right; empty-cells: hide; border-bottom: hidden;"></th>
+</tr>
+<tr class="even">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Min</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Max</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Increment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">Inf</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="nextbest-object" class="slide level2">
+<h2>NextBest object</h2>
+<p>Together with the regression model, the definition of how to obtain the recommendation for the dose of the next cohort, are the key components of the model-based dose escalation design.</p>
+<p>For example, we can maximize the posterior probability of being in the target toxicity interval (e.g.&nbsp;20–30% DLTs) while restricting the maximum overdosing (e.g.&nbsp;40-100% DLTs) probability to less than 25%:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a>next_best <span class="ot">&lt;-</span> <span class="fu">NextBestNCRM</span>(</span>
+<span id="cb12-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.3</span>),</span>
+<span id="cb12-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">overdose =</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="dv">1</span>),</span>
+<span id="cb12-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">max_overdose_prob =</span> <span class="fl">0.25</span></span>
+<span id="cb12-5"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb12-6"><a aria-hidden="true" tabindex="-1"></a>next_best</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<p>The dose recommended for the next cohort will be chosen in the following way. First, doses that are ineligible according to the increments rule will be discarded. Next, any dose for which the mean posterior probability of toxicity being in the overdose range - (0.4, 1] - is 0.25 or more will also be discarded. Finally, the dose amongst those remaining which has the highest chance that the mean posterior probability of toxicity is in the target toxicity range of 0.2 to 0.3 (inclusive) will be selected.</p>
+</div>
+</div>
+</section>
+<section id="cohortsize-object" class="slide level2">
+<h2>CohortSize object</h2>
+<p>In the simplest case, we just always have the same constant number of patients in each cohort, e.g.&nbsp;3 patients per cohort:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a>cohort_size <span class="ot">&lt;-</span> <span class="fu">CohortSizeConst</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>As with all components, other options are available, see <code>?CohortSize</code> for details.</p>
+</section>
+<section id="stopping-object" class="slide level2">
+<h2>Stopping object</h2>
+<p>Typically there are stopping rules for a dose escalation study. In the simplest case, this is just the number of patients treated, e.g.&nbsp;30 patients:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a>stop1 <span class="ot">&lt;-</span> <span class="fu">StoppingMinPatients</span>(<span class="at">nPatients =</span> <span class="dv">30</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>But we can also combine this with logical <code>&amp;</code> and <code>|</code> operators with other stopping rules, e.g.&nbsp;to also stop if the target probability is high, or if the model would not recommend any dose at all because of safety concerns:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" tabindex="-1"></a>stop2 <span class="ot">&lt;-</span> <span class="fu">StoppingTargetProb</span>(<span class="at">target =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.3</span>), <span class="at">prob =</span> <span class="fl">0.7</span>)</span>
+<span id="cb15-2"><a aria-hidden="true" tabindex="-1"></a>stop3 <span class="ot">&lt;-</span> <span class="fu">StoppingMissingDose</span>()</span>
+<span id="cb15-3"><a aria-hidden="true" tabindex="-1"></a>stopping <span class="ot">&lt;-</span> stop1 <span class="sc">|</span> stop2 <span class="sc">|</span> stop3</span>
+<span id="cb15-4"><a aria-hidden="true" tabindex="-1"></a>stopping</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<p>If any of the following rules are <code>TRUE</code>:</p>
+<ul>
+<li><p>≥ 30 patients dosed: If 30 or more participants have been treated.</p></li>
+<li><p>P(0.2 ≤ prob(DLE | NBD) ≤ 0.3) ≥ 0.7: If the probability of toxicity at the next best dose is in the range [0.20, 0.30] is at least 0.70.</p></li>
+<li><p>Stopped because of missing dose: If the dose returned by <code>nextBest()</code> is <code>NA</code>, or if the trial includes a placebo dose, the placebo dose.</p></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="resulting-recommendation-example" class="slide level2">
+<h2>Resulting recommendation example</h2>
+<p>So in our data example from above, what would be the recommended dose for the next cohort?</p>
+<p>First, the maximum increment is calculated using the <code>maxDose</code> method:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" tabindex="-1"></a>max_dose <span class="ot">&lt;-</span> <span class="fu">maxDose</span>(increments, data)</span>
+<span id="cb16-2"><a aria-hidden="true" tabindex="-1"></a>max_dose</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 30</code></pre>
+</div>
+</div>
+<p>Here it is only 30, because we observed one DLT at dose 20, so the maximum allowed increment is 50%.</p>
+<p>Then the next best dose is calculated with the <code>nextBest</code> method:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a>next_best_dose <span class="ot">&lt;-</span> <span class="fu">nextBest</span>(next_best, <span class="at">doselimit =</span> max_dose, <span class="at">samples =</span> posterior_samples, <span class="at">model =</span> model, <span class="at">data =</span> data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="resulting-recommendation-example-contd" class="slide level2">
+<h2>Resulting recommendation example (cont’d)</h2>
+<p>The plot is in the <code>$plot</code> element of the result:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(next_best_dose<span class="sc">$</span>plot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="01_basic_files/figure-revealjs/unnamed-chunk-19-1.png" width="960" class="r-stretch"><p>And the value is in the <code>$value</code> element:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a>next_best_dose<span class="sc">$</span>value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 20</code></pre>
+</div>
+</div>
+<p>So due to the high probability of overdosing at dose 30, the recommended dose for the next cohort is dose 20, which is the same as the previous cohort.</p>
+</section></section>
+<section>
+<section id="operating-characteristics" class="title-slide slide level1 center">
+<h1>Operating characteristics</h1>
+
+</section>
+<section id="design-object" class="slide level2">
+<h2>Design object</h2>
+<p>First we need to put all the components of our model-based dose escalation design together in a <code>Design</code> object - here we also need to define a starting dose:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">Design</span>(</span>
+<span id="cb22-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> empty_data,</span>
+<span id="cb22-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> model,</span>
+<span id="cb22-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">nextBest =</span> next_best,</span>
+<span id="cb22-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">increments =</span> increments,</span>
+<span id="cb22-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cohort_size =</span> cohort_size,</span>
+<span id="cb22-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">stopping =</span> stopping,</span>
+<span id="cb22-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">startingDose =</span> <span class="dv">5</span></span>
+<span id="cb22-9"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-10"><a aria-hidden="true" tabindex="-1"></a>design</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="design-1" class="slide level2 cell-output-display">
+<h2>Design</h2>
+<h3 id="dose-toxicity-model">Dose toxicity model</h3>
+<p>A logistic log normal model will describe the relationship between dose and toxicity: <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>T</mi><mi>o</mi><mi>x</mi><mo stretchy="false" form="prefix">|</mo><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mo>=</mo><mn>1</mn><mo stretchy="false" form="prefix">|</mo><mi>θ</mi><mo>,</mo><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><msup><mi>e</mi><mrow><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>d</mi><mi>/</mi><msub><mi>d</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>d</mi><mi>/</mi><msub><mi>d</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex"> p(Tox | d) = f(X = 1 | \theta, d) = \frac{e^{\alpha + \beta \cdot log(d/d_{ref})}}{1 + e^{\alpha + \beta \cdot log(d/d_{ref})}} </annotation></semantics></math>where d<sub>ref</sub> denotes a reference dose.</p>
+<p>The prior for θ is given by<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝛉</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>α</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>β</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>−</mi><mn>3.00</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.50</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1.00</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>1.00</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1.00</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>4.00</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex"> \boldsymbol\theta = \begin{bmatrix}\alpha \\ log(\beta)\end{bmatrix}\sim N \left(\begin{bmatrix}-3.00 \\  0.50\end{bmatrix} , \begin{bmatrix} 1.00 &amp;  1.00 \\ 1.00 &amp;  4.00\end{bmatrix} \right) </annotation></semantics></math></p>
+<p>The reference dose will be 20.00.</p>
+<h3 id="stopping-rule">Stopping rule</h3>
+<p>If any of the following rules are <code>TRUE</code>:</p>
+<ul>
+<li><p>≥ 30 patients dosed: If 30 or more participants have been treated.</p></li>
+<li><p>P(0.2 ≤ prob(DLE | NBD) ≤ 0.3) ≥ 0.7: If the probability of toxicity at the next best dose is in the range [0.20, 0.30] is at least 0.70.</p></li>
+<li><p>Stopped because of missing dose: If the dose returned by <code>nextBest()</code> is <code>NA</code>, or if the trial includes a placebo dose, the placebo dose.</p></li>
+</ul>
+<h3 id="escalation-rule">Escalation rule</h3>
+<table>
+<caption>
+Defined by number of DLTs reported so far
+</caption>
+<thead>
+<tr>
+<th style="border-bottom:hidden;padding-bottom:0; padding-left:3px;padding-right:3px;text-align: center; " colspan="2">
+<div style="border-bottom: 1px solid #ddd; padding-bottom: 5px; ">
+No DLTs
+</div>
+</th>
+<th style="empty-cells: hide;border-bottom:hidden;" colspan="1">
+</th>
+</tr>
+<tr>
+<th style="text-align:right;">
+Min
+</th>
+<th style="text-align:right;">
+Max
+</th>
+<th style="text-align:right;">
+Increment
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+0
+</td>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+1.0
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1
+</td>
+<td style="text-align:right;">
+Inf
+</td>
+<td style="text-align:right;">
+0.5
+</td>
+</tr>
+</tbody>
+</table>
+<h3 id="use-of-placebo">Use of placebo</h3>
+<p>Placebo will not be administered in the trial.</p>
+<h3 id="backfill-cohorts">Backfill cohorts</h3>
+<p>No backfill cohorts at all will be opened.</p>
+<h3 id="dose-recommendation">Dose recommendation</h3>
+<p>The dose recommended for the next cohort will be chosen in the following way. First, doses that are ineligible according to the increments rule will be discarded. Next, any dose for which the mean posterior probability of toxicity being in the overdose range - (0.4, 1] - is 0.25 or more will also be discarded. Finally, the dose amongst those remaining which has the highest chance that the mean posterior probability of toxicity is in the target toxicity range of 0.2 to 0.3 (inclusive) will be selected.</p>
+<h3 id="cohort-size">Cohort size</h3>
+<p>A constant size of 3 participants.</p>
+<h3 id="observed-data">Observed data</h3>
+<p>No participants are yet evaluable.</p>
+<p>The dose grid is 1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190 and 200.</p>
+<h3 id="starting-dose">Starting dose</h3>
+<p>The starting dose is 5.</p>
+</section>
+</div>
+</section>
+<section id="examine-method" class="slide level2">
+<h2>Examine method</h2>
+<p>The first “quick check” we should run on our design is how it behaves if we don’t see any DLTs at all - can we even reach the higher doses? This can be done with the <code>examine</code> method:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">examine</span>(design)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   dose DLTs nextDose  stop increment
+1     5    0       10 FALSE       100
+2     5    1        5 FALSE         0
+3     5    2        5 FALSE         0
+4     5    3        5 FALSE         0
+5    10    0       20 FALSE       100
+6    10    1       10 FALSE         0
+7    10    2       10 FALSE         0
+8    10    3       10 FALSE         0
+9    20    0       30 FALSE        50
+10   20    1       20 FALSE         0
+11   20    2       20 FALSE         0
+12   20    3       10 FALSE       -50
+13   30    0       60 FALSE       100
+14   30    1       30 FALSE         0
+15   30    2       20 FALSE       -33
+16   30    3       20 FALSE       -33
+17   60    0      110 FALSE        83
+18   60    1       50 FALSE       -17
+19   60    2       40 FALSE       -33
+20   60    3       30 FALSE       -50
+21  110    0      200 FALSE        82
+22  110    1      100 FALSE        -9
+23  110    2       60 FALSE       -45
+24  110    3       50 FALSE       -55</code></pre>
+</div>
+</div>
+<p>Here it could be also concerning that if we observe 3 DLTs at the starting dose of 5, we still continue with the same dose 5 for the next cohort. The reason here is that the prior is “too confident” that at low doses we have a low DLT probability.</p>
+</section>
+<section id="adjusted-performance" class="slide level2">
+<h2>Adjusted performance</h2>
+<p>So we need to adjust the prior to be less confident, e.g.&nbsp;by increasing the standard deviations of the parameters:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a>model_adjusted <span class="ot">&lt;-</span> <span class="fu">get_model</span>(<span class="at">sigma0 =</span> <span class="dv">2</span>, <span class="at">sigma1 =</span> <span class="dv">4</span>, <span class="at">rho =</span> <span class="fl">0.5</span>)</span>
+<span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a>design_adjusted <span class="ot">&lt;-</span> design</span>
+<span id="cb25-3"><a aria-hidden="true" tabindex="-1"></a>design_adjusted<span class="sc">@</span>model <span class="ot">&lt;-</span> model_adjusted</span>
+<span id="cb25-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">examine</span>(design_adjusted)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   dose DLTs nextDose  stop increment
+1     5    0       10 FALSE       100
+2     5    1        5 FALSE         0
+3     5    2        1 FALSE       -80
+4     5    3       NA  TRUE        NA
+5    10    0       20 FALSE       100
+6    10    1       10 FALSE         0
+7    10    2       10 FALSE         0
+8    10    3        5 FALSE       -50
+9    20    0       20 FALSE         0
+10   20    1       20 FALSE         0
+11   20    2       10 FALSE       -50
+12   20    3       10 FALSE       -50
+13   20    0       20 FALSE         0
+14   20    1       20 FALSE         0
+15   20    2       20 FALSE         0
+16   20    3       10 FALSE       -50
+17   20    0       20 FALSE         0
+18   20    1       20 FALSE         0
+19   20    2       20 FALSE         0
+20   20    3       20 FALSE         0
+21   20    0       30 FALSE        50
+22   20    1       20 FALSE         0
+23   20    2       20 FALSE         0
+24   20    3       20 FALSE         0
+25   30    0       60 FALSE       100
+26   30    1       30 FALSE         0
+27   30    2       20 FALSE       -33
+28   30    3       20 FALSE       -33
+29   60    0      120 FALSE       100
+30   60    1       60 FALSE         0
+31   60    2       40 FALSE       -33
+32   60    3       30 FALSE       -50
+33  120    0      200 FALSE        67
+34  120    1      110 FALSE        -8
+35  120    2       80 FALSE       -33
+36  120    3       50 FALSE       -58</code></pre>
+</div>
+</div>
+</section>
+<section id="backfilling-cohorts" class="slide level2">
+<h2>Backfilling cohorts</h2>
+</section>
+<section id="toxicity-scenarios" class="slide level2">
+<h2>Toxicity scenarios</h2>
+</section>
+<section id="running-simulations" class="slide level2">
+<h2>Running simulations</h2>
+</section>
+<section id="summarizing-results" class="slide level2">
+<h2>Summarizing results</h2>
 </section>
 <section id="references" class="slide level2 scrollable smaller">
 <h2>References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-JI2010" class="csl-entry" role="listitem">
+Ji, Y, P Liu, Y Li, and N Bekele. 2010. <span>“A Modified Toxicity Probability Interval Method for Dose-Finding Trials.”</span> <em>Clin Trials</em> 7: 653–63. <a href="https://doi.org/doi.org/10.1177/1740774510382799">https://doi.org/doi.org/10.1177/1740774510382799</a>.
+</div>
 <div id="ref-LETOURNAU2009" class="csl-entry" role="listitem">
 Le Tourneau, C, JJ Lee, and LL Siu. 2009. <span>“Dose Escalation Methods in Phase i Cancer Clinical Trials.”</span> <em>J Natl Cancer Inst</em>, 708–20.
 </div>
+<div id="ref-LIN2001" class="csl-entry" role="listitem">
+Lin, Y, and WJ Shih. 2015. <span>“Statistical Properties of the Traditional Algorithm-Based Designs for Phase i Cancer Clinical Trials.”</span> <em>Biostatistics</em> 2: 203 -- 215. <a href="https://doi.org/doi.org/10.1093/biostatistics/2.2.203">https://doi.org/doi.org/10.1093/biostatistics/2.2.203</a>.
+</div>
+<div id="ref-LIU2015" class="csl-entry" role="listitem">
+Liu, S, and Y Yuan. 2015. <span>“Bayesian Optimal Interval Designs for Phase i Clinical Trials.”</span> <em>JRSS(C)</em> 64: 507 -- 523.
+</div>
+<div id="ref-NEUENSCHWANDER2008" class="csl-entry" role="listitem">
+Neuenschwander, B, M Branson, and T Gsponer. 2008. <span>“Critical Aspects of the Bayesian Approach to Phase i Cancer Trials.”</span> <em>Statistics in Medicine</em>.
+</div>
+<div id="ref-NONAMI2025" class="csl-entry" role="listitem">
+Nonami, Atsushi, Kensuke Matsuda, Kouta Funakoshi, Ryosuke Kato, Hideaki Takahashi, and Yoko Edahiro. 2025. <span>“Impact of Dose-Escalation Design on the Safety and Development of Anticancer Drugs in Clinical Trials.”</span> <em>Clinical and Translational Science</em> 18 (10): e70367. https://doi.org/<a href="https://doi.org/10.1111/cts.70367">https://doi.org/10.1111/cts.70367</a>.
+</div>
+<div id="ref-OQUIGLEY1990" class="csl-entry" role="listitem">
+O’Quigley, John, Margaret Pepe, and Lloyd Fisher. 1990. <span>“Continual Reassessment Method: A Practical Design for Phase 1 Clinical Trials in Cancer.”</span> <em>Biometrics</em> 46 (1): 33–48.
+</div>
 <div id="ref-ROGATKO2007" class="csl-entry" role="listitem">
 Rogatko, A, D Shoeneck, W Jonas, M Tighiouart, FR Khuri, and A Porter. 2007. <span>“Translation of Innovative Designs into Phase 1 Trials.”</span> <em>J Clin Onc</em> 25 (31): 4982–86.
+</div>
+<div id="ref-SKOLNIK2008" class="csl-entry" role="listitem">
+Skolnik, JM, JS Barrett, B Jayaraman, D Patel, and PC Adamson. 2008. <span>“Shortening the Timeline of Pediatric Phase i Trials: The Rolling Six Design.”</span> <em>J Clin Onc</em> 26 (2): 190–95. <a href="https://doi.org/10.1200/JCO.2007.12.7712">https://doi.org/10.1200/JCO.2007.12.7712</a>.
 </div>
 <div id="ref-VANBRUMMELEN2016" class="csl-entry" role="listitem">
 van Brummelen, EM, AD Huitema, E van Werkhoven, JH Beijnen, and JH Schellens. 2016. <span>“The Performance of Model-Based Versus Rule-Based Phase i Clinical Trials in Oncology: A Quantitative Comparison of the Performance of Model-Based Versus Rule-Based Phase i Trials with Molecularly Targeted Anticancer Drugs over the Last 2 Years.”</span> <em>J Pharmacokinet Pharmacodyn</em> 43 (3): 235–42.

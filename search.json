@@ -25,7 +25,7 @@
     "href": "parts/01_basic.html#overview-of-dose-escalation-designs",
     "title": "crmPack Training for Merck",
     "section": "Overview of dose escalation designs",
-    "text": "Overview of dose escalation designs\n\nRule-based designs: 3+3, accelerated titration, rolling 6, etc.\nModel-based designs: Continual Reassessment Method (CRM), Escalation with Overdose Control (EWOC), etc.\nModel-assisted designs: mTPI, Keyboard, Bayesian Optimal Interval (BOIN), etc."
+    "text": "Overview of dose escalation designs\n\nRule-based designs: 3+3 (Lin and Shih 2015), accelerated titration, rolling 6 (Skolnik et al. 2008), etc.\nModel-based designs: Continual Reassessment Method (CRM) (O’Quigley, Pepe, and Fisher 1990), Escalation with Overdose Control (EWOC) (Neuenschwander, Branson, and Gsponer 2008), etc.\nModel-assisted designs: mTPI (Ji et al. 2010), Keyboard, Bayesian Optimal Interval (BOIN) (Liu and Yuan 2015), etc."
   },
   {
     "objectID": "parts/01_basic.html#design",
@@ -39,14 +39,21 @@
     "href": "parts/01_basic.html#vs.-model-based-designs",
     "title": "crmPack Training for Merck",
     "section": "3+3 vs. model-based designs",
-    "text": "3+3 vs. model-based designs\n\nTable taken from “Moving Beyond 3+3: The Future of Clinical Trial Design”"
+    "text": "3+3 vs. model-based designs\n\n\n\n\n3+3\nCRM\n\n\n\n\nDefinition of a DLT\nStudy specific\nStudy specific\n\n\nThe target toxicity rate\n0.33\nAny\n\n\nThe dose grid\nStudy specific\nStudy specific\n\n\nThe cohort size\n3\nAny\n\n\nThe stopping rule(s)\n2 DLTs at same dose\nAny\n\n\nThe eligibility rule\nOne dose up\nAny\n\n\nThe escalation rule\n+1 if 0/3 or 1/6\nAny\n\n\nThe definition of the MTD\nMax dose with &lt;2 DLTs\nAny\n\n\nThe dose-toxicity model\nNone\nAny"
+  },
+  {
+    "objectID": "parts/01_basic.html#higher-level-overview",
+    "href": "parts/01_basic.html#higher-level-overview",
+    "title": "crmPack Training for Merck",
+    "section": "Higher-level overview",
+    "text": "Higher-level overview\n\nTable taken from “Moving Beyond 3+3: The Future of Clinical Trial Design”"
   },
   {
     "objectID": "parts/01_basic.html#usage-of-model-based-designs",
     "href": "parts/01_basic.html#usage-of-model-based-designs",
     "title": "crmPack Training for Merck",
     "section": "Usage of model-based designs",
-    "text": "Usage of model-based designs\n\n(Rogatko et al. 2007) reported that 98.4% of phase I cancer trials use a 3+3 design or a variant, but that only 35% of participants is such trials were treated at “optimal” doses, compared to 55% in model-based trials\n(Le Tourneau, Lee, and Siu 2009) reported 3.3% (6 of 181) of trials used CRM during 2007–2008\n(van Brummelen et al. 2016) reported that only 6.4% (11 of 172 oncology Phase I trials) used model-based approaches from 2012 to 2014\n(NONAMI2025?) reported that from 394 clinical trials submitted to PMDA between 2013 and 2022, 195 (49.5%) used rule-based designs, 114 (28.9%) used model-based designs and 85 (21.6%) used model-assisted designs."
+    "text": "Usage of model-based designs\n\nRogatko et al. (2007) reported that 98.4% of phase I cancer trials use a 3+3 design or a variant, but that only 35% of participants is such trials were treated at “optimal” doses, compared to 55% in model-based trials\nLe Tourneau, Lee, and Siu (2009) reported 3.3% (6 of 181) of trials used CRM during 2007–2008\nvan Brummelen et al. (2016) reported that only 6.4% (11 of 172 oncology Phase I trials) used model-based approaches from 2012 to 2014\nNonami et al. (2025) reported that from 394 clinical trials submitted to PMDA between 2013 and 2022, 195 (49.5%) used rule-based designs, 114 (28.9%) used model-based designs and 85 (21.6%) used model-assisted designs."
   },
   {
     "objectID": "parts/01_basic.html#crmpack-to-the-rescue",
@@ -77,11 +84,165 @@
     "text": "Framework in crmPack\n\ncrmPack package framework"
   },
   {
+    "objectID": "parts/01_basic.html#data-object",
+    "href": "parts/01_basic.html#data-object",
+    "title": "crmPack Training for Merck",
+    "section": "Data object",
+    "text": "Data object\nWe first need to decide what the possible doses could be, i.e. the so-called dose grid:\n\nlibrary(crmPack)\n\ndose_grid &lt;- c(1, 5, 10, seq(from = 20, to = 200, by = 10))\n\nThis we use to initialize our (still empty, i.e. without patients) Data object, which will be used to store the data of our trial as it progresses:\n\nempty_data &lt;- Data(doseGrid = dose_grid)"
+  },
+  {
+    "objectID": "parts/01_basic.html#adding-a-patient",
+    "href": "parts/01_basic.html#adding-a-patient",
+    "title": "crmPack Training for Merck",
+    "section": "Adding a patient",
+    "text": "Adding a patient\nWe can “update” the Data object with the information of a patient treated at dose 10, who did not experience a DLT, and a patient at dose 20 with a DLT:\n\ndata &lt;- empty_data |&gt; \n    update(x = 10, y = 0) |&gt; \n    update(x = 20, y = 1)\n\nAnd plot it:\n\nplot(data)"
+  },
+  {
+    "objectID": "parts/01_basic.html#model-object",
+    "href": "parts/01_basic.html#model-object",
+    "title": "crmPack Training for Merck",
+    "section": "Model object",
+    "text": "Model object\nNext we need to specify the dose-toxicity model we want to use.\nOften used is this logistic model with reference dose drefd_{ref}, which assigns the following probability of DLT to a dose xx:\nℙ(Y=1|x)=eα+β⋅log(x/dref)1+eα+β⋅log(x/dref)\n\\mathbb{P}(Y = 1 | x) = \\frac{e^{\\alpha + \\beta \\cdot log(x / d_{ref})}}{1 + e^{\\alpha + \\beta \\cdot log(x / d_{ref})}} \n\nThen we also use a prior distribution for the parameters α\\alpha and β\\beta. Typically, we want β\\beta to be positive, so we can assign a bivariate normal distribution to (α,log(β))(\\alpha, \\log(\\beta))."
+  },
+  {
+    "objectID": "parts/01_basic.html#model-object-contd",
+    "href": "parts/01_basic.html#model-object-contd",
+    "title": "crmPack Training for Merck",
+    "section": "Model object (cont’d)",
+    "text": "Model object (cont’d)\nFor example, let’s use the following model:\n\nget_model &lt;- function(sigma0, sigma1, rho) {\n  cov &lt;- matrix(c(sigma0^2, rho * sigma0 * sigma1, rho * sigma0 * sigma1, sigma1^2), nrow = 2)\n  LogisticLogNormal(\n    mean = c(-3, 0.5),\n    cov = cov,\n    ref_dose = 20\n  )\n}\nmodel &lt;- get_model(sigma0 = 1, sigma1 = 2, rho = 0.5)"
+  },
+  {
+    "objectID": "parts/01_basic.html#model-object-contd-1",
+    "href": "parts/01_basic.html#model-object-contd-1",
+    "title": "crmPack Training for Merck",
+    "section": "Model object (cont’d)",
+    "text": "Model object (cont’d)\nIn Quarto/Rmarkdown, we will get the nice textual description of the model by just printing it:\n\nmodel\n\nA logistic log normal model will describe the relationship between dose and toxicity: p(Tox|d)=f(X=1|θ,d)=eα+β⋅log(d/dref)1+eα+β⋅log(d/dref) p(Tox | d) = f(X = 1 | \\theta, d) = \\frac{e^{\\alpha + \\beta \\cdot log(d/d_{ref})}}{1 + e^{\\alpha + \\beta \\cdot log(d/d_{ref})}} where dref denotes a reference dose.\nThe prior for θ is given by𝛉=[αlog(β)]∼N([−3.000.50],[1.001.001.004.00]) \\boldsymbol\\theta = \\begin{bmatrix}\\alpha \\\\ log(\\beta)\\end{bmatrix}\\sim N \\left(\\begin{bmatrix}-3.00 \\\\  0.50\\end{bmatrix} , \\begin{bmatrix} 1.00 &  1.00 \\\\ 1.00 &  4.00\\end{bmatrix} \\right) \nThe reference dose will be 20.00."
+  },
+  {
+    "objectID": "parts/01_basic.html#generating-prior-and-posterior-samples",
+    "href": "parts/01_basic.html#generating-prior-and-posterior-samples",
+    "title": "crmPack Training for Merck",
+    "section": "Generating prior and posterior samples",
+    "text": "Generating prior and posterior samples\nWe use MCMC, in particular Gibbs sampling implemented in JAGS, to generate (approximate) samples from the posterior distribution of the model parameters. The settings are controlled by the McmcOptions object. Note that in order to get reproducible results, we also need to set the random seed:\n\nmcmc_options &lt;- McmcOptions(\n  burnin = 1000,\n  step = 10,\n  samples = 1000,\n  rng_kind = \"Mersenne-Twister\",\n  rng_seed = 12345\n)\n\nNow we can generate the prior and posterior samples with the mcmc method:\n\nprior_samples &lt;- mcmc(model, data = empty_data, options = mcmc_options)\nposterior_samples &lt;- mcmc(model, data = data, options = mcmc_options)"
+  },
+  {
+    "objectID": "parts/01_basic.html#plotting-dose-toxicity-curves-prior",
+    "href": "parts/01_basic.html#plotting-dose-toxicity-curves-prior",
+    "title": "crmPack Training for Merck",
+    "section": "Plotting dose-toxicity curves: Prior",
+    "text": "Plotting dose-toxicity curves: Prior\n\nplot(prior_samples, model, empty_data)"
+  },
+  {
+    "objectID": "parts/01_basic.html#plotting-dose-toxicity-curves-posterior",
+    "href": "parts/01_basic.html#plotting-dose-toxicity-curves-posterior",
+    "title": "crmPack Training for Merck",
+    "section": "Plotting dose-toxicity curves: Posterior",
+    "text": "Plotting dose-toxicity curves: Posterior\n\nplot(posterior_samples, model, data)"
+  },
+  {
+    "objectID": "parts/01_basic.html#increments-object",
+    "href": "parts/01_basic.html#increments-object",
+    "title": "crmPack Training for Merck",
+    "section": "Increments object",
+    "text": "Increments object\nWe usually need additional safety rules for our model-based dose escalation design. For example, we might restrict the maximum allowed dose increment to 100% (i.e. doubling the dose) if no DLTs have been observed, and to 50% if one DLT has been observed. This can be implemented with an Increments object:\n\nincrements &lt;- IncrementsRelativeDLT(\n    intervals = c(0, 1),\n    increments = c(1, 0.5)\n)\nincrements\n\n\nDefined by number of DLTs reported so far\n\n\n\n\n\n\n\n\nNo DLTs\n\n\n\n\nMin\nMax\nIncrement\n\n\n\n\n0\n1\n1.0\n\n\n1\nInf\n0.5"
+  },
+  {
+    "objectID": "parts/01_basic.html#nextbest-object",
+    "href": "parts/01_basic.html#nextbest-object",
+    "title": "crmPack Training for Merck",
+    "section": "NextBest object",
+    "text": "NextBest object\nTogether with the regression model, the definition of how to obtain the recommendation for the dose of the next cohort, are the key components of the model-based dose escalation design.\nFor example, we can maximize the posterior probability of being in the target toxicity interval (e.g. 20–30% DLTs) while restricting the maximum overdosing (e.g. 40-100% DLTs) probability to less than 25%:\n\nnext_best &lt;- NextBestNCRM(\n    target = c(0.2, 0.3),\n    overdose = c(0.4, 1),\n    max_overdose_prob = 0.25\n)\nnext_best\n\nThe dose recommended for the next cohort will be chosen in the following way. First, doses that are ineligible according to the increments rule will be discarded. Next, any dose for which the mean posterior probability of toxicity being in the overdose range - (0.4, 1] - is 0.25 or more will also be discarded. Finally, the dose amongst those remaining which has the highest chance that the mean posterior probability of toxicity is in the target toxicity range of 0.2 to 0.3 (inclusive) will be selected."
+  },
+  {
+    "objectID": "parts/01_basic.html#cohortsize-object",
+    "href": "parts/01_basic.html#cohortsize-object",
+    "title": "crmPack Training for Merck",
+    "section": "CohortSize object",
+    "text": "CohortSize object\nIn the simplest case, we just always have the same constant number of patients in each cohort, e.g. 3 patients per cohort:\n\ncohort_size &lt;- CohortSizeConst(3)\n\nAs with all components, other options are available, see ?CohortSize for details."
+  },
+  {
+    "objectID": "parts/01_basic.html#stopping-object",
+    "href": "parts/01_basic.html#stopping-object",
+    "title": "crmPack Training for Merck",
+    "section": "Stopping object",
+    "text": "Stopping object\nTypically there are stopping rules for a dose escalation study. In the simplest case, this is just the number of patients treated, e.g. 30 patients:\n\nstop1 &lt;- StoppingMinPatients(nPatients = 30)\n\nBut we can also combine this with logical & and | operators with other stopping rules, e.g. to also stop if the target probability is high, or if the model would not recommend any dose at all because of safety concerns:\n\nstop2 &lt;- StoppingTargetProb(target = c(0.2, 0.3), prob = 0.7)\nstop3 &lt;- StoppingMissingDose()\nstopping &lt;- stop1 | stop2 | stop3\nstopping\n\nIf any of the following rules are TRUE:\n\n≥ 30 patients dosed: If 30 or more participants have been treated.\nP(0.2 ≤ prob(DLE | NBD) ≤ 0.3) ≥ 0.7: If the probability of toxicity at the next best dose is in the range [0.20, 0.30] is at least 0.70.\nStopped because of missing dose: If the dose returned by nextBest() is NA, or if the trial includes a placebo dose, the placebo dose."
+  },
+  {
+    "objectID": "parts/01_basic.html#resulting-recommendation-example",
+    "href": "parts/01_basic.html#resulting-recommendation-example",
+    "title": "crmPack Training for Merck",
+    "section": "Resulting recommendation example",
+    "text": "Resulting recommendation example\nSo in our data example from above, what would be the recommended dose for the next cohort?\nFirst, the maximum increment is calculated using the maxDose method:\n\nmax_dose &lt;- maxDose(increments, data)\nmax_dose\n\n[1] 30\n\n\nHere it is only 30, because we observed one DLT at dose 20, so the maximum allowed increment is 50%.\nThen the next best dose is calculated with the nextBest method:\n\nnext_best_dose &lt;- nextBest(next_best, doselimit = max_dose, samples = posterior_samples, model = model, data = data)"
+  },
+  {
+    "objectID": "parts/01_basic.html#resulting-recommendation-example-contd",
+    "href": "parts/01_basic.html#resulting-recommendation-example-contd",
+    "title": "crmPack Training for Merck",
+    "section": "Resulting recommendation example (cont’d)",
+    "text": "Resulting recommendation example (cont’d)\nThe plot is in the $plot element of the result:\n\nprint(next_best_dose$plot)\n\n\nAnd the value is in the $value element:\n\nnext_best_dose$value\n\n[1] 20\n\n\nSo due to the high probability of overdosing at dose 30, the recommended dose for the next cohort is dose 20, which is the same as the previous cohort."
+  },
+  {
+    "objectID": "parts/01_basic.html#design-object",
+    "href": "parts/01_basic.html#design-object",
+    "title": "crmPack Training for Merck",
+    "section": "Design object",
+    "text": "Design object\nFirst we need to put all the components of our model-based dose escalation design together in a Design object - here we also need to define a starting dose:\n\ndesign &lt;- Design(\n    data = empty_data,\n    model = model,\n    nextBest = next_best,\n    increments = increments,\n    cohort_size = cohort_size,\n    stopping = stopping,\n    startingDose = 5\n)\ndesign\n\nDesign\nDose toxicity model\nA logistic log normal model will describe the relationship between dose and toxicity: p(Tox|d)=f(X=1|θ,d)=eα+β⋅log(d/dref)1+eα+β⋅log(d/dref) p(Tox | d) = f(X = 1 | \\theta, d) = \\frac{e^{\\alpha + \\beta \\cdot log(d/d_{ref})}}{1 + e^{\\alpha + \\beta \\cdot log(d/d_{ref})}} where dref denotes a reference dose.\nThe prior for θ is given by𝛉=[αlog(β)]∼N([−3.000.50],[1.001.001.004.00]) \\boldsymbol\\theta = \\begin{bmatrix}\\alpha \\\\ log(\\beta)\\end{bmatrix}\\sim N \\left(\\begin{bmatrix}-3.00 \\\\  0.50\\end{bmatrix} , \\begin{bmatrix} 1.00 &  1.00 \\\\ 1.00 &  4.00\\end{bmatrix} \\right) \nThe reference dose will be 20.00.\nStopping rule\nIf any of the following rules are TRUE:\n\n≥ 30 patients dosed: If 30 or more participants have been treated.\nP(0.2 ≤ prob(DLE | NBD) ≤ 0.3) ≥ 0.7: If the probability of toxicity at the next best dose is in the range [0.20, 0.30] is at least 0.70.\nStopped because of missing dose: If the dose returned by nextBest() is NA, or if the trial includes a placebo dose, the placebo dose.\n\nEscalation rule\n\n\nDefined by number of DLTs reported so far\n\n\n\n\n\nNo DLTs\n\n\n\n\n\n\n\nMin\n\n\nMax\n\n\nIncrement\n\n\n\n\n\n\n0\n\n\n1\n\n\n1.0\n\n\n\n\n1\n\n\nInf\n\n\n0.5\n\n\n\n\nUse of placebo\nPlacebo will not be administered in the trial.\nBackfill cohorts\nNo backfill cohorts at all will be opened.\nDose recommendation\nThe dose recommended for the next cohort will be chosen in the following way. First, doses that are ineligible according to the increments rule will be discarded. Next, any dose for which the mean posterior probability of toxicity being in the overdose range - (0.4, 1] - is 0.25 or more will also be discarded. Finally, the dose amongst those remaining which has the highest chance that the mean posterior probability of toxicity is in the target toxicity range of 0.2 to 0.3 (inclusive) will be selected.\nCohort size\nA constant size of 3 participants.\nObserved data\nNo participants are yet evaluable.\nThe dose grid is 1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190 and 200.\nStarting dose\nThe starting dose is 5."
+  },
+  {
+    "objectID": "parts/01_basic.html#design-1",
+    "href": "parts/01_basic.html#design-1",
+    "title": "crmPack Training for Merck",
+    "section": "Design",
+    "text": "Design\nDose toxicity model\nA logistic log normal model will describe the relationship between dose and toxicity: p(Tox|d)=f(X=1|θ,d)=eα+β⋅log(d/dref)1+eα+β⋅log(d/dref) p(Tox | d) = f(X = 1 | \\theta, d) = \\frac{e^{\\alpha + \\beta \\cdot log(d/d_{ref})}}{1 + e^{\\alpha + \\beta \\cdot log(d/d_{ref})}} where dref denotes a reference dose.\nThe prior for θ is given by𝛉=[αlog(β)]∼N([−3.000.50],[1.001.001.004.00]) \\boldsymbol\\theta = \\begin{bmatrix}\\alpha \\\\ log(\\beta)\\end{bmatrix}\\sim N \\left(\\begin{bmatrix}-3.00 \\\\  0.50\\end{bmatrix} , \\begin{bmatrix} 1.00 &  1.00 \\\\ 1.00 &  4.00\\end{bmatrix} \\right) \nThe reference dose will be 20.00.\nStopping rule\nIf any of the following rules are TRUE:\n\n≥ 30 patients dosed: If 30 or more participants have been treated.\nP(0.2 ≤ prob(DLE | NBD) ≤ 0.3) ≥ 0.7: If the probability of toxicity at the next best dose is in the range [0.20, 0.30] is at least 0.70.\nStopped because of missing dose: If the dose returned by nextBest() is NA, or if the trial includes a placebo dose, the placebo dose.\n\nEscalation rule\n\n\nDefined by number of DLTs reported so far\n\n\n\n\n\nNo DLTs\n\n\n\n\n\n\n\nMin\n\n\nMax\n\n\nIncrement\n\n\n\n\n\n\n0\n\n\n1\n\n\n1.0\n\n\n\n\n1\n\n\nInf\n\n\n0.5\n\n\n\n\nUse of placebo\nPlacebo will not be administered in the trial.\nBackfill cohorts\nNo backfill cohorts at all will be opened.\nDose recommendation\nThe dose recommended for the next cohort will be chosen in the following way. First, doses that are ineligible according to the increments rule will be discarded. Next, any dose for which the mean posterior probability of toxicity being in the overdose range - (0.4, 1] - is 0.25 or more will also be discarded. Finally, the dose amongst those remaining which has the highest chance that the mean posterior probability of toxicity is in the target toxicity range of 0.2 to 0.3 (inclusive) will be selected.\nCohort size\nA constant size of 3 participants.\nObserved data\nNo participants are yet evaluable.\nThe dose grid is 1, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190 and 200.\nStarting dose\nThe starting dose is 5."
+  },
+  {
+    "objectID": "parts/01_basic.html#examine-method",
+    "href": "parts/01_basic.html#examine-method",
+    "title": "crmPack Training for Merck",
+    "section": "Examine method",
+    "text": "Examine method\nThe first “quick check” we should run on our design is how it behaves if we don’t see any DLTs at all - can we even reach the higher doses? This can be done with the examine method:\n\nexamine(design)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        5 FALSE         0\n4     5    3        5 FALSE         0\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3       10 FALSE         0\n9    20    0       30 FALSE        50\n10   20    1       20 FALSE         0\n11   20    2       20 FALSE         0\n12   20    3       10 FALSE       -50\n13   30    0       60 FALSE       100\n14   30    1       30 FALSE         0\n15   30    2       20 FALSE       -33\n16   30    3       20 FALSE       -33\n17   60    0      110 FALSE        83\n18   60    1       50 FALSE       -17\n19   60    2       40 FALSE       -33\n20   60    3       30 FALSE       -50\n21  110    0      200 FALSE        82\n22  110    1      100 FALSE        -9\n23  110    2       60 FALSE       -45\n24  110    3       50 FALSE       -55\n\n\nHere it could be also concerning that if we observe 3 DLTs at the starting dose of 5, we still continue with the same dose 5 for the next cohort. The reason here is that the prior is “too confident” that at low doses we have a low DLT probability."
+  },
+  {
+    "objectID": "parts/01_basic.html#adjusted-performance",
+    "href": "parts/01_basic.html#adjusted-performance",
+    "title": "crmPack Training for Merck",
+    "section": "Adjusted performance",
+    "text": "Adjusted performance\nSo we need to adjust the prior to be less confident, e.g. by increasing the standard deviations of the parameters:\n\nmodel_adjusted &lt;- get_model(sigma0 = 2, sigma1 = 4, rho = 0.5)\ndesign_adjusted &lt;- design\ndesign_adjusted@model &lt;- model_adjusted\nexamine(design_adjusted)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        1 FALSE       -80\n4     5    3       NA  TRUE        NA\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3        5 FALSE       -50\n9    20    0       20 FALSE         0\n10   20    1       20 FALSE         0\n11   20    2       10 FALSE       -50\n12   20    3       10 FALSE       -50\n13   20    0       20 FALSE         0\n14   20    1       20 FALSE         0\n15   20    2       20 FALSE         0\n16   20    3       10 FALSE       -50\n17   20    0       20 FALSE         0\n18   20    1       20 FALSE         0\n19   20    2       20 FALSE         0\n20   20    3       20 FALSE         0\n21   20    0       30 FALSE        50\n22   20    1       20 FALSE         0\n23   20    2       20 FALSE         0\n24   20    3       20 FALSE         0\n25   30    0       60 FALSE       100\n26   30    1       30 FALSE         0\n27   30    2       20 FALSE       -33\n28   30    3       20 FALSE       -33\n29   60    0      120 FALSE       100\n30   60    1       60 FALSE         0\n31   60    2       40 FALSE       -33\n32   60    3       30 FALSE       -50\n33  120    0      200 FALSE        67\n34  120    1      110 FALSE        -8\n35  120    2       80 FALSE       -33\n36  120    3       50 FALSE       -58"
+  },
+  {
+    "objectID": "parts/01_basic.html#backfilling-cohorts",
+    "href": "parts/01_basic.html#backfilling-cohorts",
+    "title": "crmPack Training for Merck",
+    "section": "Backfilling cohorts",
+    "text": "Backfilling cohorts"
+  },
+  {
+    "objectID": "parts/01_basic.html#toxicity-scenarios",
+    "href": "parts/01_basic.html#toxicity-scenarios",
+    "title": "crmPack Training for Merck",
+    "section": "Toxicity scenarios",
+    "text": "Toxicity scenarios"
+  },
+  {
+    "objectID": "parts/01_basic.html#running-simulations",
+    "href": "parts/01_basic.html#running-simulations",
+    "title": "crmPack Training for Merck",
+    "section": "Running simulations",
+    "text": "Running simulations"
+  },
+  {
+    "objectID": "parts/01_basic.html#summarizing-results",
+    "href": "parts/01_basic.html#summarizing-results",
+    "title": "crmPack Training for Merck",
+    "section": "Summarizing results",
+    "text": "Summarizing results"
+  },
+  {
     "objectID": "parts/01_basic.html#references",
     "href": "parts/01_basic.html#references",
     "title": "crmPack Training for Merck",
     "section": "References",
-    "text": "References\n\n\n\n\nLe Tourneau, C, JJ Lee, and LL Siu. 2009. “Dose Escalation Methods in Phase i Cancer Clinical Trials.” J Natl Cancer Inst, 708–20.\n\n\nRogatko, A, D Shoeneck, W Jonas, M Tighiouart, FR Khuri, and A Porter. 2007. “Translation of Innovative Designs into Phase 1 Trials.” J Clin Onc 25 (31): 4982–86.\n\n\nvan Brummelen, EM, AD Huitema, E van Werkhoven, JH Beijnen, and JH Schellens. 2016. “The Performance of Model-Based Versus Rule-Based Phase i Clinical Trials in Oncology: A Quantitative Comparison of the Performance of Model-Based Versus Rule-Based Phase i Trials with Molecularly Targeted Anticancer Drugs over the Last 2 Years.” J Pharmacokinet Pharmacodyn 43 (3): 235–42."
+    "text": "References\n\n\n\n\nJi, Y, P Liu, Y Li, and N Bekele. 2010. “A Modified Toxicity Probability Interval Method for Dose-Finding Trials.” Clin Trials 7: 653–63. https://doi.org/doi.org/10.1177/1740774510382799.\n\n\nLe Tourneau, C, JJ Lee, and LL Siu. 2009. “Dose Escalation Methods in Phase i Cancer Clinical Trials.” J Natl Cancer Inst, 708–20.\n\n\nLin, Y, and WJ Shih. 2015. “Statistical Properties of the Traditional Algorithm-Based Designs for Phase i Cancer Clinical Trials.” Biostatistics 2: 203 -- 215. https://doi.org/doi.org/10.1093/biostatistics/2.2.203.\n\n\nLiu, S, and Y Yuan. 2015. “Bayesian Optimal Interval Designs for Phase i Clinical Trials.” JRSS(C) 64: 507 -- 523.\n\n\nNeuenschwander, B, M Branson, and T Gsponer. 2008. “Critical Aspects of the Bayesian Approach to Phase i Cancer Trials.” Statistics in Medicine.\n\n\nNonami, Atsushi, Kensuke Matsuda, Kouta Funakoshi, Ryosuke Kato, Hideaki Takahashi, and Yoko Edahiro. 2025. “Impact of Dose-Escalation Design on the Safety and Development of Anticancer Drugs in Clinical Trials.” Clinical and Translational Science 18 (10): e70367. https://doi.org/https://doi.org/10.1111/cts.70367.\n\n\nO’Quigley, John, Margaret Pepe, and Lloyd Fisher. 1990. “Continual Reassessment Method: A Practical Design for Phase 1 Clinical Trials in Cancer.” Biometrics 46 (1): 33–48.\n\n\nRogatko, A, D Shoeneck, W Jonas, M Tighiouart, FR Khuri, and A Porter. 2007. “Translation of Innovative Designs into Phase 1 Trials.” J Clin Onc 25 (31): 4982–86.\n\n\nSkolnik, JM, JS Barrett, B Jayaraman, D Patel, and PC Adamson. 2008. “Shortening the Timeline of Pediatric Phase i Trials: The Rolling Six Design.” J Clin Onc 26 (2): 190–95. https://doi.org/10.1200/JCO.2007.12.7712.\n\n\nvan Brummelen, EM, AD Huitema, E van Werkhoven, JH Beijnen, and JH Schellens. 2016. “The Performance of Model-Based Versus Rule-Based Phase i Clinical Trials in Oncology: A Quantitative Comparison of the Performance of Model-Based Versus Rule-Based Phase i Trials with Molecularly Targeted Anticancer Drugs over the Last 2 Years.” J Pharmacokinet Pharmacodyn 43 (3): 235–42."
   },
   {
     "objectID": "listing.html",
