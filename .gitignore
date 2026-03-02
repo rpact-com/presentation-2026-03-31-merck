@@ -5,3 +5,7 @@ www/
 .project
 
 /.luarc.json
+
+*_cache/
+*_files/
+Rplots.pdf

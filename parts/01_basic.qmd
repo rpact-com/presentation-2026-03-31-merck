@@ -5,10 +5,13 @@ author: "Daniel Sabanés Bové"
 part: 1
 description: "Basic training for crmPack users at Merck."
 image: /figures/illustration/exercise.jpg
+execute:
+    cache: true
 ---
 
 ```{r}
 #| echo: false
+#| cache: false
 library(emoji)
 library(rpact)
 ```
@@ -301,6 +304,7 @@ So due to the high probability of overdosing at dose 30, the recommended dose fo
 First we need to put all the components of our model-based dose escalation design together in a `Design` object - here we also need to define a starting dose:
 
 ```{r}
+#| results: false
 design <- Design(
     data = empty_data,
     model = model,
@@ -311,6 +315,14 @@ design <- Design(
     startingDose = 5
 )
 design
+```
+```{r}
+#| echo: false
+#| results: asis
+design_text <- as.character(knitr::knit_print(design))
+design_text <- gsub("(?m)^##\\s+", "### ", design_text, perl = TRUE)
+design_text <- gsub("(?m)^###\\s+", "#### ", design_text, perl = TRUE)
+cat(design_text)
 ```
 
 ## Examine method
@@ -334,14 +346,108 @@ design_adjusted@model <- model_adjusted
 examine(design_adjusted)
 ```
 
-## Backfilling cohorts
-
-
-
 ## Toxicity scenarios
+
+In order to evaluate the operating characteristics of our design, we need to define some toxicity scenarios, i.e. the true dose-toxicity relationship in the population. This needs to be a function mapping a dose vector to a vector of DLT probabilities. This could be:
+
+- Logistic curve
+- Probit curve
+- Power curve
+- Manual specification of DLT probabilities at each dose level
+
+For example:
+
+```{r}
+scenario1 <- function(x) {
+    plogis(- 2 + 0.8 * log(x / 20))
+}
+```
+
+## Toxicity scenarios (cont'd)
+
+```{r}
+curve(scenario1, from = 1, to = 200, ylim = c(0, 1))
+```
 
 ## Running simulations
 
+Now given the design and the toxicity scenario, we can run simulations with the `simulate` method:
+
+```{r}
+sims <- simulate(
+    design_adjusted,
+    nsim = 100,
+    truth = scenario1,
+    mcmcOptions = mcmc_options,
+    seed = 123,
+    parallel = TRUE
+)
+```
+
+## Backfilling cohorts
+
+Especially in oncology trials, it is meanwhile common to open backfill cohorts at lower dose levels while the escalation cohorts are still ongoing at higher dose levels. Recently this was implemented in `crmPack` with the `Backfill` objects. 
+
+For example:
+
+```{r}
+backfill_simple <- Backfill(
+  cohort_size = CohortSizeConst(3),
+  max_size = 12,
+  opening = OpeningMinCohorts(min_cohorts = 1),
+  recruitment = RecruitmentUnlimited(),
+  priority = "lowest"
+)
+backfill_simple
+```
+
+## Backfilling cohorts (cont'd)
+
+This can then be added in the corresponding `backfill` slot of the `Design` object:
+
+```{r}
+design_backfill <- design_adjusted
+design_backfill@backfill <- backfill_simple
+```
+
+Please note that the `examine` method does not yet take the backfilling into account, so it will still show the same results as before. To see the effect of the backfilling, we need to run simulations.
+
 ## Summarizing results
 
-## References {.scrollable}
+We can get basic summaries of the simulation results with the `summary` method:
+
+```{r}
+sims_summary <- summary(sims, truth = scenario1)
+sims_summary
+```
+
+## Plotting results
+
+And we can also get more detailed plots of the simulation results with the `plot` method:
+
+```{r}
+plot(sims)
+```
+
+## Plotting results (cont'd)
+
+The `summary` result can also be plotted:
+
+```{r}
+plot(sims_summary)
+```
+
+# Learning more
+
+## Learning more
+
+Lots of documentation is available on the `crmPack` website: [crmPack.org](https://crmPack.org/)
+It includes:
+
+- 13 vignettes with detailed examples of how to use the package
+  - In particular, the [paper](https://www.crmpack.org/vignettes/getting-started/crmPack_paper/) vignette is a great starting point
+  - Also backfilling cohorts are explained in a dedicated [backfilling](https://www.crmpack.org/vignettes/getting-started/crmPack_backfill/) vignette e.g.
+- Link to the online reference explaining all the functions and classes in the package
+- Contact information for questions and suggestions, as well as a link to the GitHub repository for bug reports and feature requests
+
+## References

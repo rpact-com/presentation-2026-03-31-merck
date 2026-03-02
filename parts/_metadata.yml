@@ -12,6 +12,7 @@ format:
     theme: [default, ../custom.scss]
     logo: /figures/logos/logo_full.png
     favicon: /favicon.ico
+    scrollable: true
     fontsize: 28px
     toc: false
     slide-number: true
