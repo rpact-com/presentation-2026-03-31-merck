@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>crmPack Training for Merck</title>
+<link>https://crmpack-training.merck.2026.rpact.com/listing.html</link>
+<atom:link href="https://crmpack-training.merck.2026.rpact.com/listing.xml" rel="self" type="application/rss+xml"/>
+<description></description>
+<language>en</language>
+<generator>quarto-1.8.27</generator>
+<lastBuildDate>Mon, 30 Mar 2026 16:00:00 GMT</lastBuildDate>
+<item>
+  <title></title>
+  <dc:creator>First Last</dc:creator>
+  <link>https://crmpack-training.merck.2026.rpact.com/parts/01_title1.html</link>
+  <description><![CDATA[ undefined ]]></description>
+  <guid>https://crmpack-training.merck.2026.rpact.com/parts/01_title1.html</guid>
+  <pubDate>Mon, 30 Mar 2026 16:00:00 GMT</pubDate>
+  <media:content url="https://crmpack-training.merck.2026.rpact.com/figures/illustration/packages.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title></title>
+  <dc:creator>First Last</dc:creator>
+  <link>https://crmpack-training.merck.2026.rpact.com/parts/02_title2.html</link>
+  <description><![CDATA[ undefined ]]></description>
+  <guid>https://crmpack-training.merck.2026.rpact.com/parts/02_title2.html</guid>
+  <pubDate>Mon, 30 Mar 2026 16:00:00 GMT</pubDate>
+  <media:content url="https://crmpack-training.merck.2026.rpact.com/figures/illustration/packages.jpg" medium="image" type="image/jpeg"/>
+</item>
+</channel>
+</rss>
