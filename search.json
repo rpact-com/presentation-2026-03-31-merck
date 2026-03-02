@@ -46,7 +46,7 @@
     "href": "parts/01_basic.html#usage-of-model-based-designs",
     "title": "crmPack Training for Merck",
     "section": "Usage of model-based designs",
-    "text": "Usage of model-based designs\n\n(Rogatko et al. 2007) reported that 98.4% of phase I cancer trials use a 3+3 design or a variant, but that only 35% of participants is such trials were treated at “optimal” doses, compared to 55% in model-based trials\n(Le Tourneau, Lee, and Siu 2009) reported 3.3% (6 of 181) of trials used CRM during 2007–2008\n(van Brummelen et al. 2016) reported that only 6.4% (11 of 172 oncology Phase I trials) used model-based approaches from 2012 to 2014"
+    "text": "Usage of model-based designs\n\n(Rogatko et al. 2007) reported that 98.4% of phase I cancer trials use a 3+3 design or a variant, but that only 35% of participants is such trials were treated at “optimal” doses, compared to 55% in model-based trials\n(Le Tourneau, Lee, and Siu 2009) reported 3.3% (6 of 181) of trials used CRM during 2007–2008\n(van Brummelen et al. 2016) reported that only 6.4% (11 of 172 oncology Phase I trials) used model-based approaches from 2012 to 2014\n(NONAMI2025?) reported that from 394 clinical trials submitted to PMDA between 2013 and 2022, 195 (49.5%) used rule-based designs, 114 (28.9%) used model-based designs and 85 (21.6%) used model-assisted designs."
   },
   {
     "objectID": "parts/01_basic.html#crmpack-to-the-rescue",
@@ -54,6 +54,27 @@
     "title": "crmPack Training for Merck",
     "section": "crmPack to the rescue!",
     "text": "crmPack to the rescue!\nWith crmPack we aim to make it easy for everyone to use model-based designs in their dose escalation studies. The package provides:\n\nA flexible framework to define dose escalation designs\nCalculation of operating characteristics via simulations\nVisualization and tabulation of results\nA user-friendly interface to backfill cohorts\nA growing collection of advanced design options (e.g. dual endpoint designs, time-to-event designs, etc.)"
+  },
+  {
+    "objectID": "parts/01_basic.html#flow-chart",
+    "href": "parts/01_basic.html#flow-chart",
+    "title": "crmPack Training for Merck",
+    "section": "Flow chart",
+    "text": "Flow chart\n\nGeneric flow chart for model-based dose escalation design"
+  },
+  {
+    "objectID": "parts/01_basic.html#package-structure-parallel-to-flow",
+    "href": "parts/01_basic.html#package-structure-parallel-to-flow",
+    "title": "crmPack Training for Merck",
+    "section": "Package structure: parallel to flow",
+    "text": "Package structure: parallel to flow\n\ncrmPack package structure parallels the flow chart"
+  },
+  {
+    "objectID": "parts/01_basic.html#framework-in-crmpack",
+    "href": "parts/01_basic.html#framework-in-crmpack",
+    "title": "crmPack Training for Merck",
+    "section": "Framework in crmPack",
+    "text": "Framework in crmPack\n\ncrmPack package framework"
   },
   {
     "objectID": "parts/01_basic.html#references",
