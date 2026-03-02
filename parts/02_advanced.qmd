@@ -5,10 +5,13 @@ author: "Daniel Sabanés Bové"
 part: 2
 description: "Advanced training for crmPack users at Merck."
 image: /figures/illustration/refatoring_Antoni-Shkraba.jpg
+execute:
+    cache: true
 ---
 
 ```{r}
 #| echo: false
+#| cache: false
 library(emoji)
 library(rpact)
 ```
@@ -17,7 +20,9 @@ library(rpact)
 
 ::::: columns
 ::: {.column width="70%"}
-- Mixture priors
+- Prior construction: 
+  - Minimally informative prior
+  - Mixture priors
 - Time-to-event (TITE) designs
 :::
 
@@ -25,5 +30,199 @@ library(rpact)
 ![](/figures/logos/crmPack_logo.png){height="150px"}
 :::
 :::::
+
+# Prior construction
+
+## Minimally informative prior
+
+- As we have seen in the basic training, it is not trivial to construct a reasonable prior for the CRM model parameters.
+- It gets easier when we don't directly specify priors for the model parameters, but instead specify a prior for the toxicity probabilities at the doses of interest.
+- For logistic (log-)normal models, the `crmPack` function `Quantiles2LogisticNormal` can be used to compute the model parameters that correspond to a given set of quantiles for the toxicity probabilities at the doses of interest.
+
+## Minimally informative prior (cont'd)
+
+- Specifically, @NEUENSCHWANDER2008 introduced the concept of a "minimally informative prior" for the CRM, which is a prior for the logistic (log-) normal model that is as vague as possible while still being consistent with the prior information we have about the toxicity probabilities at the doses of interest
+- The algorithm can be summarized as follows:
+  - For a high dose, have a small chance (say 5%) of being below a low toxicity probability (say 20%)
+  - For a low dose have a small chance (say 5%) of being above a low toxicity probability (say 10%)
+  - For intermediate doses, assume prior medians are linear in log-dose on the logit scale
+  - Then iteratively compute the model prior parameters that come closest to satisfying these constraints
+
+## Example of a minimally informative prior
+
+Note that we only use a coarse grid here to simplify the optimization problem a bit.
+
+```{r}
+#| message: false
+coarseGrid <- c(25, 100, 300)
+min_result <- MinimalInformative(
+  dosegrid = coarseGrid, 
+  refDose = 100,
+  logNormal = TRUE, # use a log-normal distribution for the slope parameter
+  threshmin = 0.1, # the quantile for the low dose
+  threshmax = 0.2, # the quantile for the high dose
+  seed = 432, # for reproducibility
+  control = list(max.time = 30) # limit the optimization time here
+)
+```
+
+## Comparing the prior result with the target quantiles
+
+```{r}
+matplot(
+    x = coarseGrid,
+    y = min_result$required,
+    type = "o",
+    lty = 1,
+    col = 1
+)
+matlines(
+    x = coarseGrid,
+    y = min_result$quantiles,
+    type = "o",
+    lty = 2,
+    col = 1
+)
+legend("topleft", legend = c("Target quantiles", "Obtained quantiles"), lty = 1:2, col = 1)
+```
+
+## Resulting prior parameters
+
+```{r}
+min_result$model
+```
+
+## Mixture priors
+
+- Sometimes we have more specific prior information about the toxicity probabilities at the doses of interest, for example from preclinical data or from similar drugs.
+- In such cases, we can use mixture priors to incorporate this information into the CRM model
+- For example, we can use a logistic log-normal model with a mixture of two normal distributions, with the weights of the two components reflecting our uncertainty about which scenario is more likely
+- Applications of mixture priors include:
+  - bimodal: e.g. one representing a "low toxicity" scenario and one representing a "high toxicity" scenario
+  - borrowing from another compound: e.g. one representing the information from a similar drug and one representing a minimally informative prior
+  - borrowing from another population: e.g. one representing the behavior from a global study population and one minimally informative
+
+## Mixture priors in crmPack
+
+`crmPack` currently includes the following classes for mixture priors:
+
+- [`LogisticNormalMixture`](https://docs.crmpack.org/latest-tag/reference/LogisticNormalMixture-class.html): 
+  - standard logistic regression model with a mixture of $K=2$ bivariate normal priors on the intercept and slope parameters
+  - the weight parameter is also estimated from the data and has a Beta hyperprior distribution
+- [`LogisticNormalFixedMixture`](https://docs.crmpack.org/latest-tag/reference/LogisticNormalFixedMixture-class.html)
+  - standard logistic regression model with fixed mixture of multiple bivariate (log-) normal priors on the intercept and slope parameters
+  - the weights are fixed, and $K>2$ mixture components can be used
+
+## Example of LogisticNormalMixture
+
+Let's first define two bivariate normal components: 
+
+```{r}
+comp1 <- ModelParamsNormal(
+    mean = c(-0.85, 1),
+    cov = matrix(c(1, -0.5, -0.5, 1), nrow = 2)
+  )
+comp2 <- ModelParamsNormal(
+    mean = c(1, 1.5),
+    cov = matrix(c(1.2, -0.45, -0.45, 0.6), nrow = 2)
+  )
+```
+
+Say we use a uniform $\textrm{Beta}(1,1)$ hyperprior for the weight parameter, and a reference dose of $d^{*} = 50$:
+
+```{r}
+normal_mix_prior <- LogisticNormalMixture(
+    comp1 = comp1,
+    comp2 = comp2,
+    weightpar = c(a = 1, b = 1),
+    ref_dose = 50
+)
+normal_mix_prior
+```
+
+## Example of LogisticNormalFixedMixture
+
+Here we need to fix the weights of the mixture components, for example to 0.5 each:
+
+```{r}
+normal_mix_fix_weights_prior <- LogisticNormalFixedMixture(
+  components = list(
+    comp1 = comp1,
+    comp2 = comp2
+  ),
+  weights = c(0.5, 0.5),
+    ref_dose = 50
+)
+normal_mix_fix_weights_prior
+```
+
+## Comparison of the two prior specifications
+
+We can easily see the difference in the JAGS code:
+
+```{r}
+normal_mix_prior@priormodel
+normal_mix_fix_weights_prior@priormodel
+```
+
+## Yet another but different mixture prior
+
+- [`LogisticLogNormalMixture`](https://docs.crmpack.org/latest-tag/reference/LogisticLogNormalMixture-class.html)
+  - standard logistic model with *online* mixture of $K=2$ bivariate log normal priors on the intercept and slope parameters
+  - can be used when data is arising online from the informative component of the prior, at the same time with the data of the trial of main interest
+  - assumes the same prior distribution for the informative component and the current trial data (for simplicity), the only question is whether the parameters are identical or not
+  - needs to use [`DataMixture`](https://docs.crmpack.org/latest-tag/reference/DataMixture-class.html) class to specify the data structure for the online data
+
+## Example of LogisticLogNormalMixture
+
+Note that we just use one component, i.e. one prior here:
+
+```{r}
+online_mix_prior <- LogisticLogNormalMixture(
+    share_weight = 0.5, # probability that the current and external data are from the same distribution
+    ref_dose = 50,
+    mean = comp1@mean,
+    cov = comp1@cov
+)
+```
+
+Now we define the data, which consists of the current trial data and the external data:
+
+```{r}
+#| message: false
+data_share <- DataMixture(
+    doseGrid = c(25, 50, 100, 200, 300),
+    x = c(25, 25, 50, 50),
+    y = c(0, 1, 0, 1),
+    xshare = c(25, 25, 50, 50, 100, 100, 300, 300),
+    yshare = c(0, 0, 0, 1, 0, 0, 0, 1)
+)
+```
+
+## Example of LogisticLogNormalMixture (cont'd)
+
+Let's look at the model definition:
+
+```{r}
+online_mix_prior@priormodel
+online_mix_prior@datamodel
+```
+
+We see that `comp == 2` means that the current and external data are from the same distribution, while `comp == 1` means they are from different distributions.
+
+## Example of LogisticLogNormalMixture (cont'd)
+
+We can produce samples then as usually:
+
+```{r}
+samples_share <- mcmc(data_share, online_mix_prior, McmcOptions())
+plot(samples_share, online_mix_prior, data_share)
+```
+
+Probability that the current and external data are from the same distribution:
+
+```{r}
+mean(samples_share@data$comp == 2)
+```
 
 ## References
