@@ -60,6 +60,7 @@ Part of this training material is based on the `crmPack` training materials deve
 -   [@ROGATKO2007] reported that 98.4% of phase I cancer trials use a 3+3 design or a variant, but that only 35% of participants is such trials were treated at "optimal" doses, compared to 55% in model-based trials
 -   [@LETOURNAU2009] reported 3.3% (6 of 181) of trials used CRM during 2007--2008
 -   [@VANBRUMMELEN2016] reported that only 6.4% (11 of 172 oncology Phase I trials) used model-based approaches from 2012 to 2014
+-   [@NONAMI2025] reported that from 394 clinical trials submitted to PMDA between 2013 and 2022, 195 (49.5%) used rule-based designs, 114 (28.9%) used model-based designs and 85 (21.6%) used model-assisted designs.
 
 ## crmPack to the rescue!
 
@@ -70,5 +71,21 @@ With `crmPack` we aim to make it easy for everyone to use model-based designs in
 -  Visualization and tabulation of results
 -  A user-friendly interface to backfill cohorts
 -  A growing collection of advanced design options (e.g. dual endpoint designs, time-to-event designs, etc.)
+
+# Model-based dose escalation design
+
+## Flow chart
+
+![Generic flow chart for model-based dose escalation design](/figures/screenshots/2026-03-02-13-36-13.png)
+
+## Package structure: parallel to flow
+
+![`crmPack` package structure parallels the flow chart](../figures/screenshots/2026-03-02-13-37-38.png)
+
+## Framework in crmPack
+
+![`crmPack` package framework](/figures/screenshots/framework.png)
+
+# 
 
 ## References {.scrollable}
