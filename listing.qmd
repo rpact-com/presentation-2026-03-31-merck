@@ -1,0 +1,17 @@
+---
+title: "Slides"
+listing:
+  contents: 
+    - "parts/*.qmd"
+  type: default
+  sort: part
+  grid-columns: 2
+  max-items: 99
+  max-description-length: 225
+  date-format: medium
+  categories: false
+  feed: 
+    items: 3
+    title: Presentation title # TODO: Update the presentation title.
+    language: en
+---

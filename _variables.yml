@@ -1,0 +1,8 @@
+# Author definitions using simple placeholders
+# The Lua filter will replace {{LINKEDIN}} and {{ORCID}} with actual icons
+
+author-wassmer: 'Gernot Wassmer<span class="author-orcid"><a href="https://www.linkedin.com/in/gernot-wassmer" class="author-linkedin" title="Visit Gernot Wassmer''s LinkedIn Profile">{{LINKEDIN}}</a> <a href="https://orcid.org/0000-0001-9397-1794" title="Visit Gernot Wassmer''s ORCID">{{ORCID}}</a></span>'
+
+author-pahlke: 'Friedrich Pahlke<span class="author-orcid"><a href="https://www.linkedin.com/in/pahlke/" class="author-linkedin" title="Visit Friedrich Pahlke''s LinkedIn Profile">{{LINKEDIN}}</a> <a href="https://orcid.org/0000-0003-2105-2582" title="Visit Friedrich Pahlke''s ORCID">{{ORCID}}</a></span>'
+
+author-sabanes: 'Daniel Sabanés Bové<span class="author-orcid"><a href="https://www.linkedin.com/in/danielsabanesbove/" class="author-linkedin" title="Visit Daniel Sabanés Bové''s LinkedIn Profile">{{LINKEDIN}}</a> <a href="https://orcid.org/0000-0002-0176-9239" title="Visit Daniel Sabanés Bové''s ORCID">{{ORCID}}</a></span>'

@@ -1,0 +1,151 @@
+/*see https://quarto.org/docs/presentations/revealjs/themes.html */
+
+/*-- scss:defaults --*/
+$theme-darkblue: #01364C;
+$theme-blue: #99D9DD;
+$theme-white: #F7F8F9;
+$theme-yellow: #F4BA02;
+$theme-red: #FF0000;
+$theme-green: #0f6234;
+
+$presentation-heading-font-weight: 580;
+$presentation-h1-font-size: 1.8em;
+$presentation-h2-font-size:	1.6em;
+$presentation-h3-font-size:	1.3em;
+$presentation-h4-font-size:	1em;
+$code-block-bg: #FEFEFE;
+$code-block-font-size: 0.65em;
+$body-color: #222;
+$border-color: lighten($body-color, 30%);
+$tabset-border-color: lighten($body-color, 30%);
+
+/*-- scss:rules --*/
+
+code {
+    font-size: 0.85em;
+}
+
+.blue {
+  color: $theme-blue;
+  font-weight: bold;
+}
+
+.green {
+  color: $theme-green;
+  font-weight: bold;
+}
+
+.red {
+  color: $theme-red;
+  font-weight: bold;
+}
+
+.red-small {
+  color: $theme-red;
+  font-size: 0.8em;
+}
+
+
+.small {
+  font-size: 0.8em;
+}
+
+.yellow {
+  color: $theme-yellow;
+  font-weight: bold;
+}
+
+.error {
+  color: $theme-red;
+  font-size: 0.7em;
+}
+
+.footnote {
+  color: #777777;
+  font-size: 0.7em;
+}
+
+.copyright {
+  color: #999999;
+  font-size: 0.4em;
+}
+
+.clean-code-rule {
+  color: #999999;
+  font-size: 0.5em;
+}
+
+.quarto-figure {
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+.quarto-figure-center {
+  text-align: center !important;
+  margin: 0px !important;
+  padding: 0px !important;
+}
+
+p.caption,
+.center .caption {
+  text-align: center !important;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.info-block {
+  background-color: #EEEEEE !important;
+  width: 100% !important;
+  border: solid;
+  border-width: 2px;
+  border-color: #777777;
+  padding: 10px;
+  font-weight: normal;
+}
+
+.callout-title {
+    font-size: 1.6em !important;
+}
+
+/*-- callout box content --*/
+.callout-content {
+    font-size: 1.4em!important;
+}
+
+/* Stack multiple authors vertically in the title block */
+.quarto-title .quarto-title-meta-author {
+  display: block;
+}
+
+.copyright {
+  color: #999999;
+  font-size: 0.6em;
+}
+
+.reveal .callout.callout-style-default div.callout-body {
+ 	  font-size: var(--r-main-font-size);
+}
+
+.cell-output pre code {
+	max-height: 550px !important;
+	background-color: #F5F5F5 !important;
+}
+
+.cell-output-display {
+    font-size: 0.65em;
+}
+
+/*-- R print output (to activate use #| class: printOutput) --*/
+.printOutput {
+    font-size: 0.7em;
+}
+
+
+
+

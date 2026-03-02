@@ -1,0 +1,62 @@
+project:
+  type: website
+  output-dir: www
+
+website:
+  title: "Title of the Presentation Website" # TODO: provide the website title.
+  site-url: https://presentation.company.year.rpact.com # TODO: provide the website URL.
+  favicon: favicon.ico
+  search: true
+  navbar:
+    logo: figures/logos/logo_100.png
+    left:
+      - href: index.qmd
+        text: Home
+        icon: "house-fill"
+      - href: listing.qmd
+        text: Slides
+        icon: "file-earmark-slides"
+    right:
+      - icon: linkedin
+        href: https://www.linkedin.com/company/rpact/
+        aria-label: LinkedIn
+      - icon: github
+        href: https://github.com/rpact-com/
+        aria-label: GitHub
+      - icon: envelope
+        href: https://www.rpact.com/contact/
+        aria-label: Contact
+  page-footer:
+    left: | # TODO: update the copyright year as needed.
+      Copyright &copy; 2026 RPACT. All rights reserved.
+    center:
+      - icon: house
+        text: RPACT
+        href: https://www.rpact.com/ 
+      - icon: envelope
+        text: Contact
+        href: https://www.rpact.com/contact/
+    right:
+      - icon: linkedin
+        href: https://www.linkedin.com/company/rpact/
+        aria-label: LinkedIn
+      - icon: github
+        href: https://github.com/rpact-com
+        aria-label: GitHub
+
+filters:
+  - author-icons
+
+format:
+  html:
+    theme:
+    - flatly
+    - custom.scss
+    toc: true
+    link-external-icon: false
+    link-external-newwindow: true
+
+editor: source
+
+
+

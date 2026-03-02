@@ -1,0 +1,6 @@
+title: Author Icons
+author: RPACT
+version: 1.0.0
+contributes:
+  filters:
+    - author-icons.lua

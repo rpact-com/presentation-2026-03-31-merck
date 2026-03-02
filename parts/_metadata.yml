@@ -1,0 +1,37 @@
+date: "yyyy-mm-dd" # TODO: Enter date.
+date-format: long
+institute: "[RPACT](https://www.rpact.com)"
+bibliography: ../references.bib
+knitr:
+  opts_chunk:
+    eval: true
+    echo: true
+    code-line-numbers: false
+format: 
+  revealjs:
+    theme: [default, ../custom.scss]
+    logo: /figures/logos/logo_full.png
+    favicon: /favicon.ico
+    fontsize: 28px
+    toc: false
+    slide-number: true
+    progress: true
+    code-line-numbers: true
+    mouse-wheel: false
+    link-external-newwindow: true
+    transition: fade
+    # TODO: Enter title.
+    footer: 'Title - [Home](/index.html "Title") | [Slides](/listing.html "Overview of all slides") | [LinkedIn](https://www.linkedin.com/company/rpact) | [RPACT](https://www.rpact.com "RPACT") | [CRAN](https://cran.r-project.org/package=rpact) | [Contact](https://www.rpact.com/contact)'
+    html-math-method:
+        method: mathml
+    title-slide-attributes:
+        data-background-image: "/figures/logos/logo_full.png"
+        data-background-size: "150px 150px"
+        data-background-position: "20px 20px"
+        data-background-opacity: "1"
+lang: en
+editor: 
+  markdown: 
+    wrap: 120
+editor_options: 
+  chunk_output_type: console
