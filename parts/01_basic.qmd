@@ -13,12 +13,15 @@ library(emoji)
 library(rpact)
 ```
 
-## Title `r emoji("package")`
+## Basic Training Outline `r emoji("package")`
 
 ::::: columns
 ::: {.column width="70%"}
-- Text
-- Text
+- Motivation
+- Model-based dose escalation design
+- Example study design
+- Calculating operating characteristics
+- Backfilling cohorts
 :::
 
 ::: {.column width="30%"}

@@ -13,12 +13,12 @@ library(emoji)
 library(rpact)
 ```
 
-## Title `r emoji("package")`
+## Advanced Training Outline `r emoji("package")`
 
 ::::: columns
 ::: {.column width="70%"}
-- Text
-- Text
+- Mixture priors
+- Time-to-event (TITE) designs
 :::
 
 ::: {.column width="30%"}
