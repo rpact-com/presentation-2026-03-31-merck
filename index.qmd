@@ -17,7 +17,7 @@ editor:
 **Welcome to the crmPack Training for Merck!** 
 
 This website is accessible at
-[crmPack Training for Merck](https://crmpack-training.merck.2026.rpact.com).
+[crmPack Training for Merck](https://merck.training.2026.crmpack.org).
 
 **Details**
 
