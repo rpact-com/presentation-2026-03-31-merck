@@ -226,4 +226,152 @@ Probability that the current and external data are from the same distribution:
 mean(samples_share@data$comp == 2)
 ```
 
+# Time-to-event (TITE) designs
+
+## Motivation
+
+- The TITE-CRM design was introduced by @CHEUNG2004 to address the issue of late-onset toxicities in dose-escalation trials (e.g. up to 6 months in radiotherapy trials)
+- It would be impractical to always wait for the full possible DLT assessment period to elapse for all patients before making dose-escalation decisions, as this would lead to very long trial durations (e.g. 12 years)
+- The TITE-CRM design allows for making dose-escalation decisions based on partial information about the occurrence of DLTs, by using a weighted likelihood approach that accounts for the time-to-event nature of the data
+- This leads to much shorter trial durations (e.g. 2-4 years) while still maintaining the CRM's accuracy and safety
+
+## Required design inputs
+
+In addition to the standard CRM design inputs, additional inputs are required for TITE-CRM designs:
+
+-  A DLT observation time period of length $T_{\textrm{max}}$, also called the DLT window
+-  A weighting function $w(t)$ that assigns weights to the observed data based on the time of observation relative to the DLT window
+-  The required follow-up time before enrolling the next cohort at a potentially higher dose level, called "safety window" in `crmPack`
+
+## Model specification
+
+The TITE-CRM uses a pseudo-likelihood function:
+
+$$
+\prod_{i=1}^{n} \left[ (p(x_i)w(t_i))^{y_i} (1 - p(x_i)w(t_i))^{1 - y_i} \right]
+$$
+
+where $p(x_i)$ is a standard CRM model for the probability of DLT at dose $x_i$, $y_i$ is the binary indicator of whether a DLT was observed for patient $i$, and $w(t_i)$ is the weight assigned to patient $i$ based on the time of observation $t_i$ relative to the DLT window.
+
+Note: In `crmPack` this is implemented with the "Poisson trick" in JAGS. In principle this could work for any CRM model, but we restrict it to `LogisticLogNormal` so far in `crmPack`.
+
+## Weighting functions
+
+In `crmPack` you can choose between
+
+- the linear weighting function $w(t) = \min(1, t / T_{\textrm{max}})$, which is the most commonly used weighting function in the literature, and
+- the adaptive weighting function proposed in formula (3) of @CHEUNG2004:
+
+$$
+w(t) = \frac{\kappa}{z + 1} + \frac{1}{z + 1}\left(\frac{t - t_{(\kappa)}}{t_{(\kappa + 1)} - t_{(\kappa)}}\right)
+$$
+
+where $z$ is the total number of DLTs, $0 \equiv t_{(0)} < t_{(1)} \leq \cdots \leq t_{(z)} < t_{(z+1)} \equiv T_{\textrm{max}}$ are the ordered failure times, and $\kappa = \max_{0 \leq j \leq z}\{j : t \geq t_{(j)}\}$.
+  - Basically, the adaptive function allocates more weight to each record than the linear function when DLTs are observed early and less weight when DLTs are observed late. 
+
+## Illustration
+
+![From Fig. 1 from @VANWERKHOVEN2020](/figures/screenshots/2026-03-03-22-07-12.png)
+
+## Example with crmPack
+
+```{r}
+model <- TITELogisticLogNormal(
+  mean = c(1.33, 1.49),
+  cov = matrix(c(1.826, 0.0209, 0.0209, 0.0245), nrow = 2),
+  ref_dose = 56,
+  weight_method = "linear"
+)
+increments <- IncrementsRelative(intervals = c(0, 20), increments = c(2, 1))
+next_best <- NextBestMTD( # Note that we use a "nonparametric" rule here.
+  target = 0.3,
+  derive = function(mtd_samples) mean(mtd_samples)
+)
+stopping <- StoppingMinPatients(n = 20)
+size <- CohortSizeConst(3)
+t_max <- 42
+# Note that we need to use the DataDA class because we need to have
+# DLT times in the data.
+empty_data <- DataDA(doseGrid = seq(from = 2, to = 50, by = 2), Tmax = t_max)
+safety_window <- SafetyWindowConst(gap = c(7, 5), follow = 7, follow_min = 14)
+```
+
+## Example with crmPack (cont'd)
+
+Some observations here:
+
+- We use a "nonparametric" rule for the next best dose, because we do not (yet) have a TITE-CRM specific model-based rule implemented
+- We use the `DataDA` class for the data, because we need to have DLT times in the data
+- The safety window can be a bit confusing:
+  - `gap` is the time between patients in the same cohort (so 7 days between the first and second patient, and 5 days between the second and third patient)
+  - `follow` is the time we need to wait after the last patient in the cohort before enrolling the next cohort
+  - `follow_min` is the time at least one patient needs to have been followed up for before enrolling the next cohort
+
+## Example with crmPack (cont'd)
+
+We need to define the true scenario in terms of both the true toxicity probabilities at the doses of interest and the distribution of DLT times:
+
+```{r}
+truth <- function(x) {
+  plogis(2 + 3 * log(x / 56))
+}
+
+onset <- 3
+exp_cond_cdf <- function(x) {
+  1 - (pexp(x, 1 / onset, lower.tail = FALSE) - pexp(t_max, 1 / onset, lower.tail = FALSE)) / pexp(t_max, 1 / onset)
+}
+```
+
+## Example with crmPack (cont'd)
+
+Let's plot the CDF of this truncated exponential distribution of DLT times (constrained to the DLT window) to see how it looks like:
+
+```{r}
+curve(exp_cond_cdf, from = 0, to = t_max, ylab = "CDF", xlab = "Time")
+abline(v = onset)
+```
+
+## Example with crmPack (cont'd)
+
+Now we can define the design and run simulations:
+
+```{r}
+design <- DADesign(
+  model = model,
+  increments = increments,
+  nextBest = next_best,
+  stopping = stopping,
+  cohort_size = size,
+  data = empty_data,
+  safetyWindow = safety_window,
+  startingDose = 2
+)
+sims <- simulate(
+  object = design,
+  truthTox = truth,
+  truthSurv = exp_cond_cdf,
+  trueTmax = t_max,
+  nsim = 100,
+  seed = 413,
+  mcmcOptions = McmcOptions(burnin = 500, step = 2, samples = 200, rng_kind = "Mersenne-Twister", rng_seed = 413)
+)
+```
+
+## Example with crmPack (cont'd)
+
+```{r}
+summary(sims, truth = truth, target = c(0.29, 0.31))
+```
+
+## Practical aspects
+
+@VANWERKHOVEN2020 discuss practical aspects of running TITE-CRM designs:
+
+- They "have found that designing and running earlyphase trials using the TiTE-CRM can be complex, but is feasible and worthwhile"
+- Prior probability of DLTs at the dose grid: 
+  - use the "background DLT probability", i.e. without any experimental treatment, as reference (all probabilities need to be higher)
+  - effect of the addition of the experimental drug can then be approximated by multiplication with dose enhancement factors obtained from preclinical studies
+- Recommend to have the first few patients treated at the starting dose, to avoid aggressive escalation early in the trial
+- Don't just report the final MTD estimate, but also the credible interval for it: particularly relevant with incomplete follow-up data
+
 ## References
