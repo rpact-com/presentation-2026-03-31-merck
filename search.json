@@ -193,14 +193,14 @@
     "href": "parts/01_basic.html#examine-method",
     "title": "crmPack Training for Merck",
     "section": "Examine method",
-    "text": "Examine method\nThe first “quick check” we should run on our design is how it behaves if we don’t see any DLTs at all - can we even reach the higher doses? This can be done with the examine method:\n\nexamine(design)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        5 FALSE         0\n4     5    3        5 FALSE         0\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3       10 FALSE         0\n9    20    0       30 FALSE        50\n10   20    1       20 FALSE         0\n11   20    2       20 FALSE         0\n12   20    3       10 FALSE       -50\n13   30    0       40 FALSE        33\n14   30    1       30 FALSE         0\n15   30    2       20 FALSE       -33\n16   30    3       20 FALSE       -33\n17   40    0       80 FALSE       100\n18   40    1       40 FALSE         0\n19   40    2       30 FALSE       -25\n20   40    3       20 FALSE       -50\n21   80    0      150 FALSE        88\n22   80    1       80 FALSE         0\n23   80    2       50 FALSE       -38\n24   80    3       40 FALSE       -50\n25  150    0      200 FALSE        33\n26  150    1      140 FALSE        -7\n27  150    2       90 FALSE       -40\n28  150    3       60 FALSE       -60\n\n\nHere it could be also concerning that if we observe 3 DLTs at the starting dose of 5, we still continue with the same dose 5 for the next cohort. The reason here is that the prior is “too confident” that at low doses we have a low DLT probability."
+    "text": "Examine method\nThe first “quick check” we should run on our design is how it behaves if we don’t see any DLTs at all - can we even reach the higher doses? This can be done with the examine method:\n\nexamine(design)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        5 FALSE         0\n4     5    3        5 FALSE         0\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3       10 FALSE         0\n9    20    0       20 FALSE         0\n10   20    1       20 FALSE         0\n11   20    2       20 FALSE         0\n12   20    3       10 FALSE       -50\n13   20    0       30 FALSE        50\n14   20    1       20 FALSE         0\n15   20    2       20 FALSE         0\n16   20    3       20 FALSE         0\n17   30    0       60 FALSE       100\n18   30    1       30 FALSE         0\n19   30    2       20 FALSE       -33\n20   30    3       20 FALSE       -33\n21   60    0      100 FALSE        67\n22   60    1       50 FALSE       -17\n23   60    2       40 FALSE       -33\n24   60    3       30 FALSE       -50\n25  100    0      200 FALSE       100\n26  100    1       90 FALSE       -10\n27  100    2       60 FALSE       -40\n28  100    3       50 FALSE       -50\n\n\nHere it could be also concerning that if we observe 3 DLTs at the starting dose of 5, we still continue with the same dose 5 for the next cohort. The reason here is that the prior is “too confident” that at low doses we have a low DLT probability."
   },
   {
     "objectID": "parts/01_basic.html#adjusted-performance",
     "href": "parts/01_basic.html#adjusted-performance",
     "title": "crmPack Training for Merck",
     "section": "Adjusted performance",
-    "text": "Adjusted performance\nSo we need to adjust the prior to be less confident, e.g. by increasing the standard deviations of the parameters:\n\nmodel_adjusted &lt;- get_model(sigma0 = 2, sigma1 = 4, rho = 0.5)\ndesign_adjusted &lt;- design\ndesign_adjusted@model &lt;- model_adjusted\nexamine(design_adjusted)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        1 FALSE       -80\n4     5    3       NA  TRUE        NA\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3        5 FALSE       -50\n9    20    0       20 FALSE         0\n10   20    1       20 FALSE         0\n11   20    2       10 FALSE       -50\n12   20    3       10 FALSE       -50\n13   20    0       20 FALSE         0\n14   20    1       20 FALSE         0\n15   20    2       20 FALSE         0\n16   20    3       10 FALSE       -50\n17   20    0       30 FALSE        50\n18   20    1       20 FALSE         0\n19   20    2       20 FALSE         0\n20   20    3       20 FALSE         0\n21   30    0       60 FALSE       100\n22   30    1       30 FALSE         0\n23   30    2       20 FALSE       -33\n24   30    3       20 FALSE       -33\n25   60    0      120 FALSE       100\n26   60    1       50 FALSE       -17\n27   60    2       40 FALSE       -33\n28   60    3       30 FALSE       -50\n29  120    0      200 FALSE        67\n30  120    1      130 FALSE         8\n31  120    2       70 FALSE       -42\n32  120    3       50 FALSE       -58"
+    "text": "Adjusted performance\nSo we need to adjust the prior to be less confident, e.g. by increasing the standard deviations of the parameters:\n\nmodel_adjusted &lt;- get_model(sigma0 = 2, sigma1 = 4, rho = 0.5)\ndesign_adjusted &lt;- design\ndesign_adjusted@model &lt;- model_adjusted\nexamine(design_adjusted)\n\n   dose DLTs nextDose  stop increment\n1     5    0       10 FALSE       100\n2     5    1        5 FALSE         0\n3     5    2        1 FALSE       -80\n4     5    3       NA  TRUE        NA\n5    10    0       20 FALSE       100\n6    10    1       10 FALSE         0\n7    10    2       10 FALSE         0\n8    10    3        5 FALSE       -50\n9    20    0       20 FALSE         0\n10   20    1       20 FALSE         0\n11   20    2       10 FALSE       -50\n12   20    3       10 FALSE       -50\n13   20    0       20 FALSE         0\n14   20    1       20 FALSE         0\n15   20    2       20 FALSE         0\n16   20    3       10 FALSE       -50\n17   20    0       20 FALSE         0\n18   20    1       20 FALSE         0\n19   20    2       20 FALSE         0\n20   20    3       20 FALSE         0\n21   20    0       30 FALSE        50\n22   20    1       20 FALSE         0\n23   20    2       20 FALSE         0\n24   20    3       20 FALSE         0\n25   30    0       60 FALSE       100\n26   30    1       30 FALSE         0\n27   30    2       20 FALSE       -33\n28   30    3       20 FALSE       -33\n29   60    0      120 FALSE       100\n30   60    1       60 FALSE         0\n31   60    2       40 FALSE       -33\n32   60    3       30 FALSE       -50\n33  120    0      200 FALSE        67\n34  120    1      130 FALSE         8\n35  120    2       70 FALSE       -42\n36  120    3       50 FALSE       -58"
   },
   {
     "objectID": "parts/01_basic.html#toxicity-scenarios",
@@ -354,7 +354,7 @@
     "href": "parts/02_advanced.html#example-of-a-minimally-informative-prior",
     "title": "crmPack Training for Merck",
     "section": "Example of a minimally informative prior",
-    "text": "Example of a minimally informative prior\nNote that we only use a coarse grid here to simplify the optimization problem a bit.\n\ncoarseGrid &lt;- c(25, 100, 300)\nmin_result &lt;- MinimalInformative(\n  dosegrid = coarseGrid, \n  refDose = 100,\n  logNormal = TRUE, # use a log-normal distribution for the slope parameter\n  threshmin = 0.1, # the quantile for the low dose\n  threshmax = 0.2, # the quantile for the high dose\n  seed = 432, # for reproducibility\n  control = list(max.time = 30) # limit the optimization time here\n)\n\nIt: 1, obj value (lsEnd): 0.06732883077 indTrace: 1\nIt: 214, obj value (lsEnd): 0.01474025243 indTrace: 214\nIt: 238, obj value (lsEnd): 0.01416193999 indTrace: 238\nIt: 460, obj value (lsEnd): 0.01295269405 indTrace: 460\ntimeSpan = 30.000442 maxTime = 30\nEmini is: 0.01295269405\nxmini are:\n-1.280026342 0.6618977116 1.254935046 0.1500300078 0.5608228116 \nTotally it used 30.000481 secs\nNo. of function call is: 10147"
+    "text": "Example of a minimally informative prior\nNote that we only use a coarse grid here to simplify the optimization problem a bit.\n\ncoarseGrid &lt;- c(25, 100, 300)\nmin_result &lt;- MinimalInformative(\n  dosegrid = coarseGrid, \n  refDose = 100,\n  logNormal = TRUE, # use a log-normal distribution for the slope parameter\n  threshmin = 0.1, # the quantile for the low dose\n  threshmax = 0.2, # the quantile for the high dose\n  seed = 432, # for reproducibility\n  control = list(max.time = 30) # limit the optimization time here\n)\n\nIt: 1, obj value (lsEnd): 0.06732883077 indTrace: 1\nIt: 214, obj value (lsEnd): 0.01474025243 indTrace: 214\nIt: 238, obj value (lsEnd): 0.01416193999 indTrace: 238\nIt: 460, obj value (lsEnd): 0.01295269405 indTrace: 460\ntimeSpan = 30.002664 maxTime = 30\nEmini is: 0.01295269405\nxmini are:\n-1.280026342 0.6618977116 1.254935046 0.1500300078 0.5608228116 \nTotally it used 30.002705 secs\nNo. of function call is: 10086"
   },
   {
     "objectID": "parts/02_advanced.html#comparing-the-prior-result-with-the-target-quantiles",
@@ -438,13 +438,97 @@
     "href": "parts/02_advanced.html#example-of-logisticlognormalmixture-contd-1",
     "title": "crmPack Training for Merck",
     "section": "Example of LogisticLogNormalMixture (cont’d)",
-    "text": "Example of LogisticLogNormalMixture (cont’d)\nWe can produce samples then as usually:\n\nsamples_share &lt;- mcmc(data_share, online_mix_prior, McmcOptions())\nplot(samples_share, online_mix_prior, data_share)\n\n\nProbability that the current and external data are from the same distribution:\n\nmean(samples_share@data$comp == 2)\n\n[1] 0.5825"
+    "text": "Example of LogisticLogNormalMixture (cont’d)\nWe can produce samples then as usually:\n\nsamples_share &lt;- mcmc(data_share, online_mix_prior, McmcOptions())\nplot(samples_share, online_mix_prior, data_share)\n\n\nProbability that the current and external data are from the same distribution:\n\nmean(samples_share@data$comp == 2)\n\n[1] 0.5761"
+  },
+  {
+    "objectID": "parts/02_advanced.html#motivation",
+    "href": "parts/02_advanced.html#motivation",
+    "title": "crmPack Training for Merck",
+    "section": "Motivation",
+    "text": "Motivation\n\nThe TITE-CRM design was introduced by Cheung and Chappell (2004) to address the issue of late-onset toxicities in dose-escalation trials (e.g. up to 6 months in radiotherapy trials)\nIt would be impractical to always wait for the full possible DLT assessment period to elapse for all patients before making dose-escalation decisions, as this would lead to very long trial durations (e.g. 12 years)\nThe TITE-CRM design allows for making dose-escalation decisions based on partial information about the occurrence of DLTs, by using a weighted likelihood approach that accounts for the time-to-event nature of the data\nThis leads to much shorter trial durations (e.g. 2-4 years) while still maintaining the CRM’s accuracy and safety"
+  },
+  {
+    "objectID": "parts/02_advanced.html#required-design-inputs",
+    "href": "parts/02_advanced.html#required-design-inputs",
+    "title": "crmPack Training for Merck",
+    "section": "Required design inputs",
+    "text": "Required design inputs\nIn addition to the standard CRM design inputs, additional inputs are required for TITE-CRM designs:\n\nA DLT observation time period of length TmaxT_{\\textrm{max}}, also called the DLT window\nA weighting function w(t)w(t) that assigns weights to the observed data based on the time of observation relative to the DLT window\nThe required follow-up time before enrolling the next cohort at a potentially higher dose level, called “safety window” in crmPack"
+  },
+  {
+    "objectID": "parts/02_advanced.html#model-specification",
+    "href": "parts/02_advanced.html#model-specification",
+    "title": "crmPack Training for Merck",
+    "section": "Model specification",
+    "text": "Model specification\nThe TITE-CRM uses a pseudo-likelihood function:\n∏i=1n[(p(xi)w(ti))yi(1−p(xi)w(ti))1−yi]\n\\prod_{i=1}^{n} \\left[ (p(x_i)w(t_i))^{y_i} (1 - p(x_i)w(t_i))^{1 - y_i} \\right]\n\nwhere p(xi)p(x_i) is a standard CRM model for the probability of DLT at dose xix_i, yiy_i is the binary indicator of whether a DLT was observed for patient ii, and w(ti)w(t_i) is the weight assigned to patient ii based on the time of observation tit_i relative to the DLT window.\nNote: In crmPack this is implemented with the “Poisson trick” in JAGS. In principle this could work for any CRM model, but we restrict it to LogisticLogNormal so far in crmPack."
+  },
+  {
+    "objectID": "parts/02_advanced.html#weighting-functions",
+    "href": "parts/02_advanced.html#weighting-functions",
+    "title": "crmPack Training for Merck",
+    "section": "Weighting functions",
+    "text": "Weighting functions\nIn crmPack you can choose between\n\nthe linear weighting function w(t)=min(1,t/Tmax)w(t) = \\min(1, t / T_{\\textrm{max}}), which is the most commonly used weighting function in the literature, and\nthe adaptive weighting function proposed in formula (3) of Cheung and Chappell (2004):\n\nw(t)=κz+1+1z+1(t−t(κ)t(κ+1)−t(κ))\nw(t) = \\frac{\\kappa}{z + 1} + \\frac{1}{z + 1}\\left(\\frac{t - t_{(\\kappa)}}{t_{(\\kappa + 1)} - t_{(\\kappa)}}\\right)\n\nwhere zz is the total number of DLTs, 0≡t(0)&lt;t(1)≤⋯≤t(z)&lt;t(z+1)≡Tmax0 \\equiv t_{(0)} &lt; t_{(1)} \\leq \\cdots \\leq t_{(z)} &lt; t_{(z+1)} \\equiv T_{\\textrm{max}} are the ordered failure times, and κ=max0≤j≤z{j:t≥t(j)}\\kappa = \\max_{0 \\leq j \\leq z}\\{j : t \\geq t_{(j)}\\}. - Basically, the adaptive function allocates more weight to each record than the linear function when DLTs are observed early and less weight when DLTs are observed late."
+  },
+  {
+    "objectID": "parts/02_advanced.html#illustration",
+    "href": "parts/02_advanced.html#illustration",
+    "title": "crmPack Training for Merck",
+    "section": "Illustration",
+    "text": "Illustration\n\nFrom Fig. 1 from Werkhoven et al. (2020)"
+  },
+  {
+    "objectID": "parts/02_advanced.html#example-with-crmpack",
+    "href": "parts/02_advanced.html#example-with-crmpack",
+    "title": "crmPack Training for Merck",
+    "section": "Example with crmPack",
+    "text": "Example with crmPack\n\nmodel &lt;- TITELogisticLogNormal(\n  mean = c(1.33, 1.49),\n  cov = matrix(c(1.826, 0.0209, 0.0209, 0.0245), nrow = 2),\n  ref_dose = 56,\n  weight_method = \"linear\"\n)\nincrements &lt;- IncrementsRelative(intervals = c(0, 20), increments = c(2, 1))\nnext_best &lt;- NextBestMTD( # Note that we use a \"nonparametric\" rule here.\n  target = 0.3,\n  derive = function(mtd_samples) mean(mtd_samples)\n)\nstopping &lt;- StoppingMinPatients(n = 20)\nsize &lt;- CohortSizeConst(3)\nt_max &lt;- 42\n# Note that we need to use the DataDA class because we need to have\n# DLT times in the data.\nempty_data &lt;- DataDA(doseGrid = seq(from = 2, to = 50, by = 2), Tmax = t_max)\nsafety_window &lt;- SafetyWindowConst(gap = c(7, 5), follow = 7, follow_min = 14)"
+  },
+  {
+    "objectID": "parts/02_advanced.html#example-with-crmpack-contd",
+    "href": "parts/02_advanced.html#example-with-crmpack-contd",
+    "title": "crmPack Training for Merck",
+    "section": "Example with crmPack (cont’d)",
+    "text": "Example with crmPack (cont’d)\nSome observations here:\n\nWe use a “nonparametric” rule for the next best dose, because we do not (yet) have a TITE-CRM specific model-based rule implemented\nWe use the DataDA class for the data, because we need to have DLT times in the data\nThe safety window can be a bit confusing:\n\ngap is the time between patients in the same cohort (so 7 days between the first and second patient, and 5 days between the second and third patient)\nfollow is the time we need to wait after the last patient in the cohort before enrolling the next cohort\nfollow_min is the time at least one patient needs to have been followed up for before enrolling the next cohort"
+  },
+  {
+    "objectID": "parts/02_advanced.html#example-with-crmpack-contd-1",
+    "href": "parts/02_advanced.html#example-with-crmpack-contd-1",
+    "title": "crmPack Training for Merck",
+    "section": "Example with crmPack (cont’d)",
+    "text": "Example with crmPack (cont’d)\nWe need to define the true scenario in terms of both the true toxicity probabilities at the doses of interest and the distribution of DLT times:\n\ntruth &lt;- function(x) {\n  plogis(2 + 3 * log(x / 56))\n}\n\nonset &lt;- 3\nexp_cond_cdf &lt;- function(x) {\n  1 - (pexp(x, 1 / onset, lower.tail = FALSE) - pexp(t_max, 1 / onset, lower.tail = FALSE)) / pexp(t_max, 1 / onset)\n}"
+  },
+  {
+    "objectID": "parts/02_advanced.html#example-with-crmpack-contd-2",
+    "href": "parts/02_advanced.html#example-with-crmpack-contd-2",
+    "title": "crmPack Training for Merck",
+    "section": "Example with crmPack (cont’d)",
+    "text": "Example with crmPack (cont’d)\nLet’s plot the CDF of this truncated exponential distribution of DLT times (constrained to the DLT window) to see how it looks like:\n\ncurve(exp_cond_cdf, from = 0, to = t_max, ylab = \"CDF\", xlab = \"Time\")\nabline(v = onset)"
+  },
+  {
+    "objectID": "parts/02_advanced.html#example-with-crmpack-contd-3",
+    "href": "parts/02_advanced.html#example-with-crmpack-contd-3",
+    "title": "crmPack Training for Merck",
+    "section": "Example with crmPack (cont’d)",
+    "text": "Example with crmPack (cont’d)\nNow we can define the design and run simulations:\n\ndesign &lt;- DADesign(\n  model = model,\n  increments = increments,\n  nextBest = next_best,\n  stopping = stopping,\n  cohort_size = size,\n  data = empty_data,\n  safetyWindow = safety_window,\n  startingDose = 2\n)\nsims &lt;- simulate(\n  object = design,\n  truthTox = truth,\n  truthSurv = exp_cond_cdf,\n  trueTmax = t_max,\n  nsim = 100,\n  seed = 413,\n  mcmcOptions = McmcOptions(burnin = 500, step = 2, samples = 200, rng_kind = \"Mersenne-Twister\", rng_seed = 413)\n)"
+  },
+  {
+    "objectID": "parts/02_advanced.html#example-with-crmpack-contd-4",
+    "href": "parts/02_advanced.html#example-with-crmpack-contd-4",
+    "title": "crmPack Training for Merck",
+    "section": "Example with crmPack (cont’d)",
+    "text": "Example with crmPack (cont’d)\n\nsummary(sims, truth = truth, target = c(0.29, 0.31))\n\nSummary of 100 simulations\n\nTarget toxicity interval was 29, 31 %\nTarget dose interval corresponding to this was 21.3, 22 \nIntervals are corresponding to 10 and 90 % quantiles\n\nNumber of patients overall : mean 21 (21, 21) \nNumber of patients treated above target tox interval : mean 8 (0, 12) \nProportions of DLTs in the trials : mean 27 % (19 %, 33 %) \nMean toxicity risks for the patients on active : mean 27 % (17 %, 35 %) \nDoses selected as MTD : mean 23.3 (18, 28) \nTrue toxicity at doses selected : mean 35 % (20 %, 48 %) \nProportion of trials selecting target MTD: 25 %\nDose most often selected as MTD: 22 \nObserved toxicity rate at dose most often selected: 28 %\nFitted toxicity rate at dose most often selected : mean 29 % (17 %, 46 %) \nStop reason triggered:\n ≥ 20 patients dosed :  100 %"
+  },
+  {
+    "objectID": "parts/02_advanced.html#practical-aspects",
+    "href": "parts/02_advanced.html#practical-aspects",
+    "title": "crmPack Training for Merck",
+    "section": "Practical aspects",
+    "text": "Practical aspects\nWerkhoven et al. (2020) discuss practical aspects of running TITE-CRM designs:\n\nThey “have found that designing and running earlyphase trials using the TiTE-CRM can be complex, but is feasible and worthwhile”\nPrior probability of DLTs at the dose grid:\n\nuse the “background DLT probability”, i.e. without any experimental treatment, as reference (all probabilities need to be higher)\neffect of the addition of the experimental drug can then be approximated by multiplication with dose enhancement factors obtained from preclinical studies\n\nRecommend to have the first few patients treated at the starting dose, to avoid aggressive escalation early in the trial\nDon’t just report the final MTD estimate, but also the credible interval for it: particularly relevant with incomplete follow-up data"
   },
   {
     "objectID": "parts/02_advanced.html#references",
     "href": "parts/02_advanced.html#references",
     "title": "crmPack Training for Merck",
     "section": "References",
-    "text": "References\n\n\n\n\nNeuenschwander, B, M Branson, and T Gsponer. 2008. “Critical Aspects of the Bayesian Approach to Phase i Cancer Trials.” Statistics in Medicine."
+    "text": "References\n\n\n\n\nCheung, Ying Kuen, and Rick Chappell. 2004. “Sequential Designs for Phase i Clinical Trials with Late-Onset Toxicities.” Biometrics 56 (4): 1177–82. https://doi.org/10.1111/j.0006-341X.2000.01177.x.\n\n\nNeuenschwander, B, M Branson, and T Gsponer. 2008. “Critical Aspects of the Bayesian Approach to Phase i Cancer Trials.” Statistics in Medicine.\n\n\nWerkhoven, Erik van, Samantha Hinsley, Eleni Frangou, Jane Holmes, Rosemarie de Haan, Maria Hawkins, Sarah Brown, and Sharon B. Love. 2020. “Practicalities in Running Early-Phase Trials Using the Time-to-Event Continual Reassessment Method (TiTE-CRM) for Interventions with Long Toxicity Periods Using Two Radiotherapy Oncology Trials as Examples.” BMC Medical Research Methodology 20 (1): 162. https://doi.org/10.1186/s12874-020-01012-z."
   }
 ]

@@ -293,12 +293,12 @@ Daniel Sabanés Bové
 It: 214, obj value (lsEnd): 0.01474025243 indTrace: 214
 It: 238, obj value (lsEnd): 0.01416193999 indTrace: 238
 It: 460, obj value (lsEnd): 0.01295269405 indTrace: 460
-timeSpan = 30.000442 maxTime = 30
+timeSpan = 30.002664 maxTime = 30
 Emini is: 0.01295269405
 xmini are:
 -1.280026342 0.6618977116 1.254935046 0.1500300078 0.5608228116 
-Totally it used 30.000481 secs
-No. of function call is: 10147</code></pre>
+Totally it used 30.002705 secs
+No. of function call is: 10086</code></pre>
 </div>
 </div>
 </section>
@@ -538,17 +538,196 @@ N (
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(samples_share<span class="sc">@</span>data<span class="sc">$</span>comp <span class="sc">==</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.5825</code></pre>
+<pre><code>[1] 0.5761</code></pre>
 </div>
 </div>
+</section></section>
+<section>
+<section id="time-to-event-tite-designs" class="title-slide slide level1 center">
+<h1>Time-to-event (TITE) designs</h1>
+
+</section>
+<section id="motivation" class="slide level2">
+<h2>Motivation</h2>
+<ul>
+<li>The TITE-CRM design was introduced by <span class="citation" data-cites="CHEUNG2004">Cheung and Chappell (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span> to address the issue of late-onset toxicities in dose-escalation trials (e.g.&nbsp;up to 6 months in radiotherapy trials)</li>
+<li>It would be impractical to always wait for the full possible DLT assessment period to elapse for all patients before making dose-escalation decisions, as this would lead to very long trial durations (e.g.&nbsp;12 years)</li>
+<li>The TITE-CRM design allows for making dose-escalation decisions based on partial information about the occurrence of DLTs, by using a weighted likelihood approach that accounts for the time-to-event nature of the data</li>
+<li>This leads to much shorter trial durations (e.g.&nbsp;2-4 years) while still maintaining the CRM’s accuracy and safety</li>
+</ul>
+</section>
+<section id="required-design-inputs" class="slide level2">
+<h2>Required design inputs</h2>
+<p>In addition to the standard CRM design inputs, additional inputs are required for TITE-CRM designs:</p>
+<ul>
+<li>A DLT observation time period of length <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>T</mi><mtext mathvariant="normal">max</mtext></msub><annotation encoding="application/x-tex">T_{\textrm{max}}</annotation></semantics></math>, also called the DLT window</li>
+<li>A weighting function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">w(t)</annotation></semantics></math> that assigns weights to the observed data based on the time of observation relative to the DLT window</li>
+<li>The required follow-up time before enrolling the next cohort at a potentially higher dose level, called “safety window” in <code>crmPack</code></li>
+</ul>
+</section>
+<section id="model-specification" class="slide level2">
+<h2>Model specification</h2>
+<p>The TITE-CRM uses a pseudo-likelihood function:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munderover><mo>∏</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover><mrow><mo stretchy="true" form="prefix">[</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow><msub><mi>y</mi><mi>i</mi></msub></msup><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mn>1</mn><mo>−</mo><msub><mi>y</mi><mi>i</mi></msub></mrow></msup><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+\prod_{i=1}^{n} \left[ (p(x_i)w(t_i))^{y_i} (1 - p(x_i)w(t_i))^{1 - y_i} \right]
+</annotation></semantics></math></p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>x</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">p(x_i)</annotation></semantics></math> is a standard CRM model for the probability of DLT at dose <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>x</mi><mi>i</mi></msub><annotation encoding="application/x-tex">x_i</annotation></semantics></math>, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>y</mi><mi>i</mi></msub><annotation encoding="application/x-tex">y_i</annotation></semantics></math> is the binary indicator of whether a DLT was observed for patient <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>i</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">w(t_i)</annotation></semantics></math> is the weight assigned to patient <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math> based on the time of observation <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>t</mi><mi>i</mi></msub><annotation encoding="application/x-tex">t_i</annotation></semantics></math> relative to the DLT window.</p>
+<p>Note: In <code>crmPack</code> this is implemented with the “Poisson trick” in JAGS. In principle this could work for any CRM model, but we restrict it to <code>LogisticLogNormal</code> so far in <code>crmPack</code>.</p>
+</section>
+<section id="weighting-functions" class="slide level2">
+<h2>Weighting functions</h2>
+<p>In <code>crmPack</code> you can choose between</p>
+<ul>
+<li>the linear weighting function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>min</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mi>t</mi><mi>/</mi><msub><mi>T</mi><mtext mathvariant="normal">max</mtext></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">w(t) = \min(1, t / T_{\textrm{max}})</annotation></semantics></math>, which is the most commonly used weighting function in the literature, and</li>
+<li>the adaptive weighting function proposed in formula (3) of <span class="citation" data-cites="CHEUNG2004">Cheung and Chappell (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span>:</li>
+</ul>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mi>κ</mi><mrow><mi>z</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo>+</mo><mfrac><mn>1</mn><mrow><mi>z</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mi>t</mi><mo>−</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>κ</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow><mrow><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>κ</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>−</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>κ</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+w(t) = \frac{\kappa}{z + 1} + \frac{1}{z + 1}\left(\frac{t - t_{(\kappa)}}{t_{(\kappa + 1)} - t_{(\kappa)}}\right)
+</annotation></semantics></math></p>
+<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math> is the total number of DLTs, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≡</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>&lt;</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>≤</mo><mi>⋯</mi><mo>≤</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>z</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>&lt;</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>z</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>≡</mo><msub><mi>T</mi><mtext mathvariant="normal">max</mtext></msub></mrow><annotation encoding="application/x-tex">0 \equiv t_{(0)} &lt; t_{(1)} \leq \cdots \leq t_{(z)} &lt; t_{(z+1)} \equiv T_{\textrm{max}}</annotation></semantics></math> are the ordered failure times, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>κ</mi><mo>=</mo><msub><mo>max</mo><mrow><mn>0</mn><mo>≤</mo><mi>j</mi><mo>≤</mo><mi>z</mi></mrow></msub><mo stretchy="false" form="prefix">{</mo><mi>j</mi><mo>:</mo><mi>t</mi><mo>≥</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\kappa = \max_{0 \leq j \leq z}\{j : t \geq t_{(j)}\}</annotation></semantics></math>. - Basically, the adaptive function allocates more weight to each record than the linear function when DLTs are observed early and less weight when DLTs are observed late.</p>
+</section>
+<section id="illustration" class="slide level2">
+<h2>Illustration</h2>
+
+<img data-src="../figures/screenshots/2026-03-03-22-07-12.png" class="r-stretch quarto-figure-center"><p class="caption">From Fig. 1 from <span class="citation" data-cites="VANWERKHOVEN2020">Werkhoven et al. (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span></p></section>
+<section id="example-with-crmpack" class="slide level2">
+<h2>Example with crmPack</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">TITELogisticLogNormal</span>(</span>
+<span id="cb21-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">mean =</span> <span class="fu">c</span>(<span class="fl">1.33</span>, <span class="fl">1.49</span>),</span>
+<span id="cb21-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">cov =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">1.826</span>, <span class="fl">0.0209</span>, <span class="fl">0.0209</span>, <span class="fl">0.0245</span>), <span class="at">nrow =</span> <span class="dv">2</span>),</span>
+<span id="cb21-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_dose =</span> <span class="dv">56</span>,</span>
+<span id="cb21-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">weight_method =</span> <span class="st">"linear"</span></span>
+<span id="cb21-6"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-7"><a aria-hidden="true" tabindex="-1"></a>increments <span class="ot">&lt;-</span> <span class="fu">IncrementsRelative</span>(<span class="at">intervals =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>), <span class="at">increments =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
+<span id="cb21-8"><a aria-hidden="true" tabindex="-1"></a>next_best <span class="ot">&lt;-</span> <span class="fu">NextBestMTD</span>( <span class="co"># Note that we use a "nonparametric" rule here.</span></span>
+<span id="cb21-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">target =</span> <span class="fl">0.3</span>,</span>
+<span id="cb21-10"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">derive =</span> <span class="cf">function</span>(mtd_samples) <span class="fu">mean</span>(mtd_samples)</span>
+<span id="cb21-11"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb21-12"><a aria-hidden="true" tabindex="-1"></a>stopping <span class="ot">&lt;-</span> <span class="fu">StoppingMinPatients</span>(<span class="at">n =</span> <span class="dv">20</span>)</span>
+<span id="cb21-13"><a aria-hidden="true" tabindex="-1"></a>size <span class="ot">&lt;-</span> <span class="fu">CohortSizeConst</span>(<span class="dv">3</span>)</span>
+<span id="cb21-14"><a aria-hidden="true" tabindex="-1"></a>t_max <span class="ot">&lt;-</span> <span class="dv">42</span></span>
+<span id="cb21-15"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Note that we need to use the DataDA class because we need to have</span></span>
+<span id="cb21-16"><a aria-hidden="true" tabindex="-1"></a><span class="co"># DLT times in the data.</span></span>
+<span id="cb21-17"><a aria-hidden="true" tabindex="-1"></a>empty_data <span class="ot">&lt;-</span> <span class="fu">DataDA</span>(<span class="at">doseGrid =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">2</span>, <span class="at">to =</span> <span class="dv">50</span>, <span class="at">by =</span> <span class="dv">2</span>), <span class="at">Tmax =</span> t_max)</span>
+<span id="cb21-18"><a aria-hidden="true" tabindex="-1"></a>safety_window <span class="ot">&lt;-</span> <span class="fu">SafetyWindowConst</span>(<span class="at">gap =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">5</span>), <span class="at">follow =</span> <span class="dv">7</span>, <span class="at">follow_min =</span> <span class="dv">14</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="example-with-crmpack-contd" class="slide level2">
+<h2>Example with crmPack (cont’d)</h2>
+<p>Some observations here:</p>
+<ul>
+<li>We use a “nonparametric” rule for the next best dose, because we do not (yet) have a TITE-CRM specific model-based rule implemented</li>
+<li>We use the <code>DataDA</code> class for the data, because we need to have DLT times in the data</li>
+<li>The safety window can be a bit confusing:
+<ul>
+<li><code>gap</code> is the time between patients in the same cohort (so 7 days between the first and second patient, and 5 days between the second and third patient)</li>
+<li><code>follow</code> is the time we need to wait after the last patient in the cohort before enrolling the next cohort</li>
+<li><code>follow_min</code> is the time at least one patient needs to have been followed up for before enrolling the next cohort</li>
+</ul></li>
+</ul>
+</section>
+<section id="example-with-crmpack-contd-1" class="slide level2">
+<h2>Example with crmPack (cont’d)</h2>
+<p>We need to define the true scenario in terms of both the true toxicity probabilities at the doses of interest and the distribution of DLT times:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a>truth <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb22-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">plogis</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> <span class="fu">log</span>(x <span class="sc">/</span> <span class="dv">56</span>))</span>
+<span id="cb22-3"><a aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a aria-hidden="true" tabindex="-1"></a>onset <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb22-6"><a aria-hidden="true" tabindex="-1"></a>exp_cond_cdf <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
+<span id="cb22-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="sc">-</span> (<span class="fu">pexp</span>(x, <span class="dv">1</span> <span class="sc">/</span> onset, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="sc">-</span> <span class="fu">pexp</span>(t_max, <span class="dv">1</span> <span class="sc">/</span> onset, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)) <span class="sc">/</span> <span class="fu">pexp</span>(t_max, <span class="dv">1</span> <span class="sc">/</span> onset)</span>
+<span id="cb22-8"><a aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="example-with-crmpack-contd-2" class="slide level2">
+<h2>Example with crmPack (cont’d)</h2>
+<p>Let’s plot the CDF of this truncated exponential distribution of DLT times (constrained to the DLT window) to see how it looks like:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(exp_cond_cdf, <span class="at">from =</span> <span class="dv">0</span>, <span class="at">to =</span> t_max, <span class="at">ylab =</span> <span class="st">"CDF"</span>, <span class="at">xlab =</span> <span class="st">"Time"</span>)</span>
+<span id="cb23-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> onset)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="02_advanced_files/figure-revealjs/unnamed-chunk-16-1.png" width="960" class="r-stretch"></section>
+<section id="example-with-crmpack-contd-3" class="slide level2">
+<h2>Example with crmPack (cont’d)</h2>
+<p>Now we can define the design and run simulations:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">DADesign</span>(</span>
+<span id="cb24-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> model,</span>
+<span id="cb24-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">increments =</span> increments,</span>
+<span id="cb24-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">nextBest =</span> next_best,</span>
+<span id="cb24-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping =</span> stopping,</span>
+<span id="cb24-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">cohort_size =</span> size,</span>
+<span id="cb24-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> empty_data,</span>
+<span id="cb24-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">safetyWindow =</span> safety_window,</span>
+<span id="cb24-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">startingDose =</span> <span class="dv">2</span></span>
+<span id="cb24-10"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-11"><a aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> <span class="fu">simulate</span>(</span>
+<span id="cb24-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> design,</span>
+<span id="cb24-13"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">truthTox =</span> truth,</span>
+<span id="cb24-14"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">truthSurv =</span> exp_cond_cdf,</span>
+<span id="cb24-15"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">trueTmax =</span> t_max,</span>
+<span id="cb24-16"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">nsim =</span> <span class="dv">100</span>,</span>
+<span id="cb24-17"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">413</span>,</span>
+<span id="cb24-18"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">mcmcOptions =</span> <span class="fu">McmcOptions</span>(<span class="at">burnin =</span> <span class="dv">500</span>, <span class="at">step =</span> <span class="dv">2</span>, <span class="at">samples =</span> <span class="dv">200</span>, <span class="at">rng_kind =</span> <span class="st">"Mersenne-Twister"</span>, <span class="at">rng_seed =</span> <span class="dv">413</span>)</span>
+<span id="cb24-19"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="example-with-crmpack-contd-4" class="slide level2">
+<h2>Example with crmPack (cont’d)</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sims, <span class="at">truth =</span> truth, <span class="at">target =</span> <span class="fu">c</span>(<span class="fl">0.29</span>, <span class="fl">0.31</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Summary of 100 simulations
+
+Target toxicity interval was 29, 31 %
+Target dose interval corresponding to this was 21.3, 22 
+Intervals are corresponding to 10 and 90 % quantiles
+
+Number of patients overall : mean 21 (21, 21) 
+Number of patients treated above target tox interval : mean 8 (0, 12) 
+Proportions of DLTs in the trials : mean 27 % (19 %, 33 %) 
+Mean toxicity risks for the patients on active : mean 27 % (17 %, 35 %) 
+Doses selected as MTD : mean 23.3 (18, 28) 
+True toxicity at doses selected : mean 35 % (20 %, 48 %) 
+Proportion of trials selecting target MTD: 25 %
+Dose most often selected as MTD: 22 
+Observed toxicity rate at dose most often selected: 28 %
+Fitted toxicity rate at dose most often selected : mean 29 % (17 %, 46 %) 
+Stop reason triggered:
+ ≥ 20 patients dosed :  100 %</code></pre>
+</div>
+</div>
+</section>
+<section id="practical-aspects" class="slide level2">
+<h2>Practical aspects</h2>
+<p><span class="citation" data-cites="VANWERKHOVEN2020">Werkhoven et al. (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span> discuss practical aspects of running TITE-CRM designs:</p>
+<ul>
+<li>They “have found that designing and running earlyphase trials using the TiTE-CRM can be complex, but is feasible and worthwhile”</li>
+<li>Prior probability of DLTs at the dose grid:
+<ul>
+<li>use the “background DLT probability”, i.e.&nbsp;without any experimental treatment, as reference (all probabilities need to be higher)</li>
+<li>effect of the addition of the experimental drug can then be approximated by multiplication with dose enhancement factors obtained from preclinical studies</li>
+</ul></li>
+<li>Recommend to have the first few patients treated at the starting dose, to avoid aggressive escalation early in the trial</li>
+<li>Don’t just report the final MTD estimate, but also the credible interval for it: particularly relevant with incomplete follow-up data</li>
+</ul>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-CHEUNG2004" class="csl-entry" role="listitem">
+Cheung, Ying Kuen, and Rick Chappell. 2004. <span>“Sequential Designs for Phase i Clinical Trials with Late-Onset Toxicities.”</span> <em>Biometrics</em> 56 (4): 1177–82. <a href="https://doi.org/10.1111/j.0006-341X.2000.01177.x">https://doi.org/10.1111/j.0006-341X.2000.01177.x</a>.
+</div>
 <div id="ref-NEUENSCHWANDER2008" class="csl-entry" role="listitem">
 Neuenschwander, B, M Branson, and T Gsponer. 2008. <span>“Critical Aspects of the Bayesian Approach to Phase i Cancer Trials.”</span> <em>Statistics in Medicine</em>.
+</div>
+<div id="ref-VANWERKHOVEN2020" class="csl-entry" role="listitem">
+Werkhoven, Erik van, Samantha Hinsley, Eleni Frangou, Jane Holmes, Rosemarie de Haan, Maria Hawkins, Sarah Brown, and Sharon B. Love. 2020. <span>“Practicalities in Running Early-Phase Trials Using the Time-to-Event Continual Reassessment Method (TiTE-CRM) for Interventions with Long Toxicity Periods Using Two Radiotherapy Oncology Trials as Examples.”</span> <em>BMC Medical Research Methodology</em> 20 (1): 162. <a href="https://doi.org/10.1186/s12874-020-01012-z">https://doi.org/10.1186/s12874-020-01012-z</a>.
 </div>
 </div>
 </section></section>
