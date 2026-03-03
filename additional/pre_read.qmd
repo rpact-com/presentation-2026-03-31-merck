@@ -47,7 +47,10 @@ Go to [https://sourceforge.net/projects/mcmc-jags](https://sourceforge.net/proje
 
 ## Course materials
 
-The course materials are available at [crmpack-training.merck.2026.rpact.com/](https://crmpack-training.merck.2026.rpact.com/). You can also find the materials on GitHub at [github.com/rpact-com/presentation-2026-03-31-merck](https://github.com/rpact-com/presentation-2026-03-31-merck)
+The course materials are available at
+[merck.training.2026.crmpack.org](https://merck.training.2026.crmpack.org/).
+You can also find the materials on GitHub at
+[github.com/rpact-com/presentation-2026-03-31-merck](https://github.com/rpact-com/presentation-2026-03-31-merck)
 
 ## Thank you and see you soon!
 
