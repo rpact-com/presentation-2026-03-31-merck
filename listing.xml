@@ -6,8 +6,8 @@
       version="2.0">
 <channel>
 <title>crmPack Training for Merck</title>
-<link>https://crmpack-training.merck.2026.rpact.com/listing.html</link>
-<atom:link href="https://crmpack-training.merck.2026.rpact.com/listing.xml" rel="self" type="application/rss+xml"/>
+<link>https://merck.training.2026.crmpack.org/listing.html</link>
+<atom:link href="https://merck.training.2026.crmpack.org/listing.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <language>en</language>
 <generator>quarto-1.8.27</generator>
@@ -15,20 +15,20 @@
 <item>
   <title></title>
   <dc:creator>Daniel Sabanés Bové</dc:creator>
-  <link>https://crmpack-training.merck.2026.rpact.com/parts/01_basic.html</link>
+  <link>https://merck.training.2026.crmpack.org/parts/01_basic.html</link>
   <description><![CDATA[ undefined ]]></description>
-  <guid>https://crmpack-training.merck.2026.rpact.com/parts/01_basic.html</guid>
+  <guid>https://merck.training.2026.crmpack.org/parts/01_basic.html</guid>
   <pubDate>Tue, 31 Mar 2026 00:00:00 GMT</pubDate>
-  <media:content url="https://crmpack-training.merck.2026.rpact.com/figures/illustration/exercise.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://merck.training.2026.crmpack.org/figures/illustration/exercise.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title></title>
   <dc:creator>Daniel Sabanés Bové</dc:creator>
-  <link>https://crmpack-training.merck.2026.rpact.com/parts/02_advanced.html</link>
+  <link>https://merck.training.2026.crmpack.org/parts/02_advanced.html</link>
   <description><![CDATA[ undefined ]]></description>
-  <guid>https://crmpack-training.merck.2026.rpact.com/parts/02_advanced.html</guid>
+  <guid>https://merck.training.2026.crmpack.org/parts/02_advanced.html</guid>
   <pubDate>Tue, 31 Mar 2026 00:00:00 GMT</pubDate>
-  <media:content url="https://crmpack-training.merck.2026.rpact.com/figures/illustration/refatoring_Antoni-Shkraba.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://merck.training.2026.crmpack.org/figures/illustration/refatoring_Antoni-Shkraba.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>

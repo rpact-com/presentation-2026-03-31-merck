@@ -289,18 +289,16 @@ Daniel Sabanés Bové
 <span id="cb1-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">max.time =</span> <span class="dv">30</span>) <span class="co"># limit the optimization time here</span></span>
 <span id="cb1-10"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>It: 1, obj value (lsEnd): 0.07142670344 indTrace: 1
-It: 351, obj value (lsEnd): 0.03540073469 indTrace: 351
-It: 370, obj value (lsEnd): 0.01526062805 indTrace: 370
-It: 377, obj value (lsEnd): 0.01507283033 indTrace: 377
-It: 395, obj value (lsEnd): 0.01445789659 indTrace: 395
-It: 577, obj value (lsEnd): 0.0127023889 indTrace: 577
-timeSpan = 32.113298 maxTime = 30
-Emini is: 0.0127023889
+<pre><code>It: 1, obj value (lsEnd): 0.06732883077 indTrace: 1
+It: 214, obj value (lsEnd): 0.01474025243 indTrace: 214
+It: 238, obj value (lsEnd): 0.01416193999 indTrace: 238
+It: 460, obj value (lsEnd): 0.01295269405 indTrace: 460
+timeSpan = 30.000442 maxTime = 30
+Emini is: 0.01295269405
 xmini are:
--1.280320232 0.6589842054 1.264422506 0.08107323782 0.8768339596 
-Totally it used 32.113324 secs
-No. of function call is: 11250</code></pre>
+-1.280026342 0.6618977116 1.254935046 0.1500300078 0.5608228116 
+Totally it used 30.000481 secs
+No. of function call is: 10147</code></pre>
 </div>
 </div>
 </section>
@@ -339,7 +337,7 @@ No. of function call is: 11250</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>min_result<span class="sc">$</span>model</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <p>A logistic log normal model will describe the relationship between dose and toxicity: <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>T</mi><mi>o</mi><mi>x</mi><mo stretchy="false" form="prefix">|</mo><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>X</mi><mo>=</mo><mn>1</mn><mo stretchy="false" form="prefix">|</mo><mi>θ</mi><mo>,</mo><mi>d</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><msup><mi>e</mi><mrow><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>d</mi><mi>/</mi><msub><mi>d</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup><mrow><mn>1</mn><mo>+</mo><msup><mi>e</mi><mrow><mi>α</mi><mo>+</mo><mi>β</mi><mo>⋅</mo><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>d</mi><mi>/</mi><msub><mi>d</mi><mrow><mi>r</mi><mi>e</mi><mi>f</mi></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex"> p(Tox | d) = f(X = 1 | \theta, d) = \frac{e^{\alpha + \beta \cdot log(d/d_{ref})}}{1 + e^{\alpha + \beta \cdot log(d/d_{ref})}} </annotation></semantics></math>where d<sub>ref</sub> denotes a reference dose.</p>
-<p>The prior for θ is given by<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝛉</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>α</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>β</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>−</mi><mn>1.28</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.66</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1.60</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.09</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.09</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.01</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex"> \boldsymbol\theta = \begin{bmatrix}\alpha \\ log(\beta)\end{bmatrix}\sim N \left(\begin{bmatrix}-1.28 \\  0.66\end{bmatrix} , \begin{bmatrix} 1.60 &amp;  0.09 \\ 0.09 &amp;  0.01\end{bmatrix} \right) </annotation></semantics></math></p>
+<p>The prior for θ is given by<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝛉</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>α</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>l</mi><mi>o</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>β</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mi>−</mi><mn>1.28</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.66</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo>,</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1.57</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.11</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.11</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>0.02</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex"> \boldsymbol\theta = \begin{bmatrix}\alpha \\ log(\beta)\end{bmatrix}\sim N \left(\begin{bmatrix}-1.28 \\  0.66\end{bmatrix} , \begin{bmatrix} 1.57 &amp;  0.11 \\ 0.11 &amp;  0.02\end{bmatrix} \right) </annotation></semantics></math></p>
 <p>The reference dose will be 100.00.</p>
 </div>
 </div>
@@ -540,7 +538,7 @@ N (
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(samples_share<span class="sc">@</span>data<span class="sc">$</span>comp <span class="sc">==</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.573</code></pre>
+<pre><code>[1] 0.5825</code></pre>
 </div>
 </div>
 </section>
@@ -859,7 +857,7 @@ Neuenschwander, B, M Branson, and T Gsponer. 2008. <span>“Critical Aspects of 
         }
           var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
           var mailtoRegex = new RegExp(/^mailto:/);
-            var filterRegex = new RegExp("https:\/\/crmpack-training\.merck\.2026\.rpact\.com");
+            var filterRegex = new RegExp("https:\/\/merck\.training\.2026\.crmpack\.org");
           var isInternal = (href) => {
               return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
           }
