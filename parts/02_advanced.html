@@ -280,25 +280,25 @@ Daniel Sabanés Bové
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a>coarseGrid <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">100</span>, <span class="dv">300</span>)</span>
 <span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>min_result <span class="ot">&lt;-</span> <span class="fu">MinimalInformative</span>(</span>
-<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">dosegrid =</span> coarseGrid, </span>
-<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">refDose =</span> <span class="dv">100</span>,</span>
-<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">logNormal =</span> <span class="cn">TRUE</span>, <span class="co"># use a log-normal distribution for the slope parameter</span></span>
-<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">threshmin =</span> <span class="fl">0.1</span>, <span class="co"># the quantile for the low dose</span></span>
-<span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">threshmax =</span> <span class="fl">0.2</span>, <span class="co"># the quantile for the high dose</span></span>
-<span id="cb1-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">432</span>, <span class="co"># for reproducibility</span></span>
-<span id="cb1-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">max.time =</span> <span class="dv">30</span>) <span class="co"># limit the optimization time here</span></span>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">dosegrid =</span> coarseGrid,</span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">refDose =</span> <span class="dv">100</span>,</span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">logNormal =</span> <span class="cn">TRUE</span>, <span class="co"># use a log-normal distribution for the slope parameter</span></span>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">threshmin =</span> <span class="fl">0.1</span>, <span class="co"># the quantile for the low dose</span></span>
+<span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">threshmax =</span> <span class="fl">0.2</span>, <span class="co"># the quantile for the high dose</span></span>
+<span id="cb1-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> <span class="dv">432</span>, <span class="co"># for reproducibility</span></span>
+<span id="cb1-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">control =</span> <span class="fu">list</span>(<span class="at">max.time =</span> <span class="dv">30</span>) <span class="co"># limit the optimization time here</span></span>
 <span id="cb1-10"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>It: 1, obj value (lsEnd): 0.06732883077 indTrace: 1
 It: 214, obj value (lsEnd): 0.01474025243 indTrace: 214
 It: 238, obj value (lsEnd): 0.01416193999 indTrace: 238
 It: 460, obj value (lsEnd): 0.01295269405 indTrace: 460
-timeSpan = 30.002664 maxTime = 30
+timeSpan = 30.001851 maxTime = 30
 Emini is: 0.01295269405
 xmini are:
 -1.280026342 0.6618977116 1.254935046 0.1500300078 0.5608228116 
-Totally it used 30.002705 secs
-No. of function call is: 10086</code></pre>
+Totally it used 30.00189 secs
+No. of function call is: 10207</code></pre>
 </div>
 </div>
 </section>
@@ -379,11 +379,11 @@ No. of function call is: 10086</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a>comp1 <span class="ot">&lt;-</span> <span class="fu">ModelParamsNormal</span>(</span>
 <span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.85</span>, <span class="dv">1</span>),</span>
 <span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cov =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">0.5</span>, <span class="dv">1</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
-<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb5-5"><a aria-hidden="true" tabindex="-1"></a>comp2 <span class="ot">&lt;-</span> <span class="fu">ModelParamsNormal</span>(</span>
 <span id="cb5-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">1.5</span>),</span>
 <span id="cb5-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cov =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">1.2</span>, <span class="sc">-</span><span class="fl">0.45</span>, <span class="sc">-</span><span class="fl">0.45</span>, <span class="fl">0.6</span>), <span class="at">nrow =</span> <span class="dv">2</span>)</span>
-<span id="cb5-8"><a aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-8"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Say we use a uniform <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext mathvariant="normal">Beta</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\textrm{Beta}(1,1)</annotation></semantics></math> hyperprior for the weight parameter, and a reference dose of <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>d</mi><mo>*</mo></msup><mo>=</mo><mn>50</mn></mrow><annotation encoding="application/x-tex">d^{*} = 50</annotation></semantics></math>:</p>
 <div class="cell">
@@ -416,11 +416,11 @@ N (
 <p>Here we need to fix the weights of the mixture components, for example to 0.5 each:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a>normal_mix_fix_weights_prior <span class="ot">&lt;-</span> <span class="fu">LogisticNormalFixedMixture</span>(</span>
-<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">components =</span> <span class="fu">list</span>(</span>
-<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">comp1 =</span> comp1,</span>
-<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">comp2 =</span> comp2</span>
-<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>  ),</span>
-<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">weights =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
+<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">components =</span> <span class="fu">list</span>(</span>
+<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>        <span class="at">comp1 =</span> comp1,</span>
+<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>        <span class="at">comp2 =</span> comp2</span>
+<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">weights =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>),</span>
 <span id="cb7-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">ref_dose =</span> <span class="dv">50</span></span>
 <span id="cb7-8"><a aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb7-9"><a aria-hidden="true" tabindex="-1"></a>normal_mix_fix_weights_prior</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -538,7 +538,7 @@ N (
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(samples_share<span class="sc">@</span>data<span class="sc">$</span>comp <span class="sc">==</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.5761</code></pre>
+<pre><code>[1] 0.5835</code></pre>
 </div>
 </div>
 </section></section>
@@ -578,13 +578,15 @@ N (
 <h2>Weighting functions</h2>
 <p>In <code>crmPack</code> you can choose between</p>
 <ul>
-<li>the linear weighting function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>min</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mi>t</mi><mi>/</mi><msub><mi>T</mi><mtext mathvariant="normal">max</mtext></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">w(t) = \min(1, t / T_{\textrm{max}})</annotation></semantics></math>, which is the most commonly used weighting function in the literature, and</li>
-<li>the adaptive weighting function proposed in formula (3) of <span class="citation" data-cites="CHEUNG2004">Cheung and Chappell (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span>:</li>
-</ul>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mi>κ</mi><mrow><mi>z</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo>+</mo><mfrac><mn>1</mn><mrow><mi>z</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mi>t</mi><mo>−</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>κ</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow><mrow><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>κ</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>−</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>κ</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+<li><p>the linear weighting function <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>min</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mi>t</mi><mi>/</mi><msub><mi>T</mi><mtext mathvariant="normal">max</mtext></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">w(t) = \min(1, t / T_{\textrm{max}})</annotation></semantics></math>, which is the most commonly used weighting function in the literature, and</p></li>
+<li><p>the adaptive weighting function proposed in formula (3) of <span class="citation" data-cites="CHEUNG2004">Cheung and Chappell (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span>: <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mi>κ</mi><mrow><mi>z</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo>+</mo><mfrac><mn>1</mn><mrow><mi>z</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><mi>t</mi><mo>−</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>κ</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow><mrow><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>κ</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>−</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>κ</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
 w(t) = \frac{\kappa}{z + 1} + \frac{1}{z + 1}\left(\frac{t - t_{(\kappa)}}{t_{(\kappa + 1)} - t_{(\kappa)}}\right)
 </annotation></semantics></math></p>
-<p>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math> is the total number of DLTs, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≡</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>&lt;</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>≤</mo><mi>⋯</mi><mo>≤</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>z</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>&lt;</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>z</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>≡</mo><msub><mi>T</mi><mtext mathvariant="normal">max</mtext></msub></mrow><annotation encoding="application/x-tex">0 \equiv t_{(0)} &lt; t_{(1)} \leq \cdots \leq t_{(z)} &lt; t_{(z+1)} \equiv T_{\textrm{max}}</annotation></semantics></math> are the ordered failure times, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>κ</mi><mo>=</mo><msub><mo>max</mo><mrow><mn>0</mn><mo>≤</mo><mi>j</mi><mo>≤</mo><mi>z</mi></mrow></msub><mo stretchy="false" form="prefix">{</mo><mi>j</mi><mo>:</mo><mi>t</mi><mo>≥</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\kappa = \max_{0 \leq j \leq z}\{j : t \geq t_{(j)}\}</annotation></semantics></math>. - Basically, the adaptive function allocates more weight to each record than the linear function when DLTs are observed early and less weight when DLTs are observed late.</p>
+<ul>
+<li>where <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math> is the total number of DLTs, <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≡</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>&lt;</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>≤</mo><mi>⋯</mi><mo>≤</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>z</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>&lt;</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>z</mi><mo>+</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>≡</mo><msub><mi>T</mi><mtext mathvariant="normal">max</mtext></msub></mrow><annotation encoding="application/x-tex">0 \equiv t_{(0)} &lt; t_{(1)} \leq \cdots \leq t_{(z)} &lt; t_{(z+1)} \equiv T_{\textrm{max}}</annotation></semantics></math> are the ordered failure times, and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>κ</mi><mo>=</mo><msub><mo>max</mo><mrow><mn>0</mn><mo>≤</mo><mi>j</mi><mo>≤</mo><mi>z</mi></mrow></msub><mo stretchy="false" form="prefix">{</mo><mi>j</mi><mo>:</mo><mi>t</mi><mo>≥</mo><msub><mi>t</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\kappa = \max_{0 \leq j \leq z}\{j : t \geq t_{(j)}\}</annotation></semantics></math></li>
+<li>Basically, the adaptive function allocates more weight to each record than the linear function when DLTs are observed early and less weight when DLTs are observed late.</li>
+</ul></li>
+</ul>
 </section>
 <section id="illustration" class="slide level2">
 <h2>Illustration</h2>
@@ -594,15 +596,15 @@ w(t) = \frac{\kappa}{z + 1} + \frac{1}{z + 1}\left(\frac{t - t_{(\kappa)}}{t_{(\
 <h2>Example with crmPack</h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">TITELogisticLogNormal</span>(</span>
-<span id="cb21-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">mean =</span> <span class="fu">c</span>(<span class="fl">1.33</span>, <span class="fl">1.49</span>),</span>
-<span id="cb21-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">cov =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">1.826</span>, <span class="fl">0.0209</span>, <span class="fl">0.0209</span>, <span class="fl">0.0245</span>), <span class="at">nrow =</span> <span class="dv">2</span>),</span>
-<span id="cb21-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">ref_dose =</span> <span class="dv">56</span>,</span>
-<span id="cb21-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">weight_method =</span> <span class="st">"linear"</span></span>
+<span id="cb21-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mean =</span> <span class="fu">c</span>(<span class="fl">1.33</span>, <span class="fl">1.49</span>),</span>
+<span id="cb21-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cov =</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="fl">1.826</span>, <span class="fl">0.0209</span>, <span class="fl">0.0209</span>, <span class="fl">0.0245</span>), <span class="at">nrow =</span> <span class="dv">2</span>),</span>
+<span id="cb21-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">ref_dose =</span> <span class="dv">56</span>,</span>
+<span id="cb21-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">weight_method =</span> <span class="st">"linear"</span></span>
 <span id="cb21-6"><a aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb21-7"><a aria-hidden="true" tabindex="-1"></a>increments <span class="ot">&lt;-</span> <span class="fu">IncrementsRelative</span>(<span class="at">intervals =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">20</span>), <span class="at">increments =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</span>
 <span id="cb21-8"><a aria-hidden="true" tabindex="-1"></a>next_best <span class="ot">&lt;-</span> <span class="fu">NextBestMTD</span>( <span class="co"># Note that we use a "nonparametric" rule here.</span></span>
-<span id="cb21-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">target =</span> <span class="fl">0.3</span>,</span>
-<span id="cb21-10"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">derive =</span> <span class="cf">function</span>(mtd_samples) <span class="fu">mean</span>(mtd_samples)</span>
+<span id="cb21-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">target =</span> <span class="fl">0.3</span>,</span>
+<span id="cb21-10"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">derive =</span> <span class="cf">function</span>(mtd_samples) <span class="fu">mean</span>(mtd_samples)</span>
 <span id="cb21-11"><a aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb21-12"><a aria-hidden="true" tabindex="-1"></a>stopping <span class="ot">&lt;-</span> <span class="fu">StoppingMinPatients</span>(<span class="at">n =</span> <span class="dv">20</span>)</span>
 <span id="cb21-13"><a aria-hidden="true" tabindex="-1"></a>size <span class="ot">&lt;-</span> <span class="fu">CohortSizeConst</span>(<span class="dv">3</span>)</span>
@@ -632,12 +634,12 @@ w(t) = \frac{\kappa}{z + 1} + \frac{1}{z + 1}\left(\frac{t - t_{(\kappa)}}{t_{(\
 <p>We need to define the true scenario in terms of both the true toxicity probabilities at the doses of interest and the distribution of DLT times:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a>truth <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb22-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">plogis</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> <span class="fu">log</span>(x <span class="sc">/</span> <span class="dv">56</span>))</span>
+<span id="cb22-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="fu">plogis</span>(<span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">*</span> <span class="fu">log</span>(x <span class="sc">/</span> <span class="dv">56</span>))</span>
 <span id="cb22-3"><a aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb22-4"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-5"><a aria-hidden="true" tabindex="-1"></a>onset <span class="ot">&lt;-</span> <span class="dv">3</span></span>
 <span id="cb22-6"><a aria-hidden="true" tabindex="-1"></a>exp_cond_cdf <span class="ot">&lt;-</span> <span class="cf">function</span>(x) {</span>
-<span id="cb22-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="dv">1</span> <span class="sc">-</span> (<span class="fu">pexp</span>(x, <span class="dv">1</span> <span class="sc">/</span> onset, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="sc">-</span> <span class="fu">pexp</span>(t_max, <span class="dv">1</span> <span class="sc">/</span> onset, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)) <span class="sc">/</span> <span class="fu">pexp</span>(t_max, <span class="dv">1</span> <span class="sc">/</span> onset)</span>
+<span id="cb22-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="dv">1</span> <span class="sc">-</span> (<span class="fu">pexp</span>(x, <span class="dv">1</span> <span class="sc">/</span> onset, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>) <span class="sc">-</span> <span class="fu">pexp</span>(t_max, <span class="dv">1</span> <span class="sc">/</span> onset, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)) <span class="sc">/</span> <span class="fu">pexp</span>(t_max, <span class="dv">1</span> <span class="sc">/</span> onset)</span>
 <span id="cb22-8"><a aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -655,23 +657,23 @@ w(t) = \frac{\kappa}{z + 1} + \frac{1}{z + 1}\left(\frac{t - t_{(\kappa)}}{t_{(\
 <p>Now we can define the design and run simulations:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" tabindex="-1"></a>design <span class="ot">&lt;-</span> <span class="fu">DADesign</span>(</span>
-<span id="cb24-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">model =</span> model,</span>
-<span id="cb24-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">increments =</span> increments,</span>
-<span id="cb24-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">nextBest =</span> next_best,</span>
-<span id="cb24-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">stopping =</span> stopping,</span>
-<span id="cb24-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">cohort_size =</span> size,</span>
-<span id="cb24-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> empty_data,</span>
-<span id="cb24-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">safetyWindow =</span> safety_window,</span>
-<span id="cb24-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">startingDose =</span> <span class="dv">2</span></span>
+<span id="cb24-2"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">model =</span> model,</span>
+<span id="cb24-3"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">increments =</span> increments,</span>
+<span id="cb24-4"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">nextBest =</span> next_best,</span>
+<span id="cb24-5"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">stopping =</span> stopping,</span>
+<span id="cb24-6"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">cohort_size =</span> size,</span>
+<span id="cb24-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> empty_data,</span>
+<span id="cb24-8"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">safetyWindow =</span> safety_window,</span>
+<span id="cb24-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">startingDose =</span> <span class="dv">2</span></span>
 <span id="cb24-10"><a aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb24-11"><a aria-hidden="true" tabindex="-1"></a>sims <span class="ot">&lt;-</span> <span class="fu">simulate</span>(</span>
-<span id="cb24-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">object =</span> design,</span>
-<span id="cb24-13"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">truthTox =</span> truth,</span>
-<span id="cb24-14"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">truthSurv =</span> exp_cond_cdf,</span>
-<span id="cb24-15"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">trueTmax =</span> t_max,</span>
-<span id="cb24-16"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">nsim =</span> <span class="dv">100</span>,</span>
-<span id="cb24-17"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">413</span>,</span>
-<span id="cb24-18"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">mcmcOptions =</span> <span class="fu">McmcOptions</span>(<span class="at">burnin =</span> <span class="dv">500</span>, <span class="at">step =</span> <span class="dv">2</span>, <span class="at">samples =</span> <span class="dv">200</span>, <span class="at">rng_kind =</span> <span class="st">"Mersenne-Twister"</span>, <span class="at">rng_seed =</span> <span class="dv">413</span>)</span>
+<span id="cb24-12"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">object =</span> design,</span>
+<span id="cb24-13"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">truthTox =</span> truth,</span>
+<span id="cb24-14"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">truthSurv =</span> exp_cond_cdf,</span>
+<span id="cb24-15"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">trueTmax =</span> t_max,</span>
+<span id="cb24-16"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">nsim =</span> <span class="dv">100</span>,</span>
+<span id="cb24-17"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">seed =</span> <span class="dv">413</span>,</span>
+<span id="cb24-18"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">mcmcOptions =</span> <span class="fu">McmcOptions</span>(<span class="at">burnin =</span> <span class="dv">500</span>, <span class="at">step =</span> <span class="dv">2</span>, <span class="at">samples =</span> <span class="dv">200</span>, <span class="at">rng_kind =</span> <span class="st">"Mersenne-Twister"</span>, <span class="at">rng_seed =</span> <span class="dv">413</span>)</span>
 <span id="cb24-19"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
@@ -705,7 +707,7 @@ Stop reason triggered:
 <h2>Practical aspects</h2>
 <p><span class="citation" data-cites="VANWERKHOVEN2020">Werkhoven et al. (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span> discuss practical aspects of running TITE-CRM designs:</p>
 <ul>
-<li>They “have found that designing and running earlyphase trials using the TiTE-CRM can be complex, but is feasible and worthwhile”</li>
+<li>They “have found that designing and running early phase trials using the TiTE-CRM can be complex, but is feasible and worthwhile”</li>
 <li>Prior probability of DLTs at the dose grid:
 <ul>
 <li>use the “background DLT probability”, i.e.&nbsp;without any experimental treatment, as reference (all probabilities need to be higher)</li>
