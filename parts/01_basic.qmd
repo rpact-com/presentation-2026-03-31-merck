@@ -405,7 +405,7 @@ backfill_simple
 
 This can then be added in the corresponding `backfill` slot of the `Design` object:
 
-```{r}
+```{r} 
 design_backfill <- design_adjusted
 design_backfill@backfill <- backfill_simple
 ```
@@ -442,6 +442,7 @@ plot(sims_summary)
 ## Learning more
 
 Lots of documentation is available on the `crmPack` website: [crmPack.org](https://crmPack.org/)
+
 It includes:
 
 - 13 vignettes with detailed examples of how to use the package

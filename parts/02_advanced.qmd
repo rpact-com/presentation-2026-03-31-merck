@@ -56,13 +56,13 @@ Note that we only use a coarse grid here to simplify the optimization problem a 
 #| message: false
 coarseGrid <- c(25, 100, 300)
 min_result <- MinimalInformative(
-  dosegrid = coarseGrid, 
-  refDose = 100,
-  logNormal = TRUE, # use a log-normal distribution for the slope parameter
-  threshmin = 0.1, # the quantile for the low dose
-  threshmax = 0.2, # the quantile for the high dose
-  seed = 432, # for reproducibility
-  control = list(max.time = 30) # limit the optimization time here
+    dosegrid = coarseGrid,
+    refDose = 100,
+    logNormal = TRUE, # use a log-normal distribution for the slope parameter
+    threshmin = 0.1, # the quantile for the low dose
+    threshmax = 0.2, # the quantile for the high dose
+    seed = 432, # for reproducibility
+    control = list(max.time = 30) # limit the optimization time here
 )
 ```
 
@@ -122,11 +122,11 @@ Let's first define two bivariate normal components:
 comp1 <- ModelParamsNormal(
     mean = c(-0.85, 1),
     cov = matrix(c(1, -0.5, -0.5, 1), nrow = 2)
-  )
+)
 comp2 <- ModelParamsNormal(
     mean = c(1, 1.5),
     cov = matrix(c(1.2, -0.45, -0.45, 0.6), nrow = 2)
-  )
+)
 ```
 
 Say we use a uniform $\textrm{Beta}(1,1)$ hyperprior for the weight parameter, and a reference dose of $d^{*} = 50$:
@@ -147,11 +147,11 @@ Here we need to fix the weights of the mixture components, for example to 0.5 ea
 
 ```{r}
 normal_mix_fix_weights_prior <- LogisticNormalFixedMixture(
-  components = list(
-    comp1 = comp1,
-    comp2 = comp2
-  ),
-  weights = c(0.5, 0.5),
+    components = list(
+        comp1 = comp1,
+        comp2 = comp2
+    ),
+    weights = c(0.5, 0.5),
     ref_dose = 50
 )
 normal_mix_fix_weights_prior
@@ -261,12 +261,11 @@ In `crmPack` you can choose between
 
 - the linear weighting function $w(t) = \min(1, t / T_{\textrm{max}})$, which is the most commonly used weighting function in the literature, and
 - the adaptive weighting function proposed in formula (3) of @CHEUNG2004:
-
-$$
-w(t) = \frac{\kappa}{z + 1} + \frac{1}{z + 1}\left(\frac{t - t_{(\kappa)}}{t_{(\kappa + 1)} - t_{(\kappa)}}\right)
-$$
-
-where $z$ is the total number of DLTs, $0 \equiv t_{(0)} < t_{(1)} \leq \cdots \leq t_{(z)} < t_{(z+1)} \equiv T_{\textrm{max}}$ are the ordered failure times, and $\kappa = \max_{0 \leq j \leq z}\{j : t \geq t_{(j)}\}$.
+  $$
+  w(t) = \frac{\kappa}{z + 1} + \frac{1}{z + 1}\left(\frac{t - t_{(\kappa)}}{t_{(\kappa + 1)} - t_{(\kappa)}}\right)
+  $$
+  
+  - where $z$ is the total number of DLTs, $0 \equiv t_{(0)} < t_{(1)} \leq \cdots \leq t_{(z)} < t_{(z+1)} \equiv T_{\textrm{max}}$ are the ordered failure times, and $\kappa = \max_{0 \leq j \leq z}\{j : t \geq t_{(j)}\}$
   - Basically, the adaptive function allocates more weight to each record than the linear function when DLTs are observed early and less weight when DLTs are observed late. 
 
 ## Illustration
@@ -277,15 +276,15 @@ where $z$ is the total number of DLTs, $0 \equiv t_{(0)} < t_{(1)} \leq \cdots \
 
 ```{r}
 model <- TITELogisticLogNormal(
-  mean = c(1.33, 1.49),
-  cov = matrix(c(1.826, 0.0209, 0.0209, 0.0245), nrow = 2),
-  ref_dose = 56,
-  weight_method = "linear"
+    mean = c(1.33, 1.49),
+    cov = matrix(c(1.826, 0.0209, 0.0209, 0.0245), nrow = 2),
+    ref_dose = 56,
+    weight_method = "linear"
 )
 increments <- IncrementsRelative(intervals = c(0, 20), increments = c(2, 1))
 next_best <- NextBestMTD( # Note that we use a "nonparametric" rule here.
-  target = 0.3,
-  derive = function(mtd_samples) mean(mtd_samples)
+    target = 0.3,
+    derive = function(mtd_samples) mean(mtd_samples)
 )
 stopping <- StoppingMinPatients(n = 20)
 size <- CohortSizeConst(3)
@@ -313,12 +312,12 @@ We need to define the true scenario in terms of both the true toxicity probabili
 
 ```{r}
 truth <- function(x) {
-  plogis(2 + 3 * log(x / 56))
+    plogis(2 + 3 * log(x / 56))
 }
 
 onset <- 3
 exp_cond_cdf <- function(x) {
-  1 - (pexp(x, 1 / onset, lower.tail = FALSE) - pexp(t_max, 1 / onset, lower.tail = FALSE)) / pexp(t_max, 1 / onset)
+    1 - (pexp(x, 1 / onset, lower.tail = FALSE) - pexp(t_max, 1 / onset, lower.tail = FALSE)) / pexp(t_max, 1 / onset)
 }
 ```
 
@@ -337,23 +336,23 @@ Now we can define the design and run simulations:
 
 ```{r}
 design <- DADesign(
-  model = model,
-  increments = increments,
-  nextBest = next_best,
-  stopping = stopping,
-  cohort_size = size,
-  data = empty_data,
-  safetyWindow = safety_window,
-  startingDose = 2
+    model = model,
+    increments = increments,
+    nextBest = next_best,
+    stopping = stopping,
+    cohort_size = size,
+    data = empty_data,
+    safetyWindow = safety_window,
+    startingDose = 2
 )
 sims <- simulate(
-  object = design,
-  truthTox = truth,
-  truthSurv = exp_cond_cdf,
-  trueTmax = t_max,
-  nsim = 100,
-  seed = 413,
-  mcmcOptions = McmcOptions(burnin = 500, step = 2, samples = 200, rng_kind = "Mersenne-Twister", rng_seed = 413)
+    object = design,
+    truthTox = truth,
+    truthSurv = exp_cond_cdf,
+    trueTmax = t_max,
+    nsim = 100,
+    seed = 413,
+    mcmcOptions = McmcOptions(burnin = 500, step = 2, samples = 200, rng_kind = "Mersenne-Twister", rng_seed = 413)
 )
 ```
 
@@ -367,7 +366,7 @@ summary(sims, truth = truth, target = c(0.29, 0.31))
 
 @VANWERKHOVEN2020 discuss practical aspects of running TITE-CRM designs:
 
-- They "have found that designing and running earlyphase trials using the TiTE-CRM can be complex, but is feasible and worthwhile"
+- They "have found that designing and running early phase trials using the TiTE-CRM can be complex, but is feasible and worthwhile"
 - Prior probability of DLTs at the dose grid: 
   - use the "background DLT probability", i.e. without any experimental treatment, as reference (all probabilities need to be higher)
   - effect of the addition of the experimental drug can then be approximated by multiplication with dose enhancement factors obtained from preclinical studies

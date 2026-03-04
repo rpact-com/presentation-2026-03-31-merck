@@ -9,3 +9,5 @@ www/
 *_cache/
 *_files/
 Rplots.pdf
+
+.vdoc*
