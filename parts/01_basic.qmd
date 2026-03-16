@@ -6,7 +6,7 @@ part: 1
 description: "Basic training for crmPack users at Merck."
 image: /figures/illustration/exercise.jpg
 execute:
-    cache: true
+    cache: false
 ---
 
 ```{r}
@@ -196,6 +196,24 @@ prior_samples <- mcmc(model, data = empty_data, options = mcmc_options)
 posterior_samples <- mcmc(model, data = data, options = mcmc_options)
 ```
 
+## MCMC settings recommendations
+
+- The default MCMC settings are:
+  - burn-in: 10,000
+  - step: 2
+  - samples: 10,000
+- We just saw that we can use lower numbers during development
+- Also the more complex the model, the longer the MCMC chain should be run
+- The most important is to check the convergence of the MCMC chain:
+ 
+```{r}
+names(posterior_samples@data)
+alpha0_samples <- get(posterior_samples, "alpha0")
+library(ggmcmc)
+ggs_traceplot(alpha0_samples)
+ggs_autocorrelation(alpha0_samples)
+```
+
 ## Plotting dose-toxicity curves: Prior
 
 ```{r}
@@ -224,13 +242,15 @@ increments
 
 Together with the regression model, the definition of how to obtain the recommendation for the dose of the next cohort, are the key components of the model-based dose escalation design. 
 
-For example, we can maximize the posterior probability of being in the target toxicity interval (e.g. 20--30% DLTs) while restricting the maximum overdosing (e.g. 40-100% DLTs) probability to less than 25%:
+For example, we can minimize the posterior expected loss while restricting the maximum overdosing (e.g. 40-100% DLTs) probability to less than 25%:
 
 ```{r}
-next_best <- NextBestNCRM(
-    target = c(0.2, 0.3),
-    overdose = c(0.4, 1),
-    max_overdose_prob = 0.25
+next_best <- NextBestNCRMLoss(
+    target = c(0.2, 0.3), # loss: 0
+    overdose = c(0.4, 0.7), # loss: 2
+    unacceptable = c(0.7, 1), # loss: 10
+    max_overdose_prob = 0.25,
+    losses = c(1, 0, 2, 10) # underdosing has loss 1
 )
 next_best
 ```
@@ -278,15 +298,21 @@ Here it is only 30, because we observed one DLT at dose 20, so the maximum allow
 Then the next best dose is calculated with the `nextBest` method:
 
 ```{r}
-next_best_dose <- nextBest(next_best, doselimit = max_dose, samples = posterior_samples, model = model, data = data)
+next_best_dose <- nextBest(
+  next_best, 
+  doselimit = max_dose, 
+  samples = posterior_samples, 
+  model = model, 
+  data = data
+)
 ```
 
 ## Resulting recommendation example (cont'd)
 
-The plot is in the `$plot` element of the result:
+The joint plot is in the `$plot_joint` element of the result (target/overdose/unacceptable probabilities and expected loss for each dose):
 
 ```{r}
-print(next_best_dose$plot)
+print(next_best_dose$plot_joint)
 ```
 
 And the value is in the `$value` element:
@@ -296,6 +322,17 @@ next_best_dose$value
 ```
 
 So due to the high probability of overdosing at dose 30, the recommended dose for the next cohort is dose 20, which is the same as the previous cohort. 
+
+## Resulting recommendation example (cont'd)
+
+We can also use the `fit()` method to get the posterior quantiles, and we can combine that with the loss results to get a nice table:
+
+```{r}
+fitted_df <- fit(posterior_samples, model, data)
+loss_df <- next_best_dose$probs |> as.data.frame() |> dplyr::select(dose, posterior_loss)
+result_df <- dplyr::left_join(fitted_df, loss_df, by = "dose") 
+knitr::kable(result_df, digits = 3)
+```
 
 # Operating characteristics
 

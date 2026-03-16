@@ -11,3 +11,4 @@ www/
 Rplots.pdf
 
 .vdoc*
+.DS_Store
