@@ -44,7 +44,8 @@ jobs:
             any::crmPack,
             any::ggplot2,
             any::emmeans,
-            any::emoji
+            any::emoji,
+            any::ggmcmc
 
       - name: Publish to GitHub Pages (and render) 
         uses: quarto-dev/quarto-actions/publish@v2
