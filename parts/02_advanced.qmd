@@ -20,6 +20,8 @@ library(crmPack)
 
 ::::: columns
 ::: {.column width="70%"}
+- How to contribute code on GitHub
+- Custom JAGS model workflow
 - Prior construction: 
   - Minimally informative prior
   - Mixture priors
@@ -30,6 +32,35 @@ library(crmPack)
 ![](/figures/logos/crmPack_logo.png){height="150px"}
 :::
 :::::
+
+## How to contribute on GitHub
+
+- The package's repo is hosted on GitHub at [github.com/openpharma/crmPack](https://github.com/openpharma/crmPack)
+- Contributions are very welcome:
+  - Questions
+  - Bug reports
+  - Feature requests
+  - Code contributions (under the license of the project, i.e. GPL v2 or higher)
+- We will also soon have a contributing guide in the repo with more detailed instructions on how to contribute code, but here are some general guidelines:
+  - Fork the repo for your work
+  - Make your changes and commit them with clear messages
+  - Push to your fork and create a pull request to the main `crmPack` repo
+  - I will review your pull request and provide feedback, and once it's approved I will merge it into the main branch
+
+## Custom JAGS model workflow
+
+It is actually quite straightforward to implement a custom JAGS model in `crmPack`:
+
+1. Define a new S4 class that inherits from `GeneralModel` with `setClass()`
+1. Implement a constructor / initialization function for the new class, which specifies the likelihood and prior distributions in the underlying `GeneralModel` slots:
+   1. The `datamodel` slot should contain the JAGS code for the likelihood
+   1. The `priormodel` slot should contain the JAGS code for the prior distributions
+   1. The `modelspecs` slot is a function that returns required JAGS inputs
+   1. The `init` slot is a function that returns initial values for the MCMC sampling
+   1. The `datanames` slot is a character vector of the names of the data inputs required for the likelihood
+1. Implement `dose()` and `prob()` methods for the new class, which compute the dose and toxicity probability for given model parameters using `setMethod()`
+
+Full examples are available [in the JSS paper](https://www.crmpack.org/vignettes/getting-started/crmPack_paper/#extending-crmpack-functionality) and [in the parallelization vignette](https://www.crmpack.org/vignettes/utilities/crmPack_parallel_computing/#worked-out-example).
 
 # Prior construction
 
@@ -84,7 +115,12 @@ matlines(
     lty = 2,
     col = 1
 )
-legend("topleft", legend = c("Target quantiles", "Obtained quantiles"), lty = 1:2, col = 1)
+legend(
+    "topleft",
+    legend = c("Target quantiles", "Obtained quantiles"),
+    lty = 1:2,
+    col = 1
+)
 ```
 
 ## Resulting prior parameters
@@ -282,7 +318,8 @@ model <- TITELogisticLogNormal(
     weight_method = "linear"
 )
 increments <- IncrementsRelative(intervals = c(0, 20), increments = c(2, 1))
-next_best <- NextBestMTD( # Note that we use a "nonparametric" rule here.
+next_best <- NextBestMTD(
+    # Note that we use a "nonparametric" rule here.
     target = 0.3,
     derive = function(mtd_samples) mean(mtd_samples)
 )
@@ -317,7 +354,10 @@ truth <- function(x) {
 
 onset <- 3
 exp_cond_cdf <- function(x) {
-    1 - (pexp(x, 1 / onset, lower.tail = FALSE) - pexp(t_max, 1 / onset, lower.tail = FALSE)) / pexp(t_max, 1 / onset)
+    1 -
+        (pexp(x, 1 / onset, lower.tail = FALSE) -
+            pexp(t_max, 1 / onset, lower.tail = FALSE)) /
+            pexp(t_max, 1 / onset)
 }
 ```
 
@@ -352,7 +392,13 @@ sims <- simulate(
     trueTmax = t_max,
     nsim = 100,
     seed = 413,
-    mcmcOptions = McmcOptions(burnin = 500, step = 2, samples = 200, rng_kind = "Mersenne-Twister", rng_seed = 413)
+    mcmcOptions = McmcOptions(
+        burnin = 500,
+        step = 2,
+        samples = 200,
+        rng_kind = "Mersenne-Twister",
+        rng_seed = 413
+    )
 )
 ```
 
