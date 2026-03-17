@@ -6,7 +6,7 @@ part: 2
 description: "Advanced training for crmPack users at Merck."
 image: /figures/illustration/refatoring_Antoni-Shkraba.jpg
 execute:
-    cache: true
+    cache: false
 ---
 
 ```{r}
