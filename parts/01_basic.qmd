@@ -114,7 +114,7 @@ We first need to decide what the possible doses could be, i.e. the so-called dos
 #| message: false
 library(crmPack)
 
-dose_grid <- c(1, 5, 10, seq(from = 20, to = 200, by = 10))
+dose_grid <- c(1, 5, seq(from = 10, to = 200, by = 1))
 ```
 
 This we use to initialize our (still empty, i.e. without patients) `Data` object, which will be used to store the data of our trial as it progresses:
@@ -156,15 +156,14 @@ Then we also use a prior distribution for the parameters $\alpha$ and $\beta$. T
 For example, let's use the following model:
 
 ```{r}
-get_model <- function(sigma0, sigma1, rho) {
-  cov <- matrix(c(sigma0^2, rho * sigma0 * sigma1, rho * sigma0 * sigma1, sigma1^2), nrow = 2)
-  LogisticLogNormal(
-    mean = c(-3, 0.5),
-    cov = cov,
-    ref_dose = 20
-  )
+get_cov <- function(sigma0, sigma1, rho) {
+  matrix(c(sigma0^2, rho * sigma0 * sigma1, rho * sigma0 * sigma1, sigma1^2), nrow = 2)
 }
-model <- get_model(sigma0 = 1, sigma1 = 2, rho = 0.5)
+model <- LogisticLogNormal(
+  mean = c(-3, 0.5),
+  cov = get_cov(sigma0 = 1, sigma1 = 2, rho = 0.5),
+  ref_dose = 20
+)
 ```
 
 ## Model object (cont'd)
@@ -246,11 +245,11 @@ For example, we can minimize the posterior expected loss while restricting the m
 
 ```{r}
 next_best <- NextBestNCRMLoss(
-    target = c(0.2, 0.3), # loss: 0
-    overdose = c(0.4, 0.7), # loss: 2
-    unacceptable = c(0.7, 1), # loss: 10
+    target = c(0.2, 0.4), # loss: 0
+    overdose = c(0.4, 0.7), # loss: 1
+    unacceptable = c(0.7, 1), # loss: 2
     max_overdose_prob = 0.25,
-    losses = c(1, 0, 2, 10) # underdosing has loss 1
+    losses = c(1, 0, 1, 2) # underdosing has loss 1
 )
 next_best
 ```
@@ -331,7 +330,7 @@ We can also use the `fit()` method to get the posterior quantiles, and we can co
 fitted_df <- fit(posterior_samples, model, data)
 loss_df <- next_best_dose$probs |> as.data.frame() |> dplyr::select(dose, posterior_loss)
 result_df <- dplyr::left_join(fitted_df, loss_df, by = "dose") 
-knitr::kable(result_df, digits = 3)
+knitr::kable(head(result_df), digits = 3)
 ```
 
 # Operating characteristics
@@ -374,10 +373,17 @@ Here it could be also concerning that if we observe 3 DLTs at the starting dose 
 
 ## Adjusted performance
 
-So we need to adjust the prior to be less confident, e.g. by increasing the standard deviations of the parameters:
+So we need to adjust the prior to be less confident, e.g. by changing the means and the standard deviations of the parameters, changing the reference dose, and checking the plot:
 
 ```{r}
-model_adjusted <- get_model(sigma0 = 2, sigma1 = 4, rho = 0.5)
+model_adjusted <- LogisticLogNormal(
+  mean = c(-3, -1),
+  cov = get_cov(sigma0 = 4, sigma1 = 1, rho = 0),
+  ref_dose = 100
+)
+prior_samples_adjusted <- mcmc(model_adjusted, data = empty_data, options = mcmc_options)
+plot(prior_samples_adjusted, model_adjusted, empty_data)
+
 design_adjusted <- design
 design_adjusted@model <- model_adjusted
 examine(design_adjusted)
